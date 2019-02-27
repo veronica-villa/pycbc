@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.models package &mdash; PyCBC 8fe2b5 documentation</title>
+  <title>pycbc.inference.models package &mdash; PyCBC c86b3c documentation</title>
   
 
   
@@ -1598,6 +1598,73 @@ provided keyword will over ride what is in the config file.</li>
 
 </dd></dl>
 
+<dl class="class">
+<dt id="pycbc.inference.models.marginalized_gaussian_noise.MarginalizedPhaseGaussianNoise">
+<em class="property">class </em><code class="descclassname">pycbc.inference.models.marginalized_gaussian_noise.</code><code class="descname">MarginalizedPhaseGaussianNoise</code><span class="sig-paren">(</span><em>variable_params</em>, <em>data</em>, <em>low_frequency_cutoff</em>, <em>psds=None</em>, <em>high_frequency_cutoff=None</em>, <em>norm=None</em>, <em>static_params=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/marginalized_gaussian_noise.html#MarginalizedPhaseGaussianNoise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.marginalized_gaussian_noise.MarginalizedPhaseGaussianNoise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycbc.inference.models.gaussian_noise.GaussianNoise" title="pycbc.inference.models.gaussian_noise.GaussianNoise"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.models.gaussian_noise.GaussianNoise</span></code></a></p>
+<p>The likelihood is analytically marginalized over phase.</p>
+<p>This class can be used with signal models that can be written as:</p>
+<div class="math notranslate nohighlight">
+\[\tilde{h}(f; \Theta, \phi) = A(f; \Theta)e^{i\Psi(f; \Theta) + i \phi},\]</div>
+<p>where <span class="math notranslate nohighlight">\(\phi\)</span> is an arbitrary phase constant. This phase constant
+can be analytically marginalized over with a uniform prior as follows:
+assuming the noise is stationary and Gaussian (see <cite>GaussianNoise</cite>
+for details), the posterior is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}p(\Theta,\phi|d)
+    &amp;\propto p(\Theta)p(\phi)p(d|\Theta,\phi) \\
+    &amp;\propto p(\Theta)\frac{1}{2\pi}\exp\left[
+        -\frac{1}{2}\sum_{i}^{N_D} \left&lt;
+            h_i(\Theta,\phi) - d_i, h_i(\Theta,\phi) - d_i
+        \right&gt;\right].\end{split}\]</div>
+<p>Here, the sum is over the number of detectors <span class="math notranslate nohighlight">\(N_D\)</span>, <span class="math notranslate nohighlight">\(d_i\)</span>
+and <span class="math notranslate nohighlight">\(h_i\)</span> are the data and signal in detector <span class="math notranslate nohighlight">\(i\)</span>,
+respectively, and we have assumed a uniform prior on <span class="math notranslate nohighlight">\(phi \in [0,
+2\pi)\)</span>. With the form of the signal model given above, the inner product
+in the exponent can be written as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}-\frac{1}{2}\left&lt;h_i - d_i, h_i- d_i\right&gt;
+    &amp;= \left&lt;h_i, d_i\right&gt; -
+       \frac{1}{2}\left&lt;h_i, h_i\right&gt; -
+       \frac{1}{2}\left&lt;d_i, d_i\right&gt; \\
+    &amp;= \Re\left\{O(h^0_i, d_i)e^{-i\phi}\right\} -
+       \frac{1}{2}\left&lt;h^0_i, h^0_i\right&gt; -
+       \frac{1}{2}\left&lt;d_i, d_i\right&gt;,\end{split}\]</div>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}h_i^0 &amp;\equiv \tilde{h}_i(f; \Theta, \phi=0); \\
+O(h^0_i, d_i) &amp;\equiv 4 \int_0^\infty
+    \frac{\tilde{h}_i^*(f; \Theta,0)\tilde{d}_i(f)}{S_n(f)}\mathrm{d}f.\end{split}\]</div>
+<p>Gathering all of the terms that are not dependent on <span class="math notranslate nohighlight">\(\phi\)</span> together:</p>
+<div class="math notranslate nohighlight">
+\[\alpha(\Theta, d) \equiv \exp\left[-\frac{1}{2}\sum_i
+    \left&lt;h^0_i, h^0_i\right&gt; + \left&lt;d_i, d_i\right&gt;\right],\]</div>
+<p>we can marginalize the posterior over <span class="math notranslate nohighlight">\(\phi\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}p(\Theta|d)
+    &amp;\propto p(\Theta)\alpha(\Theta,d)\frac{1}{2\pi}
+             \int_{0}^{2\pi}\exp\left[\Re \left\{
+                 e^{-i\phi} \sum_i O(h^0_i, d_i)
+             \right\}\right]\mathrm{d}\phi \\
+    &amp;\propto p(\Theta)\alpha(\Theta, d)\frac{1}{2\pi}
+             \int_{0}^{2\pi}\exp\left[
+                 x(\Theta,d)\cos(\phi) + y(\Theta, d)\sin(\phi)
+             \right]\mathrm{d}\phi.\end{split}\]</div>
+<p>The integral in the last line is equal to <span class="math notranslate nohighlight">\(2\pi I_0(\sqrt{x^2+y^2})\)</span>,
+where <span class="math notranslate nohighlight">\(I_0\)</span> is the modified Bessel function of the first kind. Thus
+the marginalized log posterior is:</p>
+<div class="math notranslate nohighlight">
+\[\log p(\Theta|d) \propto \log p(\Theta) +
+    I_0\left(\left|\sum_i O(h^0_i, d_i)\right|\right) -
+    \frac{1}{2}\sum_i\left[ \left&lt;h^0_i, h^0_i\right&gt; -
+                            \left&lt;d_i, d_i\right&gt; \right]\]</div>
+<dl class="attribute">
+<dt id="pycbc.inference.models.marginalized_gaussian_noise.MarginalizedPhaseGaussianNoise.name">
+<code class="descname">name</code><em class="property"> = 'marginalized_phase'</em><a class="headerlink" href="#pycbc.inference.models.marginalized_gaussian_noise.MarginalizedPhaseGaussianNoise.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-pycbc.inference.models.single_template">
 <span id="pycbc-inference-models-single-template-module"></span><h2>pycbc.inference.models.single_template module<a class="headerlink" href="#module-pycbc.inference.models.single_template" title="Permalink to this headline">¶</a></h2>
@@ -1731,7 +1798,7 @@ of the class specified by the name argument.</li>
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Feb 26, 2019.
+        Last updated on Feb 27, 2019.
       </span>
 
     </p>
