@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.option_utils &mdash; PyCBC 4f9116 documentation</title>
+  <title>pycbc.inference.option_utils &mdash; PyCBC 3250ab documentation</title>
   
 
   
@@ -229,6 +229,7 @@
 <span class="kn">from</span> <span class="nn">pycbc.strain</span> <span class="k">import</span> <span class="p">(</span><span class="n">gates_from_cli</span><span class="p">,</span> <span class="n">psd_gates_from_cli</span><span class="p">,</span>
                           <span class="n">apply_gates_to_td</span><span class="p">,</span> <span class="n">apply_gates_to_fd</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">pycbc</span> <span class="k">import</span> <span class="n">waveform</span>
+<span class="kn">from</span> <span class="nn">pycbc</span> <span class="k">import</span> <span class="n">distributions</span>
 
 
 <span class="c1"># -----------------------------------------------------------------------------</span>
@@ -665,6 +666,47 @@
              <span class="s2">&quot;Default is to use scipy&#39;s gaussian_kde.&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">density_group</span></div>
+
+
+<div class="viewcode-block" id="prior_from_config"><a class="viewcode-back" href="../../../pycbc.inference.html#pycbc.inference.option_utils.prior_from_config">[docs]</a><span class="k">def</span> <span class="nf">prior_from_config</span><span class="p">(</span><span class="n">cp</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Loads a prior distribution from the given config file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cp : pycbc.workflow.WorkflowConfigParser</span>
+<span class="sd">        The config file to read.</span>
+<span class="sd">    sections : list of str, optional</span>
+<span class="sd">        The sections to retrieve the prior from. If ``None`` (the default),</span>
+<span class="sd">        will look in sections starting with &#39;prior&#39;.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    distributions.JointDistribution</span>
+<span class="sd">        The prior distribution.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># get prior distribution for each variable parameter</span>
+    <span class="c1"># parse command line values for section and subsection</span>
+    <span class="c1"># if only section then look for subsections</span>
+    <span class="c1"># and add distributions to list</span>
+    <span class="n">variable_params</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">dists</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">sections</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">sections</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;prior&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">sec</span> <span class="ow">in</span> <span class="n">sections</span><span class="p">:</span>
+        <span class="n">section</span> <span class="o">=</span> <span class="n">sec</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">subsec</span> <span class="o">=</span> <span class="n">sec</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">subsec</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">subsections</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;-&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">subsec</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">subsections</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get_subsections</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">subsection</span> <span class="ow">in</span> <span class="n">subsections</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get_opt_tag</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">subsection</span><span class="p">)</span>
+            <span class="n">dist</span> <span class="o">=</span> <span class="n">distributions</span><span class="o">.</span><span class="n">distribs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">from_config</span><span class="p">(</span>
+                <span class="n">cp</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">subsection</span><span class="p">)</span>
+            <span class="n">variable_params</span> <span class="o">+=</span> <span class="n">dist</span><span class="o">.</span><span class="n">params</span>
+            <span class="n">dists</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+    <span class="c1"># construct class that will return draws from the prior</span>
+    <span class="k">return</span> <span class="n">distributions</span><span class="o">.</span><span class="n">JointDistribution</span><span class="p">(</span><span class="n">variable_params</span><span class="p">,</span> <span class="o">*</span><span class="n">dists</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
@@ -679,7 +721,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Feb 28, 2019.
+        Last updated on Mar 01, 2019.
       </span>
 
     </p>

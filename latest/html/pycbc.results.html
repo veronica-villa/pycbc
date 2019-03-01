@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.results package &mdash; PyCBC 4f9116 documentation</title>
+  <title>pycbc.results package &mdash; PyCBC 3250ab documentation</title>
   
 
   
@@ -786,7 +786,7 @@ a new figure.</li>
 
 <dl class="function">
 <dt id="pycbc.results.scatter_histograms.create_marginalized_hist">
-<code class="descclassname">pycbc.results.scatter_histograms.</code><code class="descname">create_marginalized_hist</code><span class="sig-paren">(</span><em>ax</em>, <em>values</em>, <em>label</em>, <em>percentiles=None</em>, <em>color='k'</em>, <em>fillcolor='gray'</em>, <em>linecolor='navy'</em>, <em>title=True</em>, <em>expected_value=None</em>, <em>expected_color='red'</em>, <em>rotated=False</em>, <em>plot_min=None</em>, <em>plot_max=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/results/scatter_histograms.html#create_marginalized_hist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.results.scatter_histograms.create_marginalized_hist" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pycbc.results.scatter_histograms.</code><code class="descname">create_marginalized_hist</code><span class="sig-paren">(</span><em>ax</em>, <em>values</em>, <em>label</em>, <em>percentiles=None</em>, <em>color='k'</em>, <em>fillcolor='gray'</em>, <em>linecolor='navy'</em>, <em>linestyle='-'</em>, <em>title=True</em>, <em>expected_value=None</em>, <em>expected_color='red'</em>, <em>rotated=False</em>, <em>plot_min=None</em>, <em>plot_max=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/results/scatter_histograms.html#create_marginalized_hist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.results.scatter_histograms.create_marginalized_hist" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots a 1D marginalized histogram of the given param from the given
 samples.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -803,9 +803,13 @@ median).</li>
 <li><strong>color</strong> (<em>{'k'</em><em>, </em><em>string}</em>) – What color to make the histogram; default is black.</li>
 <li><strong>fillcolor</strong> (<em>{'gray'</em><em>, </em><em>string</em><em>, or </em><em>None}</em>) – What color to fill the histogram with. Set to None to not fill the
 histogram. Default is ‘gray’.</li>
+<li><strong>linestyle</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>, </em><em>optional</em>) – What line style to use for the histogram. Default is ‘-‘.</li>
 <li><strong>linecolor</strong> (<em>{'navy'</em><em>, </em><em>string}</em>) – What color to use for the percentile lines. Default is ‘navy’.</li>
-<li><strong>title</strong> (<em>{True</em><em>, </em><em>bool}</em>) – Add a title with the median value +/- uncertainty, with the
-max(min) <cite>percentile</cite> used for the +(-) uncertainty.</li>
+<li><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>optional</em>) – Add a title with a estimated value +/- uncertainty. The estimated value
+is the pecentile halfway between the max/min of <code class="docutils literal notranslate"><span class="pre">percentiles</span></code>, while
+the uncertainty is given by the max/min of the <code class="docutils literal notranslate"><span class="pre">percentiles</span></code>. If no
+percentiles are specified, defaults to quoting the median +/- 95/5
+percentiles.</li>
 <li><strong>rotated</strong> (<em>{False</em><em>, </em><em>bool}</em>) – Plot the histogram on the y-axis instead of the x. Default is False.</li>
 <li><strong>plot_min</strong> (<em>{None</em><em>, </em><em>float}</em>) – The minimum value to plot. If None, will default to whatever <cite>pyplot</cite>
 creates.</li>
@@ -821,7 +825,7 @@ creates.</li>
 
 <dl class="function">
 <dt id="pycbc.results.scatter_histograms.create_multidim_plot">
-<code class="descclassname">pycbc.results.scatter_histograms.</code><code class="descname">create_multidim_plot</code><span class="sig-paren">(</span><em>parameters</em>, <em>samples</em>, <em>labels=None</em>, <em>mins=None</em>, <em>maxs=None</em>, <em>expected_parameters=None</em>, <em>expected_parameters_color='r'</em>, <em>plot_marginal=True</em>, <em>plot_scatter=True</em>, <em>marginal_percentiles=None</em>, <em>contour_percentiles=None</em>, <em>zvals=None</em>, <em>show_colorbar=True</em>, <em>cbar_label=None</em>, <em>vmin=None</em>, <em>vmax=None</em>, <em>scatter_cmap='plasma'</em>, <em>plot_density=False</em>, <em>plot_contours=True</em>, <em>density_cmap='viridis'</em>, <em>contour_color=None</em>, <em>hist_color='black'</em>, <em>line_color=None</em>, <em>fill_color='gray'</em>, <em>use_kombine=False</em>, <em>fig=None</em>, <em>axis_dict=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/results/scatter_histograms.html#create_multidim_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.results.scatter_histograms.create_multidim_plot" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pycbc.results.scatter_histograms.</code><code class="descname">create_multidim_plot</code><span class="sig-paren">(</span><em>parameters</em>, <em>samples</em>, <em>labels=None</em>, <em>mins=None</em>, <em>maxs=None</em>, <em>expected_parameters=None</em>, <em>expected_parameters_color='r'</em>, <em>plot_marginal=True</em>, <em>plot_scatter=True</em>, <em>marginal_percentiles=None</em>, <em>contour_percentiles=None</em>, <em>marginal_title=True</em>, <em>marginal_linestyle='-'</em>, <em>zvals=None</em>, <em>show_colorbar=True</em>, <em>cbar_label=None</em>, <em>vmin=None</em>, <em>vmax=None</em>, <em>scatter_cmap='plasma'</em>, <em>plot_density=False</em>, <em>plot_contours=True</em>, <em>density_cmap='viridis'</em>, <em>contour_color=None</em>, <em>hist_color='black'</em>, <em>line_color=None</em>, <em>fill_color='gray'</em>, <em>use_kombine=False</em>, <em>fig=None</em>, <em>axis_dict=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/results/scatter_histograms.html#create_multidim_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.results.scatter_histograms.create_multidim_plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a figure with several plots and histograms.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -848,6 +852,13 @@ diagonal axes will be turned off.</li>
 <li><strong>marginal_percentiles</strong> (<em>{None</em><em>, </em><em>array}</em>) – What percentiles to draw lines at on the 1D histograms.
 If None, will draw lines at <cite>[5, 50, 95]</cite> (i.e., the bounds on the
 upper 90th percentile and the median).</li>
+<li><strong>marginal_title</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>optional</em>) – Add a title over the 1D marginal plots that gives an estimated value
++/- uncertainty. The estimated value is the pecentile halfway between
+the max/min of <code class="docutils literal notranslate"><span class="pre">maginal_percentiles</span></code>, while the uncertainty is given
+by the max/min of the <code class="docutils literal notranslate"><span class="pre">marginal_percentiles.</span> <span class="pre">If</span> <span class="pre">no</span>
+<span class="pre">``marginal_percentiles</span></code> are specified, the median +/- 95/5 percentiles
+will be quoted.</li>
+<li><strong>marginal_linestyle</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>, </em><em>optional</em>) – What line style to use for the marginal histograms.</li>
 <li><strong>contour_percentiles</strong> (<em>{None</em><em>, </em><em>array}</em>) – What percentile contours to draw on the scatter plots. If None,
 will plot the 50th and 90th percentiles.</li>
 <li><strong>zvals</strong> (<em>{None</em><em>, </em><em>array}</em>) – An array to use for coloring the scatter plots. If None, scatter points
@@ -978,12 +989,12 @@ value to get its upper bound. If provided, <code class="docutils literal notrans
 the negative; i.e., value +plus_error -error. The number of
 significant figures printed is determined from min(error,
 plus_error).</li>
-<li><strong>use_scientific_notation</strong> (<em>{3</em><em>, </em><em>int}</em>) – If <code class="docutils literal notranslate"><span class="pre">abs(log10(value))</span></code> is greater than the given, the return string will be
-formated to “%.1f times 10^{p}”, where p is the powers of 10 needed
-for the leading number in the value to be in the singles spot.
-Otherwise will return “%.(p+1)f”. Default is 3.  To turn off,
-set to 0. Note: using scientific notation assumes that the returned
-value will be enclosed in LaTeX math mode.</li>
+<li><strong>use_scientific_notation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em>, </em><em>optional</em>) – If <code class="docutils literal notranslate"><span class="pre">abs(log10(value))</span></code> is greater than the given, the return string
+will be formated to “%.1f times 10^{p}”, where p is the powers of 10
+needed for the leading number in the value to be in the singles spot.
+Otherwise will return “%.(p+1)f”. Default is 3.  To turn off, set to
+<code class="docutils literal notranslate"><span class="pre">numpy.inf</span></code>. Note: using scientific notation assumes that the
+returned value will be enclosed in LaTeX math mode.</li>
 <li><strong>include_error</strong> (<em>{True</em><em>, </em><em>bool}</em>) – Include the error in the return string; the output will be formated
 val pm err, where err is the error rounded to the same
 power of 10 as val. Otherwise, just the formatted value will
@@ -1005,27 +1016,42 @@ it will default to the number of values in the error.</li>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<p>Given a value and its uncertainty:
-&gt;&gt;&gt; val, err
-(3.9278372067613837e-22, 2.2351435286500487e-23)</p>
-<p>Format with error quoted:
-&gt;&gt;&gt; format_value(val, err)
-‘3.9 pm 0.2times 10^{-22}’</p>
-<p>Quote error as a relative error:
-&gt;&gt;&gt; format_value(val, err, use_relative_error=True)
-‘3.9 times 10^{-22} pm5%’</p>
-<p>Format without the error and without scientific notation:
-&gt;&gt;&gt; format_value(val, err, use_scientific_notation=0, include_error=False)
-‘0.00000000000000000000039’</p>
-<p>Given an plus error:
-&gt;&gt;&gt; err_plus
-8.2700310560051804e-24</p>
-<p>Format with both bounds quoted:
-&gt;&gt;&gt; format_value(val, err, plus_error=err_plus)
-‘3.93^{+0.08}_{-0.22}times 10^{-22}’</p>
-<p>Format with both bounds quoted as a relative error:
-&gt;&gt;&gt; format_value(val, err, plus_error=err_plus, use_relative_error=True)
-‘3.93times 10^{-22},^{+2%}_{-6%}’</p>
+<p>Given a value and its uncertainty:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">val</span><span class="p">,</span> <span class="n">err</span>
+<span class="go">(3.9278372067613837e-22, 2.2351435286500487e-23)</span>
+</pre></div>
+</div>
+<p>Format with error quoted:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">format_value</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+<span class="go">&#39;3.93 \pm 0.22\times 10^{-22}&#39;</span>
+</pre></div>
+</div>
+<p>Quote error as a relative error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">format_value</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="n">use_relative_error</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">&#39;3.93 \times 10^{-22} \pm5.6\%&#39;</span>
+</pre></div>
+</div>
+<p>Format without the error and without scientific notation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">format_value</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="n">use_scientific_notation</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">),</span>
+<span class="go">                 include_error=False)</span>
+<span class="go">&#39;0.000000000000000000000393&#39;</span>
+</pre></div>
+</div>
+<p>Given an plus error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">err_plus</span>
+<span class="go">8.2700310560051804e-24</span>
+</pre></div>
+</div>
+<p>Format with both bounds quoted:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">format_value</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="n">plus_error</span><span class="o">=</span><span class="n">err_plus</span><span class="p">)</span>
+<span class="go">&#39;3.928^{+0.083}_{-0.224}\times 10^{-22}&#39;</span>
+</pre></div>
+</div>
+<p>Format with both bounds quoted as a relative error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">format_value</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="n">plus_error</span><span class="o">=</span><span class="n">err_plus</span><span class="p">,</span> <span class="n">use_relative_error</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">&#39;3.928\times 10^{-22}\,^{+2.1\%}_{-5.7\%}&#39;</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
@@ -1178,7 +1204,7 @@ analysis run.</p>
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Feb 28, 2019.
+        Last updated on Mar 01, 2019.
       </span>
 
     </p>

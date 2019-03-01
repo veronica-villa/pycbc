@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.results.scatter_histograms &mdash; PyCBC 4f9116 documentation</title>
+  <title>pycbc.results.scatter_histograms &mdash; PyCBC 3250ab documentation</title>
   
 
   
@@ -497,6 +497,7 @@
 
 <div class="viewcode-block" id="create_marginalized_hist"><a class="viewcode-back" href="../../../pycbc.results.html#pycbc.results.scatter_histograms.create_marginalized_hist">[docs]</a><span class="k">def</span> <span class="nf">create_marginalized_hist</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">percentiles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                              <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">fillcolor</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linecolor</span><span class="o">=</span><span class="s1">&#39;navy&#39;</span><span class="p">,</span>
+                             <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span>
                              <span class="n">title</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">expected_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                              <span class="n">expected_color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">rotated</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                              <span class="n">plot_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">plot_max</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -520,11 +521,16 @@
 <span class="sd">    fillcolor : {&#39;gray&#39;, string, or None}</span>
 <span class="sd">        What color to fill the histogram with. Set to None to not fill the</span>
 <span class="sd">        histogram. Default is &#39;gray&#39;.</span>
+<span class="sd">    linestyle : str, optional</span>
+<span class="sd">        What line style to use for the histogram. Default is &#39;-&#39;.</span>
 <span class="sd">    linecolor : {&#39;navy&#39;, string}</span>
 <span class="sd">        What color to use for the percentile lines. Default is &#39;navy&#39;.</span>
-<span class="sd">    title : {True, bool}</span>
-<span class="sd">        Add a title with the median value +/- uncertainty, with the</span>
-<span class="sd">        max(min) `percentile` used for the +(-) uncertainty.</span>
+<span class="sd">    title : bool, optional</span>
+<span class="sd">        Add a title with a estimated value +/- uncertainty. The estimated value</span>
+<span class="sd">        is the pecentile halfway between the max/min of ``percentiles``, while</span>
+<span class="sd">        the uncertainty is given by the max/min of the ``percentiles``. If no</span>
+<span class="sd">        percentiles are specified, defaults to quoting the median +/- 95/5</span>
+<span class="sd">        percentiles.</span>
 <span class="sd">    rotated : {False, bool}</span>
 <span class="sd">        Plot the histogram on the y-axis instead of the x. Default is False.</span>
 <span class="sd">    plot_min : {None, float}</span>
@@ -545,11 +551,15 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">orientation</span> <span class="o">=</span> <span class="s1">&#39;vertical&#39;</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="n">htype</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="n">orientation</span><span class="p">,</span>
-            <span class="n">facecolor</span><span class="o">=</span><span class="n">fillcolor</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">facecolor</span><span class="o">=</span><span class="n">fillcolor</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="n">linestyle</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">percentiles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">percentiles</span> <span class="o">=</span> <span class="p">[</span><span class="mf">5.</span><span class="p">,</span> <span class="mf">50.</span><span class="p">,</span> <span class="mf">95.</span><span class="p">]</span>
-    <span class="n">values</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">percentiles</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">percentiles</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">plotp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">percentiles</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plotp</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">plotp</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">rotated</span><span class="p">:</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">val</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">linecolor</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -561,14 +571,21 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">expected_value</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">expected_color</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">title</span><span class="p">:</span>
-        <span class="n">values_med</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
-        <span class="n">values_min</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
-        <span class="n">values_max</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">percentiles</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">minp</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">percentiles</span><span class="p">)</span>
+            <span class="n">maxp</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">percentiles</span><span class="p">)</span>
+            <span class="n">medp</span> <span class="o">=</span> <span class="p">(</span><span class="n">maxp</span> <span class="o">+</span> <span class="n">minp</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">minp</span> <span class="o">=</span> <span class="mi">5</span>
+            <span class="n">medp</span> <span class="o">=</span> <span class="mi">50</span>
+            <span class="n">maxp</span> <span class="o">=</span> <span class="mi">95</span>
+        <span class="n">values_min</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">minp</span><span class="p">)</span>
+        <span class="n">values_med</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">medp</span><span class="p">)</span>
+        <span class="n">values_max</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">maxp</span><span class="p">)</span>
         <span class="n">negerror</span> <span class="o">=</span> <span class="n">values_med</span> <span class="o">-</span> <span class="n">values_min</span>
         <span class="n">poserror</span> <span class="o">=</span> <span class="n">values_max</span> <span class="o">-</span> <span class="n">values_med</span>
         <span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;$</span><span class="si">{0}</span><span class="s1">$&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">str_utils</span><span class="o">.</span><span class="n">format_value</span><span class="p">(</span>
-            <span class="n">values_med</span><span class="p">,</span> <span class="n">negerror</span><span class="p">,</span> <span class="n">plus_error</span><span class="o">=</span><span class="n">poserror</span><span class="p">,</span> <span class="n">ndecs</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
-
+            <span class="n">values_med</span><span class="p">,</span> <span class="n">negerror</span><span class="p">,</span> <span class="n">plus_error</span><span class="o">=</span><span class="n">poserror</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">rotated</span><span class="p">:</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_label_position</span><span class="p">(</span><span class="s2">&quot;right&quot;</span><span class="p">)</span>
 
@@ -685,6 +702,7 @@
                          <span class="n">expected_parameters_color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span>
                          <span class="n">plot_marginal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">plot_scatter</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                          <span class="n">marginal_percentiles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">contour_percentiles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="n">marginal_title</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">marginal_linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span>
                          <span class="n">zvals</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show_colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cbar_label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                          <span class="n">vmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scatter_cmap</span><span class="o">=</span><span class="s1">&#39;plasma&#39;</span><span class="p">,</span>
                          <span class="n">plot_density</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">plot_contours</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -726,6 +744,15 @@
 <span class="sd">        What percentiles to draw lines at on the 1D histograms.</span>
 <span class="sd">        If None, will draw lines at `[5, 50, 95]` (i.e., the bounds on the</span>
 <span class="sd">        upper 90th percentile and the median).</span>
+<span class="sd">    marginal_title : bool, optional</span>
+<span class="sd">        Add a title over the 1D marginal plots that gives an estimated value</span>
+<span class="sd">        +/- uncertainty. The estimated value is the pecentile halfway between</span>
+<span class="sd">        the max/min of ``maginal_percentiles``, while the uncertainty is given</span>
+<span class="sd">        by the max/min of the ``marginal_percentiles. If no</span>
+<span class="sd">        ``marginal_percentiles`` are specified, the median +/- 95/5 percentiles</span>
+<span class="sd">        will be quoted.</span>
+<span class="sd">    marginal_linestyle : str, optional</span>
+<span class="sd">        What line style to use for the marginal histograms.</span>
 <span class="sd">    contour_percentiles : {None, array}</span>
 <span class="sd">        What percentile contours to draw on the scatter plots. If None,</span>
 <span class="sd">        will plot the 50th and 90th percentiles.</span>
@@ -853,8 +880,9 @@
                 <span class="n">expected_value</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="n">create_marginalized_hist</span><span class="p">(</span>
                 <span class="n">ax</span><span class="p">,</span> <span class="n">samples</span><span class="p">[</span><span class="n">param</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">labels</span><span class="p">[</span><span class="n">param</span><span class="p">],</span>
-                <span class="n">color</span><span class="o">=</span><span class="n">hist_color</span><span class="p">,</span> <span class="n">fillcolor</span><span class="o">=</span><span class="n">fill_color</span><span class="p">,</span> <span class="n">linecolor</span><span class="o">=</span><span class="n">line_color</span><span class="p">,</span>
-                <span class="n">title</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">expected_value</span><span class="o">=</span><span class="n">expected_value</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="n">hist_color</span><span class="p">,</span> <span class="n">fillcolor</span><span class="o">=</span><span class="n">fill_color</span><span class="p">,</span>
+                <span class="n">linestyle</span><span class="o">=</span><span class="n">marginal_linestyle</span><span class="p">,</span> <span class="n">linecolor</span><span class="o">=</span><span class="n">line_color</span><span class="p">,</span>
+                <span class="n">title</span><span class="o">=</span><span class="n">marginal_title</span><span class="p">,</span> <span class="n">expected_value</span><span class="o">=</span><span class="n">expected_value</span><span class="p">,</span>
                 <span class="n">expected_color</span><span class="o">=</span><span class="n">expected_parameters_color</span><span class="p">,</span>
                 <span class="n">rotated</span><span class="o">=</span><span class="n">rotated</span><span class="p">,</span> <span class="n">plot_min</span><span class="o">=</span><span class="n">mins</span><span class="p">[</span><span class="n">param</span><span class="p">],</span> <span class="n">plot_max</span><span class="o">=</span><span class="n">maxs</span><span class="p">[</span><span class="n">param</span><span class="p">],</span>
                 <span class="n">percentiles</span><span class="o">=</span><span class="n">marginal_percentiles</span><span class="p">)</span>
@@ -991,7 +1019,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Feb 28, 2019.
+        Last updated on Mar 01, 2019.
       </span>
 
     </p>
