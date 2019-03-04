@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.waveform.spa_tmplt &mdash; PyCBC ec2d58 documentation</title>
+  <title>pycbc.waveform.spa_tmplt &mdash; PyCBC d377a9 documentation</title>
   
 
   
@@ -342,7 +342,7 @@
     <span class="sd">&quot;&quot;&quot; Return the distance at a given snr (default=8) of the SPA TaylorF2</span>
 <span class="sd">    template.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">kend</span> <span class="o">=</span> <span class="n">spa_tmplt_end</span><span class="p">(</span><span class="n">mass1</span><span class="o">=</span><span class="n">mass1</span><span class="p">,</span> <span class="n">mass2</span><span class="o">=</span><span class="n">mass2</span><span class="p">)</span> <span class="o">/</span> <span class="n">psd</span><span class="o">.</span><span class="n">delta_f</span>
+    <span class="n">kend</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">spa_tmplt_end</span><span class="p">(</span><span class="n">mass1</span><span class="o">=</span><span class="n">mass1</span><span class="p">,</span> <span class="n">mass2</span><span class="o">=</span><span class="n">mass2</span><span class="p">)</span> <span class="o">/</span> <span class="n">psd</span><span class="o">.</span><span class="n">delta_f</span><span class="p">)</span>
     <span class="n">norm1</span> <span class="o">=</span> <span class="n">spa_tmplt_norm</span><span class="p">(</span><span class="n">psd</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">psd</span><span class="p">),</span> <span class="n">psd</span><span class="o">.</span><span class="n">delta_f</span><span class="p">,</span> <span class="n">lower_frequency_cutoff</span><span class="p">)</span>
     <span class="n">norm2</span> <span class="o">=</span> <span class="p">(</span><span class="n">spa_amplitude_factor</span><span class="p">(</span><span class="n">mass1</span><span class="o">=</span><span class="n">mass1</span><span class="p">,</span> <span class="n">mass2</span><span class="o">=</span><span class="n">mass2</span><span class="p">))</span> <span class="o">**</span> <span class="mf">2.0</span>
 
