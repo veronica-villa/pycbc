@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.waveform package &mdash; PyCBC 8a005f documentation</title>
+  <title>pycbc.waveform package &mdash; PyCBC 8374d3 documentation</title>
   
 
   
@@ -1943,7 +1943,14 @@ defaults.</p>
 </div>
 <div class="section" id="module-pycbc.waveform.ringdown">
 <span id="pycbc-waveform-ringdown-module"></span><h2>pycbc.waveform.ringdown module<a class="headerlink" href="#module-pycbc.waveform.ringdown" title="Permalink to this headline">¶</a></h2>
-<p>Generate ringdown templates in the frequency domain.</p>
+<p>Generate ringdown templates in the time and frequency domain.</p>
+<dl class="function">
+<dt id="pycbc.waveform.ringdown.Kerr_factor">
+<code class="descclassname">pycbc.waveform.ringdown.</code><code class="descname">Kerr_factor</code><span class="sig-paren">(</span><em>final_mass</em>, <em>distance</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/waveform/ringdown.html#Kerr_factor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.waveform.ringdown.Kerr_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the factor final_mass/distance (in dimensionless units) for Kerr
+ringdowns</p>
+</dd></dl>
+
 <dl class="function">
 <dt id="pycbc.waveform.ringdown.apply_taper">
 <code class="descclassname">pycbc.waveform.ringdown.</code><code class="descname">apply_taper</code><span class="sig-paren">(</span><em>delta_t</em>, <em>taper</em>, <em>f_0</em>, <em>tau</em>, <em>amp</em>, <em>phi</em>, <em>l</em>, <em>m</em>, <em>inclination</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/waveform/ringdown.html#apply_taper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.waveform.ringdown.apply_taper" title="Permalink to this definition">¶</a></dt>
@@ -1952,7 +1959,7 @@ defaults.</p>
 
 <dl class="function">
 <dt id="pycbc.waveform.ringdown.get_fd_from_final_mass_spin">
-<code class="descclassname">pycbc.waveform.ringdown.</code><code class="descname">get_fd_from_final_mass_spin</code><span class="sig-paren">(</span><em>template=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/waveform/ringdown.html#get_fd_from_final_mass_spin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.waveform.ringdown.get_fd_from_final_mass_spin" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pycbc.waveform.ringdown.</code><code class="descname">get_fd_from_final_mass_spin</code><span class="sig-paren">(</span><em>template=None</em>, <em>distance=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/waveform/ringdown.html#get_fd_from_final_mass_spin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.waveform.ringdown.get_fd_from_final_mass_spin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return frequency domain ringdown with all the modes specified.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1961,13 +1968,17 @@ defaults.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>template</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><em>object</em></a>) – An object that has attached properties. This can be used to substitute
 for keyword arguments. A common example would be a row in an xml table.</li>
+<li><strong>distance</strong> (<em>{None</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – Luminosity distance of the system. If specified, the returned ringdown
+will contain the factor (final_mass/distance).</li>
 <li><strong>final_mass</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Mass of the final black hole.</li>
 <li><strong>final_spin</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Spin of the final black hole.</li>
 <li><strong>lmns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – Desired lmn modes as strings (lm modes available: 22, 21, 33, 44, 55).
 The n specifies the number of overtones desired for the corresponding
 lm pair (maximum n=8).
 Example: lmns = [‘223’,‘331’] are the modes 220, 221, 222, and 330</li>
-<li><strong>amp220</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Amplitude of the fundamental 220 mode.</li>
+<li><strong>amp220</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Amplitude of the fundamental 220 mode. Note that if distance is given,
+this parameter will have a completely different order of magnitude.
+See table II in <a class="reference external" href="https://arxiv.org/abs/1107.0854">https://arxiv.org/abs/1107.0854</a> for an estimate.</li>
 <li><strong>amplmn</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Fraction of the amplitude of the lmn overtone relative to the
 fundamental mode, as many as the number of subdominant modes.</li>
 <li><strong>philmn</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Phase of the lmn overtone, as many as the number of modes. Should also
@@ -2132,7 +2143,7 @@ If None, it will be set to the frequency at which the amplitude is
 
 <dl class="function">
 <dt id="pycbc.waveform.ringdown.get_td_from_final_mass_spin">
-<code class="descclassname">pycbc.waveform.ringdown.</code><code class="descname">get_td_from_final_mass_spin</code><span class="sig-paren">(</span><em>template=None</em>, <em>taper=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/waveform/ringdown.html#get_td_from_final_mass_spin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.waveform.ringdown.get_td_from_final_mass_spin" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pycbc.waveform.ringdown.</code><code class="descname">get_td_from_final_mass_spin</code><span class="sig-paren">(</span><em>template=None</em>, <em>taper=None</em>, <em>distance=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/waveform/ringdown.html#get_td_from_final_mass_spin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.waveform.ringdown.get_td_from_final_mass_spin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return time domain ringdown with all the modes specified.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2149,13 +2160,17 @@ when doing the fourier transform to the frequency domain. Setting
 taper will add a rapid ringup with timescale tau/10.
 Each mode and overtone will have a different taper depending on its tau,
 the final taper being the superposition of all the tapers.</li>
+<li><strong>distance</strong> (<em>{None</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – Luminosity distance of the system. If specified, the returned ringdown
+will contain the factor (final_mass/distance).</li>
 <li><strong>final_mass</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Mass of the final black hole.</li>
 <li><strong>final_spin</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Spin of the final black hole.</li>
 <li><strong>lmns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – Desired lmn modes as strings (lm modes available: 22, 21, 33, 44, 55).
 The n specifies the number of overtones desired for the corresponding
 lm pair (maximum n=8).
 Example: lmns = [‘223’,‘331’] are the modes 220, 221, 222, and 330</li>
-<li><strong>amp220</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Amplitude of the fundamental 220 mode.</li>
+<li><strong>amp220</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Amplitude of the fundamental 220 mode. Note that if distance is given,
+this parameter will have a completely different order of magnitude.
+See table II in <a class="reference external" href="https://arxiv.org/abs/1107.0854">https://arxiv.org/abs/1107.0854</a> for an estimate.</li>
 <li><strong>amplmn</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Fraction of the amplitude of the lmn overtone relative to the
 fundamental mode, as many as the number of subdominant modes.</li>
 <li><strong>philmn</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Phase of the lmn overtone, as many as the number of modes. Should also
@@ -2171,10 +2186,10 @@ is 1/1000 of the peak amplitude (the maximum of all modes).</li>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
-<li><strong>hplustilde</strong> (<em>FrequencySeries</em>) – The plus phase of a ringdown with the lm modes specified and
-n overtones in frequency domain.</li>
-<li><strong>hcrosstilde</strong> (<em>FrequencySeries</em>) – The cross phase of a ringdown with the lm modes specified and
-n overtones in frequency domain.</li>
+<li><strong>hplus</strong> (<em>TimeSeries</em>) – The plus phase of a ringdown with the lm modes specified and
+n overtones in time domain.</li>
+<li><strong>hcross</strong> (<em>TimeSeries</em>) – The cross phase of a ringdown with the lm modes specified and
+n overtones in time domain.</li>
 </ul>
 </p>
 </td>

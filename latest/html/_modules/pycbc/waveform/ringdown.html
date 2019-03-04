@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.waveform.ringdown &mdash; PyCBC 8a005f documentation</title>
+  <title>pycbc.waveform.ringdown &mdash; PyCBC 8374d3 documentation</title>
   
 
   
@@ -225,7 +225,7 @@
 <span class="c1">#</span>
 <span class="c1"># =============================================================================</span>
 <span class="c1">#</span>
-<span class="sd">&quot;&quot;&quot;Generate ringdown templates in the frequency domain.</span>
+<span class="sd">&quot;&quot;&quot;Generate ringdown templates in the time and frequency domain.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span><span class="o">,</span> <span class="nn">lal</span>
@@ -435,7 +435,7 @@
 
     <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
 
-<span class="c1"># Spherical harmonics #########################################################</span>
+<span class="c1"># Spherical harmonics and Kerr factor #########################################</span>
 
 <div class="viewcode-block" id="spher_harms"><a class="viewcode-back" href="../../../pycbc.waveform.html#pycbc.waveform.ringdown.spher_harms">[docs]</a><span class="k">def</span> <span class="nf">spher_harms</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">inclination</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Return spherical harmonic polarizations</span>
@@ -449,6 +449,18 @@
     <span class="n">Y_cross</span> <span class="o">=</span> <span class="n">Y_lm</span> <span class="o">-</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="n">l</span> <span class="o">*</span> <span class="n">Y_lminusm</span>
 
     <span class="k">return</span> <span class="n">Y_plus</span><span class="p">,</span> <span class="n">Y_cross</span></div>
+
+<div class="viewcode-block" id="Kerr_factor"><a class="viewcode-back" href="../../../pycbc.waveform.html#pycbc.waveform.ringdown.Kerr_factor">[docs]</a><span class="k">def</span> <span class="nf">Kerr_factor</span><span class="p">(</span><span class="n">final_mass</span><span class="p">,</span> <span class="n">distance</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return the factor final_mass/distance (in dimensionless units) for Kerr</span>
+<span class="sd">    ringdowns</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Convert solar masses to meters</span>
+    <span class="n">mass</span> <span class="o">=</span> <span class="n">final_mass</span> <span class="o">*</span> <span class="n">lal</span><span class="o">.</span><span class="n">MSUN_SI</span> <span class="o">*</span> <span class="n">lal</span><span class="o">.</span><span class="n">G_SI</span> <span class="o">/</span> <span class="n">lal</span><span class="o">.</span><span class="n">C_SI</span><span class="o">**</span><span class="mi">2</span>
+    <span class="c1"># Convert Mpc to meters</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">distance</span> <span class="o">*</span> <span class="mf">1e6</span> <span class="o">*</span> <span class="n">lal</span><span class="o">.</span><span class="n">PC_SI</span>
+
+    <span class="k">return</span> <span class="n">mass</span> <span class="o">/</span> <span class="n">dist</span></div>
 
 <span class="c1"># Functions for tapering ######################################################</span>
 
@@ -544,11 +556,11 @@
     <span class="n">delta_t</span> <span class="o">=</span> <span class="n">input_params</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;delta_t&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="n">t_final</span> <span class="o">=</span> <span class="n">input_params</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;t_final&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">delta_t</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">delta_t</span><span class="p">:</span>
         <span class="n">delta_t</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">qnm_freq_decay</span><span class="p">(</span><span class="n">f_0</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="mf">1.</span><span class="o">/</span><span class="mi">1000</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">delta_t</span> <span class="o">&lt;</span> <span class="n">min_dt</span><span class="p">:</span>
             <span class="n">delta_t</span> <span class="o">=</span> <span class="n">min_dt</span>
-    <span class="k">if</span> <span class="n">t_final</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">t_final</span><span class="p">:</span>
         <span class="n">t_final</span> <span class="o">=</span> <span class="n">qnm_time_decay</span><span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="mf">1.</span><span class="o">/</span><span class="mi">1000</span><span class="p">)</span>
 
     <span class="n">kmax</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t_final</span> <span class="o">/</span> <span class="n">delta_t</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
@@ -560,7 +572,7 @@
     <span class="n">hcross</span> <span class="o">=</span> <span class="n">amp</span> <span class="o">*</span> <span class="n">Y_cross</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">times</span><span class="o">/</span><span class="n">tau</span><span class="p">)</span> <span class="o">*</span> \
                                 <span class="n">numpy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">two_pi</span><span class="o">*</span><span class="n">f_0</span><span class="o">*</span><span class="n">times</span> <span class="o">+</span> <span class="n">phi</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">taper</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">delta_t</span> <span class="o">&lt;</span> <span class="n">taper</span><span class="o">*</span><span class="n">tau</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">taper</span> <span class="ow">and</span> <span class="n">delta_t</span> <span class="o">&lt;</span> <span class="n">taper</span><span class="o">*</span><span class="n">tau</span><span class="p">:</span>
         <span class="n">taper_window</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">taper</span><span class="o">*</span><span class="n">tau</span><span class="o">/</span><span class="n">delta_t</span><span class="p">)</span>
         <span class="n">kmax</span> <span class="o">+=</span> <span class="n">taper_window</span>
 
@@ -568,7 +580,7 @@
     <span class="n">outcross</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">zeros</span><span class="p">(</span><span class="n">kmax</span><span class="p">),</span> <span class="n">delta_t</span><span class="o">=</span><span class="n">delta_t</span><span class="p">)</span>
 
     <span class="c1"># If size of tapering window is less than delta_t, do not apply taper.</span>
-    <span class="k">if</span> <span class="n">taper</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">delta_t</span> <span class="o">&gt;</span> <span class="n">taper</span><span class="o">*</span><span class="n">tau</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">taper</span> <span class="ow">or</span> <span class="n">delta_t</span> <span class="o">&gt;</span> <span class="n">taper</span><span class="o">*</span><span class="n">tau</span><span class="p">:</span>
         <span class="n">outplus</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="n">kmax</span><span class="p">]</span> <span class="o">=</span> <span class="n">hplus</span>
         <span class="n">outcross</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="n">kmax</span><span class="p">]</span> <span class="o">=</span> <span class="n">hcross</span>
 
@@ -647,14 +659,14 @@
     <span class="n">f_lower</span> <span class="o">=</span> <span class="n">input_params</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;f_lower&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="n">f_final</span> <span class="o">=</span> <span class="n">input_params</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;f_final&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">delta_f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">delta_f</span><span class="p">:</span>
         <span class="n">delta_f</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">qnm_time_decay</span><span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="mf">1.</span><span class="o">/</span><span class="mi">1000</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">f_lower</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">f_lower</span><span class="p">:</span>
         <span class="n">f_lower</span> <span class="o">=</span> <span class="n">delta_f</span>
         <span class="n">kmin</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">kmin</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">f_lower</span> <span class="o">/</span> <span class="n">delta_f</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">f_final</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">f_final</span><span class="p">:</span>
         <span class="n">f_final</span> <span class="o">=</span> <span class="n">qnm_freq_decay</span><span class="p">(</span><span class="n">f_0</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="mf">1.</span><span class="o">/</span><span class="mi">1000</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">f_final</span> <span class="o">&gt;</span> <span class="n">max_freq</span><span class="p">:</span>
         <span class="n">f_final</span> <span class="o">=</span> <span class="n">max_freq</span>
@@ -758,21 +770,21 @@
     <span class="n">delta_t</span> <span class="o">=</span> <span class="n">input_params</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;delta_t&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="n">t_final</span> <span class="o">=</span> <span class="n">input_params</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;t_final&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">delta_t</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">delta_t</span><span class="p">:</span>
         <span class="n">delta_t</span> <span class="o">=</span> <span class="n">lm_deltat</span><span class="p">(</span><span class="n">f_0</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;</span><span class="si">%d%d%d</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">nmodes</span><span class="p">)])</span>
-    <span class="k">if</span> <span class="n">t_final</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">t_final</span><span class="p">:</span>
         <span class="n">t_final</span> <span class="o">=</span> <span class="n">lm_tfinal</span><span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;</span><span class="si">%d%d%d</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">nmodes</span><span class="p">)])</span>
 
     <span class="n">kmax</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t_final</span> <span class="o">/</span> <span class="n">delta_t</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="c1"># Different overtones will have different tapering window-size</span>
     <span class="c1"># Find maximum window size to create long enough output vector</span>
-    <span class="k">if</span> <span class="n">taper</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">taper</span><span class="p">:</span>
         <span class="n">taper_window</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">taper</span><span class="o">*</span><span class="nb">max</span><span class="p">(</span><span class="n">tau</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="o">/</span><span class="n">delta_t</span><span class="p">)</span>
         <span class="n">kmax</span> <span class="o">+=</span> <span class="n">taper_window</span>
 
     <span class="n">outplus</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">zeros</span><span class="p">(</span><span class="n">kmax</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float64</span><span class="p">),</span> <span class="n">delta_t</span><span class="o">=</span><span class="n">delta_t</span><span class="p">)</span>
     <span class="n">outcross</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">zeros</span><span class="p">(</span><span class="n">kmax</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float64</span><span class="p">),</span> <span class="n">delta_t</span><span class="o">=</span><span class="n">delta_t</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">taper</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">taper</span><span class="p">:</span>
         <span class="n">start</span> <span class="o">=</span> <span class="o">-</span> <span class="n">taper</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">tau</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
         <span class="n">outplus</span><span class="o">.</span><span class="n">_epoch</span><span class="p">,</span> <span class="n">outcross</span><span class="o">.</span><span class="n">_epoch</span> <span class="o">=</span> <span class="n">start</span><span class="p">,</span> <span class="n">start</span>
 
@@ -784,7 +796,7 @@
                             <span class="n">amp</span><span class="o">=</span><span class="n">amps</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%d%d%d</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">)],</span>
                             <span class="n">inclination</span><span class="o">=</span><span class="n">inc</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="n">m</span><span class="p">,</span>
                             <span class="n">delta_t</span><span class="o">=</span><span class="n">delta_t</span><span class="p">,</span> <span class="n">t_final</span><span class="o">=</span><span class="n">t_final</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">taper</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">taper</span><span class="p">:</span>
             <span class="n">outplus</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="n">hplus</span><span class="o">.</span><span class="n">data</span>
             <span class="n">outcross</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="n">hcross</span><span class="o">.</span><span class="n">data</span>
         <span class="k">else</span><span class="p">:</span>
@@ -857,9 +869,9 @@
     <span class="n">f_lower</span> <span class="o">=</span> <span class="n">input_params</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;f_lower&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="n">f_final</span> <span class="o">=</span> <span class="n">input_params</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;f_final&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">delta_f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">delta_f</span><span class="p">:</span>
         <span class="n">delta_f</span> <span class="o">=</span> <span class="n">lm_deltaf</span><span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;</span><span class="si">%d%d%d</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">nmodes</span><span class="p">)])</span>
-    <span class="k">if</span> <span class="n">f_final</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">f_final</span><span class="p">:</span>
         <span class="n">f_final</span> <span class="o">=</span> <span class="n">lm_ffinal</span><span class="p">(</span><span class="n">f_0</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;</span><span class="si">%d%d%d</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">nmodes</span><span class="p">)])</span>
     <span class="n">kmax</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">f_final</span> <span class="o">/</span> <span class="n">delta_f</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
 
@@ -882,7 +894,8 @@
 <span class="c1">#### Approximants</span>
 <span class="c1">######################################################</span>
 
-<div class="viewcode-block" id="get_td_from_final_mass_spin"><a class="viewcode-back" href="../../../pycbc.waveform.html#pycbc.waveform.ringdown.get_td_from_final_mass_spin">[docs]</a><span class="k">def</span> <span class="nf">get_td_from_final_mass_spin</span><span class="p">(</span><span class="n">template</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">taper</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="get_td_from_final_mass_spin"><a class="viewcode-back" href="../../../pycbc.waveform.html#pycbc.waveform.ringdown.get_td_from_final_mass_spin">[docs]</a><span class="k">def</span> <span class="nf">get_td_from_final_mass_spin</span><span class="p">(</span><span class="n">template</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">taper</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                <span class="n">distance</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Return time domain ringdown with all the modes specified.</span>
 
 <span class="sd">    Parameters</span>
@@ -899,6 +912,9 @@
 <span class="sd">        taper will add a rapid ringup with timescale tau/10.</span>
 <span class="sd">        Each mode and overtone will have a different taper depending on its tau,</span>
 <span class="sd">        the final taper being the superposition of all the tapers.</span>
+<span class="sd">    distance : {None, float}, optional</span>
+<span class="sd">        Luminosity distance of the system. If specified, the returned ringdown</span>
+<span class="sd">        will contain the factor (final_mass/distance).</span>
 <span class="sd">    final_mass : float</span>
 <span class="sd">        Mass of the final black hole.</span>
 <span class="sd">    final_spin : float</span>
@@ -909,7 +925,9 @@
 <span class="sd">        lm pair (maximum n=8).</span>
 <span class="sd">        Example: lmns = [&#39;223&#39;,&#39;331&#39;] are the modes 220, 221, 222, and 330</span>
 <span class="sd">    amp220 : float</span>
-<span class="sd">        Amplitude of the fundamental 220 mode.</span>
+<span class="sd">        Amplitude of the fundamental 220 mode. Note that if distance is given,</span>
+<span class="sd">        this parameter will have a completely different order of magnitude.</span>
+<span class="sd">        See table II in https://arxiv.org/abs/1107.0854 for an estimate.</span>
 <span class="sd">    amplmn : float</span>
 <span class="sd">        Fraction of the amplitude of the lmn overtone relative to the</span>
 <span class="sd">        fundamental mode, as many as the number of subdominant modes.</span>
@@ -929,12 +947,12 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    hplustilde: FrequencySeries</span>
+<span class="sd">    hplus: TimeSeries</span>
 <span class="sd">        The plus phase of a ringdown with the lm modes specified and</span>
-<span class="sd">        n overtones in frequency domain.</span>
-<span class="sd">    hcrosstilde: FrequencySeries</span>
+<span class="sd">        n overtones in time domain.</span>
+<span class="sd">    hcross: TimeSeries</span>
 <span class="sd">        The cross phase of a ringdown with the lm modes specified and</span>
-<span class="sd">        n overtones in frequency domain.</span>
+<span class="sd">        n overtones in time domain.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">input_params</span> <span class="o">=</span> <span class="n">props</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">mass_spin_required_args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -954,21 +972,21 @@
 
     <span class="n">f_0</span><span class="p">,</span> <span class="n">tau</span> <span class="o">=</span> <span class="n">get_lm_f0tau_allmodes</span><span class="p">(</span><span class="n">final_mass</span><span class="p">,</span> <span class="n">final_spin</span><span class="p">,</span> <span class="n">lmns</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">delta_t</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">delta_t</span><span class="p">:</span>
         <span class="n">delta_t</span> <span class="o">=</span> <span class="n">lm_deltat</span><span class="p">(</span><span class="n">f_0</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">lmns</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">t_final</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">t_final</span><span class="p">:</span>
         <span class="n">t_final</span> <span class="o">=</span> <span class="n">lm_tfinal</span><span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="n">lmns</span><span class="p">)</span>
 
     <span class="n">kmax</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t_final</span> <span class="o">/</span> <span class="n">delta_t</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="c1"># Different overtones will have different tapering window-size</span>
     <span class="c1"># Find maximum window size to create long enough output vector</span>
-    <span class="k">if</span> <span class="n">taper</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">taper</span><span class="p">:</span>
         <span class="n">taper_window</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">taper</span><span class="o">*</span><span class="nb">max</span><span class="p">(</span><span class="n">tau</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="o">/</span><span class="n">delta_t</span><span class="p">)</span>
         <span class="n">kmax</span> <span class="o">+=</span> <span class="n">taper_window</span>
 
     <span class="n">outplus</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">zeros</span><span class="p">(</span><span class="n">kmax</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float64</span><span class="p">),</span> <span class="n">delta_t</span><span class="o">=</span><span class="n">delta_t</span><span class="p">)</span>
     <span class="n">outcross</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">zeros</span><span class="p">(</span><span class="n">kmax</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float64</span><span class="p">),</span> <span class="n">delta_t</span><span class="o">=</span><span class="n">delta_t</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">taper</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">taper</span><span class="p">:</span>
         <span class="n">start</span> <span class="o">=</span> <span class="o">-</span> <span class="n">taper</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">tau</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
         <span class="n">outplus</span><span class="o">.</span><span class="n">_epoch</span><span class="p">,</span> <span class="n">outcross</span><span class="o">.</span><span class="n">_epoch</span> <span class="o">=</span> <span class="n">start</span><span class="p">,</span> <span class="n">start</span>
 
@@ -978,16 +996,17 @@
                              <span class="n">inclination</span><span class="o">=</span><span class="n">inc</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="n">m</span><span class="p">,</span> <span class="n">nmodes</span><span class="o">=</span><span class="n">nmodes</span><span class="p">,</span>
                              <span class="n">delta_t</span><span class="o">=</span><span class="n">delta_t</span><span class="p">,</span> <span class="n">t_final</span><span class="o">=</span><span class="n">t_final</span><span class="p">,</span>
                              <span class="o">**</span><span class="n">input_params</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">taper</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">taper</span><span class="p">:</span>
             <span class="n">outplus</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="n">hplus</span><span class="o">.</span><span class="n">data</span>
             <span class="n">outcross</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="n">hcross</span><span class="o">.</span><span class="n">data</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">outplus</span> <span class="o">=</span> <span class="n">taper_shift</span><span class="p">(</span><span class="n">hplus</span><span class="p">,</span> <span class="n">outplus</span><span class="p">)</span>
             <span class="n">outcross</span> <span class="o">=</span> <span class="n">taper_shift</span><span class="p">(</span><span class="n">hcross</span><span class="p">,</span> <span class="n">outcross</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">outplus</span><span class="p">,</span> <span class="n">outcross</span></div>
+    <span class="n">norm</span> <span class="o">=</span> <span class="n">Kerr_factor</span><span class="p">(</span><span class="n">final_mass</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span> <span class="k">if</span> <span class="n">distance</span> <span class="k">else</span> <span class="mf">1.</span>
+    <span class="k">return</span> <span class="n">norm</span><span class="o">*</span><span class="n">outplus</span><span class="p">,</span> <span class="n">norm</span><span class="o">*</span><span class="n">outcross</span></div>
 
-<div class="viewcode-block" id="get_fd_from_final_mass_spin"><a class="viewcode-back" href="../../../pycbc.waveform.html#pycbc.waveform.ringdown.get_fd_from_final_mass_spin">[docs]</a><span class="k">def</span> <span class="nf">get_fd_from_final_mass_spin</span><span class="p">(</span><span class="n">template</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="get_fd_from_final_mass_spin"><a class="viewcode-back" href="../../../pycbc.waveform.html#pycbc.waveform.ringdown.get_fd_from_final_mass_spin">[docs]</a><span class="k">def</span> <span class="nf">get_fd_from_final_mass_spin</span><span class="p">(</span><span class="n">template</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Return frequency domain ringdown with all the modes specified.</span>
 
 <span class="sd">    Parameters</span>
@@ -995,6 +1014,9 @@
 <span class="sd">    template: object</span>
 <span class="sd">        An object that has attached properties. This can be used to substitute</span>
 <span class="sd">        for keyword arguments. A common example would be a row in an xml table.</span>
+<span class="sd">    distance : {None, float}, optional</span>
+<span class="sd">        Luminosity distance of the system. If specified, the returned ringdown</span>
+<span class="sd">        will contain the factor (final_mass/distance).</span>
 <span class="sd">    final_mass : float</span>
 <span class="sd">        Mass of the final black hole.</span>
 <span class="sd">    final_spin : float</span>
@@ -1005,7 +1027,9 @@
 <span class="sd">        lm pair (maximum n=8).</span>
 <span class="sd">        Example: lmns = [&#39;223&#39;,&#39;331&#39;] are the modes 220, 221, 222, and 330</span>
 <span class="sd">    amp220 : float</span>
-<span class="sd">        Amplitude of the fundamental 220 mode.</span>
+<span class="sd">        Amplitude of the fundamental 220 mode. Note that if distance is given,</span>
+<span class="sd">        this parameter will have a completely different order of magnitude.</span>
+<span class="sd">        See table II in https://arxiv.org/abs/1107.0854 for an estimate.</span>
 <span class="sd">    amplmn : float</span>
 <span class="sd">        Fraction of the amplitude of the lmn overtone relative to the</span>
 <span class="sd">        fundamental mode, as many as the number of subdominant modes.</span>
@@ -1054,11 +1078,11 @@
 
     <span class="n">f_0</span><span class="p">,</span> <span class="n">tau</span> <span class="o">=</span> <span class="n">get_lm_f0tau_allmodes</span><span class="p">(</span><span class="n">final_mass</span><span class="p">,</span> <span class="n">final_spin</span><span class="p">,</span> <span class="n">lmns</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">delta_f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">delta_f</span><span class="p">:</span>
         <span class="n">delta_f</span> <span class="o">=</span> <span class="n">lm_deltaf</span><span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="n">lmns</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">f_final</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">f_final</span><span class="p">:</span>
         <span class="n">f_final</span> <span class="o">=</span> <span class="n">lm_ffinal</span><span class="p">(</span><span class="n">f_0</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">lmns</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">f_lower</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">f_lower</span><span class="p">:</span>
         <span class="n">f_lower</span> <span class="o">=</span> <span class="n">delta_f</span>
     <span class="n">kmax</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">f_final</span> <span class="o">/</span> <span class="n">delta_f</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
 
@@ -1073,7 +1097,8 @@
         <span class="n">outplustilde</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="n">hplustilde</span><span class="o">.</span><span class="n">data</span>
         <span class="n">outcrosstilde</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="n">hcrosstilde</span><span class="o">.</span><span class="n">data</span>
 
-    <span class="k">return</span> <span class="n">outplustilde</span><span class="p">,</span> <span class="n">outcrosstilde</span></div>
+    <span class="n">norm</span> <span class="o">=</span> <span class="n">Kerr_factor</span><span class="p">(</span><span class="n">final_mass</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span> <span class="k">if</span> <span class="n">distance</span> <span class="k">else</span> <span class="mf">1.</span>
+    <span class="k">return</span> <span class="n">norm</span><span class="o">*</span><span class="n">outplustilde</span><span class="p">,</span> <span class="n">norm</span><span class="o">*</span><span class="n">outcrosstilde</span></div>
 
 <div class="viewcode-block" id="get_td_from_freqtau"><a class="viewcode-back" href="../../../pycbc.waveform.html#pycbc.waveform.ringdown.get_td_from_freqtau">[docs]</a><span class="k">def</span> <span class="nf">get_td_from_freqtau</span><span class="p">(</span><span class="n">template</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">taper</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Return time domain ringdown with all the modes specified.</span>
@@ -1144,21 +1169,21 @@
     <span class="n">delta_t</span> <span class="o">=</span> <span class="n">input_params</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;delta_t&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="n">t_final</span> <span class="o">=</span> <span class="n">input_params</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;t_final&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">delta_t</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">delta_t</span><span class="p">:</span>
         <span class="n">delta_t</span> <span class="o">=</span> <span class="n">lm_deltat</span><span class="p">(</span><span class="n">f_0</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">lmns</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">t_final</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">t_final</span><span class="p">:</span>
         <span class="n">t_final</span> <span class="o">=</span> <span class="n">lm_tfinal</span><span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="n">lmns</span><span class="p">)</span>
 
     <span class="n">kmax</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t_final</span> <span class="o">/</span> <span class="n">delta_t</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="c1"># Different overtones will have different tapering window-size</span>
     <span class="c1"># Find maximum window size to create long enough output vector</span>
-    <span class="k">if</span> <span class="n">taper</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">taper</span><span class="p">:</span>
         <span class="n">taper_window</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">taper</span><span class="o">*</span><span class="nb">max</span><span class="p">(</span><span class="n">tau</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="o">/</span><span class="n">delta_t</span><span class="p">)</span>
         <span class="n">kmax</span> <span class="o">+=</span> <span class="n">taper_window</span>
 
     <span class="n">outplus</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">zeros</span><span class="p">(</span><span class="n">kmax</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float64</span><span class="p">),</span> <span class="n">delta_t</span><span class="o">=</span><span class="n">delta_t</span><span class="p">)</span>
     <span class="n">outcross</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">zeros</span><span class="p">(</span><span class="n">kmax</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float64</span><span class="p">),</span> <span class="n">delta_t</span><span class="o">=</span><span class="n">delta_t</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">taper</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">taper</span><span class="p">:</span>
         <span class="n">start</span> <span class="o">=</span> <span class="o">-</span> <span class="n">taper</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">tau</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
         <span class="n">outplus</span><span class="o">.</span><span class="n">_epoch</span><span class="p">,</span> <span class="n">outcross</span><span class="o">.</span><span class="n">_epoch</span> <span class="o">=</span> <span class="n">start</span><span class="p">,</span> <span class="n">start</span>
 
@@ -1167,7 +1192,7 @@
         <span class="n">hplus</span><span class="p">,</span> <span class="n">hcross</span> <span class="o">=</span> <span class="n">get_td_lm</span><span class="p">(</span><span class="n">freqs</span><span class="o">=</span><span class="n">f_0</span><span class="p">,</span> <span class="n">taus</span><span class="o">=</span><span class="n">tau</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="n">m</span><span class="p">,</span> <span class="n">nmodes</span><span class="o">=</span><span class="n">nmodes</span><span class="p">,</span>
                              <span class="n">taper</span><span class="o">=</span><span class="n">taper</span><span class="p">,</span> <span class="n">inclination</span><span class="o">=</span><span class="n">inc</span><span class="p">,</span> <span class="n">delta_t</span><span class="o">=</span><span class="n">delta_t</span><span class="p">,</span>
                              <span class="n">t_final</span><span class="o">=</span><span class="n">t_final</span><span class="p">,</span> <span class="o">**</span><span class="n">input_params</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">taper</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">taper</span><span class="p">:</span>
             <span class="n">outplus</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="n">hplus</span><span class="o">.</span><span class="n">data</span>
             <span class="n">outcross</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="n">hcross</span><span class="o">.</span><span class="n">data</span>
         <span class="k">else</span><span class="p">:</span>
@@ -1240,11 +1265,11 @@
     <span class="n">f_lower</span> <span class="o">=</span> <span class="n">input_params</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;f_lower&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="n">f_final</span> <span class="o">=</span> <span class="n">input_params</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;f_final&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">delta_f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">delta_f</span><span class="p">:</span>
         <span class="n">delta_f</span> <span class="o">=</span> <span class="n">lm_deltaf</span><span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="n">lmns</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">f_final</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">f_final</span><span class="p">:</span>
         <span class="n">f_final</span> <span class="o">=</span> <span class="n">lm_ffinal</span><span class="p">(</span><span class="n">f_0</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">lmns</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">f_lower</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">f_lower</span><span class="p">:</span>
         <span class="n">f_lower</span> <span class="o">=</span> <span class="n">delta_f</span>
     <span class="n">kmax</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">f_final</span> <span class="o">/</span> <span class="n">delta_f</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
 
