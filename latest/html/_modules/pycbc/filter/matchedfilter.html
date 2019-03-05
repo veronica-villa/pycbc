@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.filter.matchedfilter &mdash; PyCBC ce3f74 documentation</title>
+  <title>pycbc.filter.matchedfilter &mdash; PyCBC 1de2f8 documentation</title>
   
 
   
@@ -1668,7 +1668,7 @@
 
     <span class="sd">&quot;&quot;&quot;Calculate SNR and signal consistency tests in a batched progression&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">templates</span><span class="p">,</span> <span class="n">snr_threshold</span><span class="p">,</span> <span class="n">chisq_bins</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">templates</span><span class="p">,</span> <span class="n">snr_threshold</span><span class="p">,</span> <span class="n">chisq_bins</span><span class="p">,</span> <span class="n">sg_chisq</span><span class="p">,</span>
                  <span class="n">maxelements</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">27</span><span class="p">,</span>
                  <span class="n">snr_abort_threshold</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">newsnr_threshold</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1683,7 +1683,9 @@
 <span class="sd">            Minimum value to record peaks in the SNR time series.</span>
 <span class="sd">        chisq_bins: str</span>
 <span class="sd">            Str that determines how the number of chisq bins varies as a</span>
-<span class="sd">        function of the template bank parameters.</span>
+<span class="sd">            function of the template bank parameters.</span>
+<span class="sd">        sg_chisq: pycbc.vetoes.SingleDetSGChisq</span>
+<span class="sd">            Instance of the sg_chisq class to calculate sg_chisq with.</span>
 <span class="sd">        maxelements: {int, 2**27}</span>
 <span class="sd">            Maximum size of a batched fourier transform.</span>
 <span class="sd">        snr_abort_threshold: {float, None}</span>
@@ -1703,6 +1705,7 @@
 
         <span class="kn">from</span> <span class="nn">pycbc</span> <span class="k">import</span> <span class="n">vetoes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">power_chisq</span> <span class="o">=</span> <span class="n">vetoes</span><span class="o">.</span><span class="n">SingleDetPowerChisq</span><span class="p">(</span><span class="n">chisq_bins</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sg_chisq</span> <span class="o">=</span> <span class="n">sg_chisq</span>
 
         <span class="n">durations</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">t</span><span class="o">.</span><span class="n">delta_f</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">templates</span><span class="p">])</span>
 
@@ -1813,8 +1816,11 @@
         <span class="sd">&quot;&quot;&quot;Calculate signal based vetoes&quot;&quot;&quot;</span>
         <span class="n">chisq</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">veto_info</span><span class="p">)),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">ndmin</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">dof</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">veto_info</span><span class="p">)),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">uint32</span><span class="p">,</span> <span class="n">ndmin</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">sg_chisq</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">veto_info</span><span class="p">)),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+                               <span class="n">ndmin</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">results</span><span class="p">[</span><span class="s1">&#39;chisq&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">chisq</span>
         <span class="n">results</span><span class="p">[</span><span class="s1">&#39;chisq_dof&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dof</span>
+        <span class="n">results</span><span class="p">[</span><span class="s1">&#39;sg_chisq&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sg_chisq</span>
 
         <span class="n">keep</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">snrv</span><span class="p">,</span> <span class="n">norm</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">htilde</span><span class="p">,</span> <span class="n">stilde</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">veto_info</span><span class="p">):</span>
@@ -1823,6 +1829,9 @@
                                            <span class="n">norm</span><span class="p">,</span> <span class="n">stilde</span><span class="o">.</span><span class="n">psd</span><span class="p">,</span> <span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">htilde</span><span class="p">)</span>
             <span class="n">chisq</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">dof</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="n">sg_chisq</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sg_chisq</span><span class="o">.</span><span class="n">values</span>\
+                <span class="p">(</span><span class="n">stilde</span><span class="p">,</span> <span class="n">htilde</span><span class="p">,</span> <span class="n">stilde</span><span class="o">.</span><span class="n">psd</span><span class="p">,</span> <span class="n">snrv</span><span class="p">,</span> <span class="n">norm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="p">[</span><span class="n">l</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">newsnr_threshold</span><span class="p">:</span>
                 <span class="n">newsnr</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">newsnr</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;snr&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">chisq</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
