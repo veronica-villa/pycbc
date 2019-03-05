@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.frame.losc &mdash; PyCBC 71651f documentation</title>
+  <title>pycbc.frame.losc &mdash; PyCBC b7b7b0 documentation</title>
   
 
   
@@ -219,10 +219,13 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">This modules contains functions for getting data from the LOSC</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">astropy.utils.data</span> <span class="k">import</span> <span class="n">download_file</span>
 
 <span class="n">_losc_url</span> <span class="o">=</span> <span class="s2">&quot;https://losc.ligo.org/archive/links/</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">/json/&quot;</span>
 
 <span class="k">def</span> <span class="nf">_get_run</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
+    <span class="k">if</span> <span class="mi">1164556817</span> <span class="o">&lt;=</span> <span class="n">time</span> <span class="o">&lt;=</span> <span class="mi">1187733618</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;O2_16KHZ_R1&#39;</span>
     <span class="k">if</span> <span class="mi">1126051217</span> <span class="o">&lt;=</span> <span class="n">time</span> <span class="o">&lt;=</span> <span class="mi">1137254417</span><span class="p">:</span>
         <span class="k">return</span> <span class="s1">&#39;O1&#39;</span>
     <span class="k">elif</span> <span class="mi">815011213</span> <span class="o">&lt;=</span> <span class="n">time</span> <span class="o">&lt;=</span> <span class="mi">875318414</span><span class="p">:</span>
@@ -305,7 +308,6 @@
 <span class="sd">    ts: TimeSeries</span>
 <span class="sd">        Returns a timeseries or list of timeseries with the requested data.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">import</span> <span class="nn">urllib</span>
     <span class="kn">from</span> <span class="nn">pycbc.frame</span> <span class="k">import</span> <span class="n">read_frame</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">channels</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
         <span class="n">channels</span> <span class="o">=</span> <span class="p">[</span><span class="n">channels</span><span class="p">]</span>
@@ -320,7 +322,7 @@
     <span class="n">fnames</span> <span class="o">=</span> <span class="p">{</span><span class="n">ifo</span><span class="p">:[]</span> <span class="k">for</span> <span class="n">ifo</span> <span class="ow">in</span> <span class="n">ifos</span><span class="p">}</span>
     <span class="k">for</span> <span class="n">ifo</span> <span class="ow">in</span> <span class="n">ifos</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">urls</span><span class="p">[</span><span class="n">ifo</span><span class="p">]:</span>
-            <span class="n">fname</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+            <span class="n">fname</span> <span class="o">=</span> <span class="n">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">fnames</span><span class="p">[</span><span class="n">ifo</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
 
     <span class="n">ts</span> <span class="o">=</span> <span class="p">[</span><span class="n">read_frame</span><span class="p">(</span><span class="n">fnames</span><span class="p">[</span><span class="n">channel</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]],</span> <span class="n">channel</span><span class="p">,</span>
