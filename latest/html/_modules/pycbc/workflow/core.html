@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.workflow.core &mdash; PyCBC a3de73 documentation</title>
+  <title>pycbc.workflow.core &mdash; PyCBC ce3f74 documentation</title>
   
 
   
@@ -521,10 +521,31 @@
                 <span class="c1"># This now expects the option to be a file</span>
                 <span class="c1"># Check is we have a list of files</span>
                 <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">path</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">path</span><span class="p">]</span>
-                <span class="n">dax_reprs</span> <span class="o">=</span> <span class="p">[]</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">common_raw_options</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">opt</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">common_raw_options</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
 
                 <span class="c1"># Get LFN and PFN</span>
                 <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+                    <span class="c1"># Here I decide if the path is URL or</span>
+                    <span class="c1"># IFO:/path/to/file or IFO:url://path/to/file</span>
+                    <span class="c1"># That&#39;s somewhat tricksy as we used : as delimiter</span>
+                    <span class="n">split_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">split_path</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="c1"># Simple case: path to file</span>
+                        <span class="n">ifo</span> <span class="o">=</span> <span class="kc">None</span>
+                        <span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1"># Have I split a URL or not?</span>
+                        <span class="k">if</span> <span class="n">split_path</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;//&#39;</span><span class="p">):</span>
+                            <span class="c1"># URL</span>
+                            <span class="n">ifo</span> <span class="o">=</span> <span class="kc">None</span>
+                            <span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="c1">#IFO:path or IFO:URL</span>
+                            <span class="n">ifo</span> <span class="o">=</span> <span class="n">split_path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                            <span class="n">path</span> <span class="o">=</span> <span class="n">split_path</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
                     <span class="n">curr_lfn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 
                     <span class="c1"># If the file exists make sure to use the</span>
@@ -534,7 +555,7 @@
                                     <span class="n">urllib</span><span class="o">.</span><span class="n">pathname2url</span><span class="p">(</span>
                                     <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">path</span><span class="p">)))</span> 
                     <span class="k">else</span><span class="p">:</span>
-                        <span class="n">curr_pfn</span> <span class="o">=</span> <span class="n">value</span>
+                        <span class="n">curr_pfn</span> <span class="o">=</span> <span class="n">path</span>
 
                     <span class="k">if</span> <span class="n">curr_lfn</span> <span class="ow">in</span> <span class="n">file_input_from_config_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                         <span class="n">file_pfn</span> <span class="o">=</span> <span class="n">file_input_from_config_dict</span><span class="p">[</span><span class="n">curr_lfn</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
@@ -546,8 +567,12 @@
                         <span class="n">tuple_val</span> <span class="o">=</span> <span class="p">(</span><span class="n">local_file_path</span><span class="p">,</span> <span class="n">curr_file</span><span class="p">,</span> <span class="n">curr_pfn</span><span class="p">)</span>
                         <span class="n">file_input_from_config_dict</span><span class="p">[</span><span class="n">curr_lfn</span><span class="p">]</span> <span class="o">=</span> <span class="n">tuple_val</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">common_input_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">curr_file</span><span class="p">)</span>
-                    <span class="n">dax_reprs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">curr_file</span><span class="o">.</span><span class="n">dax_repr</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">common_options</span> <span class="o">+=</span> <span class="p">[</span><span class="n">opt</span><span class="p">]</span> <span class="o">+</span> <span class="n">dax_reprs</span>
+                    <span class="k">if</span> <span class="n">ifo</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">common_raw_options</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ifo</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">common_raw_options</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">curr_file</span><span class="o">.</span><span class="n">dax_repr</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">common_raw_options</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">curr_file</span><span class="o">.</span><span class="n">dax_repr</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">common_raw_options</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">common_options</span> <span class="o">+=</span> <span class="p">[</span><span class="n">opt</span><span class="p">,</span> <span class="n">value</span><span class="p">]</span></div>
 
@@ -723,6 +748,7 @@
         <span class="c1"># collect the options and profile information</span>
         <span class="c1"># from the ini file section(s)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">common_options</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">common_raw_options</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">common_input_files</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">sec</span> <span class="ow">in</span> <span class="n">sections</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cp</span><span class="o">.</span><span class="n">has_section</span><span class="p">(</span><span class="n">sec</span><span class="p">):</span>
@@ -1009,6 +1035,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">add_profile</span><span class="p">(</span><span class="s1">&#39;hints&#39;</span><span class="p">,</span> <span class="s1">&#39;execution.site&#39;</span><span class="p">,</span> <span class="n">executable</span><span class="o">.</span><span class="n">execution_site</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_options</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">executable</span><span class="o">.</span><span class="n">common_options</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_raw_options</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">executable</span><span class="o">.</span><span class="n">common_raw_options</span>
         <span class="k">for</span> <span class="n">inp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">executable</span><span class="o">.</span><span class="n">common_input_files</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_add_input</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>
 
