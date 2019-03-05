@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.waveform.waveform &mdash; PyCBC 1de2f8 documentation</title>
+  <title>pycbc.waveform.waveform &mdash; PyCBC 71651f documentation</title>
   
 
   
@@ -818,7 +818,7 @@
 
     <span class="c1"># Resize to the right sample rate</span>
     <span class="n">tsize</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;delta_t&#39;</span><span class="p">]</span> <span class="o">/</span>  <span class="n">nparams</span><span class="p">[</span><span class="s1">&#39;delta_f&#39;</span><span class="p">])</span>
-    <span class="n">fsize</span> <span class="o">=</span> <span class="n">tsize</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">fsize</span> <span class="o">=</span> <span class="n">tsize</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="n">hp</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">fsize</span><span class="p">)</span>
     <span class="n">hc</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">fsize</span><span class="p">)</span>
 
