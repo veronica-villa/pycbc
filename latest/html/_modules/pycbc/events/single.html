@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.events.single &mdash; PyCBC 68fa18 documentation</title>
+  <title>pycbc.events.single &mdash; PyCBC 17b101 documentation</title>
   
 
   
@@ -204,6 +204,7 @@
 <span></span><span class="sd">&quot;&quot;&quot; utilities for assigning FAR to single detector triggers</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">pycbc.events</span> <span class="k">import</span> <span class="n">newsnr</span>
+<span class="kn">from</span> <span class="nn">pycbc.types</span> <span class="k">import</span> <span class="n">MultiDetOptionAction</span>
 
 <div class="viewcode-block" id="LiveSingleFarThreshold"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.single.LiveSingleFarThreshold">[docs]</a><span class="k">class</span> <span class="nc">LiveSingleFarThreshold</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ifo</span><span class="p">,</span>
@@ -219,18 +220,23 @@
 
 <div class="viewcode-block" id="LiveSingleFarThreshold.insert_args"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.single.LiveSingleFarThreshold.insert_args">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">insert_args</span><span class="p">(</span><span class="n">parser</span><span class="p">):</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--single-newsnr-threshold&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--single-reduced-chisq-threshold&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--single-fixed-ifar&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--single-duration-threshold&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span></div>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--single-newsnr-threshold&#39;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="n">MultiDetOptionAction</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--single-reduced-chisq-threshold&#39;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="n">MultiDetOptionAction</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--single-fixed-ifar&#39;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="n">MultiDetOptionAction</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--single-duration-threshold&#39;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="n">MultiDetOptionAction</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LiveSingleFarThreshold.from_cli"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.single.LiveSingleFarThreshold.from_cli">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_cli</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">ifo</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">ifo</span><span class="p">,</span> <span class="n">newsnr_threshold</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">single_newsnr_threshold</span><span class="p">,</span>
-                   <span class="n">reduced_chisq_threshold</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">single_reduced_chisq_threshold</span><span class="p">,</span>
-                   <span class="n">fixed_ifar</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">single_fixed_ifar</span><span class="p">,</span>
-                   <span class="n">duration_threshold</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">single_duration_threshold</span><span class="p">,</span>
-                   <span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+           <span class="n">ifo</span><span class="p">,</span> <span class="n">newsnr_threshold</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">single_newsnr_threshold</span><span class="p">[</span><span class="n">ifo</span><span class="p">],</span>
+           <span class="n">reduced_chisq_threshold</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">single_reduced_chisq_threshold</span><span class="p">[</span><span class="n">ifo</span><span class="p">],</span>
+           <span class="n">fixed_ifar</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">single_fixed_ifar</span><span class="p">[</span><span class="n">ifo</span><span class="p">],</span>
+           <span class="n">duration_threshold</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">single_duration_threshold</span><span class="p">[</span><span class="n">ifo</span><span class="p">],</span>
+           <span class="p">)</span></div>
 
 <div class="viewcode-block" id="LiveSingleFarThreshold.check"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.single.LiveSingleFarThreshold.check">[docs]</a>    <span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">triggers</span><span class="p">,</span> <span class="n">data_reader</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Look for a single detector trigger that passes the thresholds in</span>
@@ -270,7 +276,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Mar 05, 2019.
+        Last updated on Mar 06, 2019.
       </span>
 
     </p>
