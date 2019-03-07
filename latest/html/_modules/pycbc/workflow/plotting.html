@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.workflow.plotting &mdash; PyCBC b2a568 documentation</title>
+  <title>pycbc.workflow.plotting &mdash; PyCBC f20320 documentation</title>
   
 
   
@@ -514,9 +514,10 @@
                         <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span> <span class="o">+</span> <span class="n">tags</span><span class="p">)</span><span class="o">.</span><span class="n">create_node</span><span class="p">()</span>
 
             <span class="n">node</span><span class="o">.</span><span class="n">set_memory</span><span class="p">(</span><span class="mi">15000</span><span class="p">)</span>
-            <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s1">&#39;--segment-name&#39;</span><span class="p">,</span> <span class="n">veto_name</span><span class="p">)</span>
             <span class="n">node</span><span class="o">.</span><span class="n">add_input_opt</span><span class="p">(</span><span class="s1">&#39;--trigger-file&#39;</span><span class="p">,</span> <span class="n">trig_file</span><span class="p">)</span>
-            <span class="n">node</span><span class="o">.</span><span class="n">add_input_opt</span><span class="p">(</span><span class="s1">&#39;--veto-file&#39;</span><span class="p">,</span> <span class="n">veto_file</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">veto_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">add_input_opt</span><span class="p">(</span><span class="s1">&#39;--veto-file&#39;</span><span class="p">,</span> <span class="n">veto_file</span><span class="p">)</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s1">&#39;--segment-name&#39;</span><span class="p">,</span> <span class="n">veto_name</span><span class="p">)</span>
             <span class="n">node</span><span class="o">.</span><span class="n">new_output_file_opt</span><span class="p">(</span><span class="n">trig_file</span><span class="o">.</span><span class="n">segment</span><span class="p">,</span> <span class="s1">&#39;.png&#39;</span><span class="p">,</span> <span class="s1">&#39;--output-file&#39;</span><span class="p">)</span>
             <span class="n">workflow</span> <span class="o">+=</span> <span class="n">node</span>
             <span class="n">files</span> <span class="o">+=</span> <span class="n">node</span><span class="o">.</span><span class="n">output_files</span>
@@ -622,8 +623,9 @@
                     <span class="n">ifos</span><span class="o">=</span><span class="n">trig_file</span><span class="o">.</span><span class="n">ifo</span><span class="p">,</span>
                     <span class="n">out_dir</span><span class="o">=</span><span class="n">out_dir</span><span class="p">,</span>
                     <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span> <span class="o">+</span> <span class="n">tags</span><span class="p">)</span><span class="o">.</span><span class="n">create_node</span><span class="p">()</span>
-        <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s1">&#39;--segment-name&#39;</span><span class="p">,</span> <span class="n">veto_name</span><span class="p">)</span>
-        <span class="n">node</span><span class="o">.</span><span class="n">add_input_opt</span><span class="p">(</span><span class="s1">&#39;--veto-file&#39;</span><span class="p">,</span> <span class="n">veto_file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">veto_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s1">&#39;--segment-name&#39;</span><span class="p">,</span> <span class="n">veto_name</span><span class="p">)</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">add_input_opt</span><span class="p">(</span><span class="s1">&#39;--veto-file&#39;</span><span class="p">,</span> <span class="n">veto_file</span><span class="p">)</span>
         <span class="n">node</span><span class="o">.</span><span class="n">add_input_opt</span><span class="p">(</span><span class="s1">&#39;--trigger-file&#39;</span><span class="p">,</span> <span class="n">trig_file</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">bank_file</span><span class="p">:</span>
             <span class="n">node</span><span class="o">.</span><span class="n">add_input_opt</span><span class="p">(</span><span class="s1">&#39;--bank-file&#39;</span><span class="p">,</span> <span class="n">bank_file</span><span class="p">)</span>
@@ -646,8 +648,9 @@
                     <span class="n">out_dir</span><span class="o">=</span><span class="n">out_dir</span><span class="p">,</span>
                     <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span> <span class="o">+</span> <span class="n">tags</span><span class="p">)</span><span class="o">.</span><span class="n">create_node</span><span class="p">()</span>
         <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s1">&#39;--ifo&#39;</span><span class="p">,</span> <span class="n">trig_file</span><span class="o">.</span><span class="n">ifo</span><span class="p">)</span>
-        <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s1">&#39;--veto-segment-name&#39;</span><span class="p">,</span> <span class="n">veto_name</span><span class="p">)</span>
-        <span class="n">node</span><span class="o">.</span><span class="n">add_input_opt</span><span class="p">(</span><span class="s1">&#39;--veto-file&#39;</span><span class="p">,</span> <span class="n">veto_file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">veto_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s1">&#39;--veto-segment-name&#39;</span><span class="p">,</span> <span class="n">veto_name</span><span class="p">)</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">add_input_opt</span><span class="p">(</span><span class="s1">&#39;--veto-file&#39;</span><span class="p">,</span> <span class="n">veto_file</span><span class="p">)</span>
         <span class="n">node</span><span class="o">.</span><span class="n">add_input_opt</span><span class="p">(</span><span class="s1">&#39;--trigger-file&#39;</span><span class="p">,</span> <span class="n">trig_file</span><span class="p">)</span>
         <span class="n">node</span><span class="o">.</span><span class="n">add_input_opt</span><span class="p">(</span><span class="s1">&#39;--bank-file&#39;</span><span class="p">,</span> <span class="n">bank_file</span><span class="p">)</span>
         <span class="n">node</span><span class="o">.</span><span class="n">new_output_file_opt</span><span class="p">(</span><span class="n">trig_file</span><span class="o">.</span><span class="n">segment</span><span class="p">,</span> <span class="s1">&#39;.png&#39;</span><span class="p">,</span> <span class="s1">&#39;--output-file&#39;</span><span class="p">)</span>
@@ -670,9 +673,10 @@
                         <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span> <span class="o">+</span> <span class="n">tags</span><span class="p">)</span><span class="o">.</span><span class="n">create_node</span><span class="p">()</span>
 
             <span class="n">node</span><span class="o">.</span><span class="n">set_memory</span><span class="p">(</span><span class="mi">15000</span><span class="p">)</span>
-            <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s1">&#39;--segment-name&#39;</span><span class="p">,</span> <span class="n">veto_name</span><span class="p">)</span>
             <span class="n">node</span><span class="o">.</span><span class="n">add_input_opt</span><span class="p">(</span><span class="s1">&#39;--bank-file&#39;</span><span class="p">,</span> <span class="n">bank_file</span><span class="p">)</span>
-            <span class="n">node</span><span class="o">.</span><span class="n">add_input_opt</span><span class="p">(</span><span class="s1">&#39;--veto-file&#39;</span><span class="p">,</span> <span class="n">veto_file</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">veto_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">add_input_opt</span><span class="p">(</span><span class="s1">&#39;--veto-file&#39;</span><span class="p">,</span> <span class="n">veto_file</span><span class="p">)</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s1">&#39;--segment-name&#39;</span><span class="p">,</span> <span class="n">veto_name</span><span class="p">)</span>
             <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s1">&#39;--detector&#39;</span><span class="p">,</span> <span class="n">trig_file</span><span class="o">.</span><span class="n">ifo</span><span class="p">)</span>
             <span class="n">node</span><span class="o">.</span><span class="n">add_input_opt</span><span class="p">(</span><span class="s1">&#39;--single-trig-file&#39;</span><span class="p">,</span> <span class="n">trig_file</span><span class="p">)</span>
             <span class="n">node</span><span class="o">.</span><span class="n">new_output_file_opt</span><span class="p">(</span><span class="n">trig_file</span><span class="o">.</span><span class="n">segment</span><span class="p">,</span> <span class="s1">&#39;.png&#39;</span><span class="p">,</span> <span class="s1">&#39;--output-file&#39;</span><span class="p">)</span>
