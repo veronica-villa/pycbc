@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.catalog &mdash; PyCBC 446895 documentation</title>
+  <title>pycbc.catalog &mdash; PyCBC 80e4f0 documentation</title>
   
 
   
@@ -234,7 +234,7 @@
 
 <div class="viewcode-block" id="Merger"><a class="viewcode-back" href="../../pycbc.catalog.html#pycbc.catalog.Merger">[docs]</a><span class="k">class</span> <span class="nc">Merger</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Informaton about a specific compact binary merger&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s1">&#39;gwtc-1&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Return the information of a merger</span>
 
 <span class="sd">        Parameters</span>
@@ -242,13 +242,14 @@
 <span class="sd">        name: str</span>
 <span class="sd">            The name (GW prefixed date) of the merger event.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="n">source</span><span class="p">)[</span><span class="n">name</span><span class="p">]</span>
 
         <span class="c1"># Set some basic params from the dataset</span>
-        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;median1d&#39;</span><span class="p">]:</span>
-            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;median1d&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;best&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;best&#39;</span><span class="p">])</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;tc&#39;</span><span class="p">][</span><span class="s1">&#39;best&#39;</span><span class="p">]</span>
 
 <div class="viewcode-block" id="Merger.median1d"><a class="viewcode-back" href="../../pycbc.catalog.html#pycbc.catalog.Merger.median1d">[docs]</a>    <span class="k">def</span> <span class="nf">median1d</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">return_errors</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Return median 1d marginalized parameters</span>
@@ -267,11 +268,13 @@
 <span class="sd">            The requested parameter</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">return_errors</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;median1d&#39;</span><span class="p">][</span><span class="n">name</span><span class="p">]</span>
+            <span class="n">mid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;best&#39;</span><span class="p">]</span>
+            <span class="n">low</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;err&#39;</span><span class="p">]</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">mid</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;median1d&#39;</span><span class="p">][</span><span class="n">name</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;best&#39;</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="Merger.strain"><a class="viewcode-back" href="../../pycbc.catalog.html#pycbc.catalog.Merger.strain">[docs]</a>    <span class="k">def</span> <span class="nf">strain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ifo</span><span class="p">):</span>
+<div class="viewcode-block" id="Merger.strain"><a class="viewcode-back" href="../../pycbc.catalog.html#pycbc.catalog.Merger.strain">[docs]</a>    <span class="k">def</span> <span class="nf">strain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ifo</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="mi">4096</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Return strain around the event</span>
 
 <span class="sd">        Currently this will return the strain around the event in the smallest</span>
@@ -290,20 +293,34 @@
         <span class="kn">from</span> <span class="nn">astropy.utils.data</span> <span class="k">import</span> <span class="n">download_file</span>
         <span class="kn">from</span> <span class="nn">pycbc.frame</span> <span class="k">import</span> <span class="n">read_frame</span>
 
-        <span class="n">channel</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:LOSC-STRAIN&#39;</span> <span class="o">%</span> <span class="n">ifo</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;frames&#39;</span><span class="p">][</span><span class="n">ifo</span><span class="p">]</span>
+        <span class="c1"># Information is currently wrong on GWOSC!</span>
+        <span class="c1"># channels = self.data[&#39;files&#39;][&#39;FrameChannels&#39;]</span>
+        <span class="c1"># for channel in channels:</span>
+        <span class="c1">#    if ifo in channel:</span>
+        <span class="c1">#        break</span>
+
+        <span class="n">length</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">sec&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sample_rate</span> <span class="o">==</span> <span class="mi">4096</span><span class="p">:</span>
+            <span class="n">sampling</span> <span class="o">=</span> <span class="s2">&quot;4KHz&quot;</span>
+        <span class="k">elif</span> <span class="n">sample_rate</span> <span class="o">==</span> <span class="mi">16384</span><span class="p">:</span>
+            <span class="n">sampling</span> <span class="o">=</span> <span class="s2">&quot;16KHz&quot;</span>
+
+        <span class="n">channel</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:GWOSC-</span><span class="si">{}</span><span class="s2">_R1_STRAIN&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ifo</span><span class="p">,</span> <span class="n">sampling</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;files&#39;</span><span class="p">][</span><span class="n">ifo</span><span class="p">][</span><span class="n">length</span><span class="p">][</span><span class="n">sampling</span><span class="p">][</span><span class="s1">&#39;GWF&#39;</span><span class="p">]</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="n">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">read_frame</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">channel</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">read_frame</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">channel</span><span class="p">))</span></div></div>
 
 <div class="viewcode-block" id="Catalog"><a class="viewcode-back" href="../../pycbc.catalog.html#pycbc.catalog.Catalog">[docs]</a><span class="k">class</span> <span class="nc">Catalog</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Manage a set of binary mergers&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s1">&#39;gwtc-1&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Return the set of detected mergers</span>
 
 <span class="sd">        The set of detected mergers. At some point this may have some selection</span>
 <span class="sd">        abilities.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mergers</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">Merger</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">catalog</span><span class="o">.</span><span class="n">data</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mergers</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">Merger</span><span class="p">(</span><span class="n">name</span><span class="p">,</span>
+                                     <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mergers</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

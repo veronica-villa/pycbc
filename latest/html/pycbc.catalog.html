@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.catalog package &mdash; PyCBC 446895 documentation</title>
+  <title>pycbc.catalog package &mdash; PyCBC 80e4f0 documentation</title>
   
 
   
@@ -262,6 +262,12 @@
 <span id="pycbc-catalog-catalog-module"></span><h2>pycbc.catalog.catalog module<a class="headerlink" href="#module-pycbc.catalog.catalog" title="Permalink to this headline">¶</a></h2>
 <p>This modules contains information about the announced LIGO/Virgo
 compact binary mergers</p>
+<dl class="function">
+<dt id="pycbc.catalog.catalog.get_source">
+<code class="descclassname">pycbc.catalog.catalog.</code><code class="descname">get_source</code><span class="sig-paren">(</span><em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/catalog/catalog.html#get_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.catalog.catalog.get_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the source data for a particular GW catalog</p>
+</dd></dl>
+
 </div>
 <div class="section" id="module-pycbc.catalog">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pycbc.catalog" title="Permalink to this headline">¶</a></h2>
@@ -269,7 +275,7 @@ compact binary mergers</p>
 compact binary mergers</p>
 <dl class="class">
 <dt id="pycbc.catalog.Catalog">
-<em class="property">class </em><code class="descclassname">pycbc.catalog.</code><code class="descname">Catalog</code><a class="reference internal" href="_modules/pycbc/catalog.html#Catalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.catalog.Catalog" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pycbc.catalog.</code><code class="descname">Catalog</code><span class="sig-paren">(</span><em>source='gwtc-1'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/catalog.html#Catalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.catalog.Catalog" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Manage a set of binary mergers</p>
 <dl class="method">
@@ -301,7 +307,7 @@ lower and upper 90% error on the parameter.</li>
 
 <dl class="class">
 <dt id="pycbc.catalog.Merger">
-<em class="property">class </em><code class="descclassname">pycbc.catalog.</code><code class="descname">Merger</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/catalog.html#Merger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.catalog.Merger" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pycbc.catalog.</code><code class="descname">Merger</code><span class="sig-paren">(</span><em>name</em>, <em>source='gwtc-1'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/catalog.html#Merger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.catalog.Merger" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Informaton about a specific compact binary merger</p>
 <dl class="method">
@@ -331,7 +337,7 @@ lower and upper 90% error on the parameter.</li>
 
 <dl class="method">
 <dt id="pycbc.catalog.Merger.strain">
-<code class="descname">strain</code><span class="sig-paren">(</span><em>ifo</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/catalog.html#Merger.strain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.catalog.Merger.strain" title="Permalink to this definition">¶</a></dt>
+<code class="descname">strain</code><span class="sig-paren">(</span><em>ifo</em>, <em>duration=32</em>, <em>sample_rate=4096</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/catalog.html#Merger.strain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.catalog.Merger.strain" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return strain around the event</p>
 <p>Currently this will return the strain around the event in the smallest
 format available. Selection of other data is not yet available.</p>

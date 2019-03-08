@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Catalog of Observed Gravitational-wave Mergers &mdash; PyCBC 446895 documentation</title>
+  <title>Catalog of Observed Gravitational-wave Mergers &mdash; PyCBC 80e4f0 documentation</title>
   
 
   
@@ -226,8 +226,8 @@ accessed through the <a class="reference internal" href="pycbc.catalog.html#modu
 </pre></div>
 </div>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ python ../examples/catalog/what.py
-[&#39;LVT151012&#39;, &#39;GW170608&#39;, &#39;GW150914&#39;, &#39;GW170814&#39;, &#39;GW170817&#39;, &#39;GW170104&#39;, &#39;GW151226&#39;]
-[1128678900.44, 1180922494.49, 1126259462.4, 1186741861.53, 1187008882.43, 1167559936.6, 1135136350.65]
+[u&#39;GW151012&#39;, u&#39;GW170608&#39;, u&#39;GW170729&#39;, u&#39;GW150914&#39;, u&#39;GW151226&#39;, u&#39;GW170814&#39;, u&#39;GW170817&#39;, u&#39;GW170104&#39;, u&#39;GW170809&#39;, u&#39;GW170818&#39;, u&#39;GW170823&#39;]
+[1128678900.4, 1180922494.5, 1185389807.3, 1126259462.4, 1135136350.6, 1186741861.5, 1187008882.4, 1167559936.6, 1186302519.8, 1187058327.1, 1187529256.5]
 </pre></div>
 </div>
 </div>
@@ -258,16 +258,21 @@ accessed through the <a class="reference internal" href="pycbc.catalog.html#modu
 
 <span class="n">m</span> <span class="o">=</span> <span class="n">pycbc</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">Merger</span><span class="p">(</span><span class="s2">&quot;GW170817&quot;</span><span class="p">)</span>
 
-<span class="c1"># Retreive data from the Livingston observatory around the BNS merger</span>
-<span class="n">ts</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">strain</span><span class="p">(</span><span class="s2">&quot;L1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">time_slice</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">time</span> <span class="o">-</span> <span class="mi">30</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">time</span> <span class="o">+</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">pylab</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ifo</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="s2">&quot;L1&quot;</span><span class="p">,</span> <span class="s2">&quot;H1&quot;</span><span class="p">],</span> <span class="n">axs</span><span class="p">):</span>
+    <span class="n">pylab</span><span class="o">.</span><span class="n">sca</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">pylab</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">ifo</span><span class="p">)</span>
+    <span class="c1"># Retreive data around the BNS merger</span>
+    <span class="n">ts</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">strain</span><span class="p">(</span><span class="n">ifo</span><span class="p">)</span><span class="o">.</span><span class="n">time_slice</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">time</span> <span class="o">-</span> <span class="mi">15</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">time</span> <span class="o">+</span> <span class="mi">6</span><span class="p">)</span>
 
-<span class="c1"># Whiten the data with a 4s filter</span>
-<span class="n">white</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">whiten</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="c1"># Whiten the data with a 4s filter</span>
+    <span class="n">white</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">whiten</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 
-<span class="n">times</span><span class="p">,</span> <span class="n">freqs</span><span class="p">,</span> <span class="n">power</span> <span class="o">=</span> <span class="n">white</span><span class="o">.</span><span class="n">qtransform</span><span class="p">(</span><span class="o">.</span><span class="mo">01</span><span class="p">,</span> <span class="n">logfsteps</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
-                                    <span class="n">qrange</span><span class="o">=</span><span class="p">(</span><span class="mi">110</span><span class="p">,</span> <span class="mi">110</span><span class="p">),</span>
-                                    <span class="n">frange</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">512</span><span class="p">))</span>
-<span class="n">pylab</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">freqs</span><span class="p">,</span> <span class="n">power</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">times</span><span class="p">,</span> <span class="n">freqs</span><span class="p">,</span> <span class="n">power</span> <span class="o">=</span> <span class="n">white</span><span class="o">.</span><span class="n">qtransform</span><span class="p">(</span><span class="o">.</span><span class="mo">01</span><span class="p">,</span> <span class="n">logfsteps</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+                                        <span class="n">qrange</span><span class="o">=</span><span class="p">(</span><span class="mi">110</span><span class="p">,</span> <span class="mi">110</span><span class="p">),</span>
+                                        <span class="n">frange</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">512</span><span class="p">))</span>
+    <span class="n">pylab</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">freqs</span><span class="p">,</span> <span class="n">power</span><span class="o">**</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
 <span class="n">pylab</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
 <span class="n">pylab</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency (Hz)&quot;</span><span class="p">)</span>
 <span class="n">pylab</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time (s)&quot;</span><span class="p">)</span>
