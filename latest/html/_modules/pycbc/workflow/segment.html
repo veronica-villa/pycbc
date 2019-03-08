@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.workflow.segment &mdash; PyCBC f20320 documentation</title>
+  <title>pycbc.workflow.segment &mdash; PyCBC 446895 documentation</title>
   
 
   
@@ -112,8 +112,9 @@
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../catalog.html">Catalog of Observed Gravitational-wave Mergers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../gw150914.html">Signal Processing with GW150914</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dataquality.html">Query times of valid data, hardware injections, and more.</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../frame.html">Reading Gravitational-wave Frames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../gw150914.html">Signal Processing with GW150914</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../detector.html">Gravitational-wave Detectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../psd.html">Handling PSDs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../noise.html">Generating Noise</a></li>
@@ -1484,7 +1485,8 @@
     <span class="n">resolve_url</span><span class="p">(</span><span class="n">veto_def_url</span><span class="p">,</span><span class="n">out_dir</span><span class="p">)</span>
 
     <span class="c1"># and update location</span>
-    <span class="n">cp</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;workflow-segments&quot;</span><span class="p">,</span> <span class="s2">&quot;segments-veto-definer-file&quot;</span><span class="p">,</span> <span class="n">veto_def_new_path</span><span class="p">)</span></div>
+    <span class="n">cp</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;workflow-segments&quot;</span><span class="p">,</span> <span class="s2">&quot;segments-veto-definer-file&quot;</span><span class="p">,</span> <span class="n">veto_def_new_path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">veto_def_new_path</span></div>
 
 <div class="viewcode-block" id="parse_cat_ini_opt"><a class="viewcode-back" href="../../../workflow/segments.html#pycbc.workflow.segment.parse_cat_ini_opt">[docs]</a><span class="k">def</span> <span class="nf">parse_cat_ini_opt</span><span class="p">(</span><span class="n">cat_str</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Parse a cat str from the ini file into a list of sets &quot;&quot;&quot;</span>
@@ -1593,6 +1595,58 @@
             <span class="n">err_msg</span> <span class="o">+=</span> <span class="s1">&#39;&quot;always&quot;, &quot;if_not_present&quot;, &quot;error_on_duplicate&quot;, &#39;</span>
             <span class="n">err_msg</span> <span class="o">+=</span> <span class="s1">&#39;&quot;never&quot;. Got </span><span class="si">%s</span><span class="s1">.&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">generate_segment_files</span><span class="p">,)</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="get_segments_file"><a class="viewcode-back" href="../../../workflow/segments.html#pycbc.workflow.segment.get_segments_file">[docs]</a><span class="k">def</span> <span class="nf">get_segments_file</span><span class="p">(</span><span class="n">workflow</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">option_name</span><span class="p">,</span> <span class="n">out_dir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get cumulative segments from option name syntax for each ifo.</span>
+
+<span class="sd">    Use syntax of configparser string to define the resulting segment_file</span>
+<span class="sd">    e.x. option_name = +up_flag1,+up_flag2,+up_flag3,-down_flag1,-down_flag2</span>
+<span class="sd">    Each ifo may have a different string and is stored separately in the file.</span>
+<span class="sd">    Flags which add time must precede flags which subtract time.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    workflow: pycbc.workflow.Workflow</span>
+<span class="sd">    name: string</span>
+<span class="sd">        Name of the segment list being created</span>
+<span class="sd">    option_name: str</span>
+<span class="sd">        Name of option in the associated config parser to get the flag list</span>
+
+<span class="sd">    returns</span>
+<span class="sd">    --------</span>
+<span class="sd">    seg_file: pycbc.workflow.SegFile</span>
+<span class="sd">        SegFile intance that points to the segment xml file on disk.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">pycbc.dq</span> <span class="k">import</span> <span class="n">query_str</span>
+    <span class="n">make_analysis_dir</span><span class="p">(</span><span class="n">out_dir</span><span class="p">)</span>
+    <span class="n">cp</span> <span class="o">=</span> <span class="n">workflow</span><span class="o">.</span><span class="n">cp</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">workflow</span><span class="o">.</span><span class="n">analysis_time</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">workflow</span><span class="o">.</span><span class="n">analysis_time</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># Check for veto definer file</span>
+    <span class="n">veto_definer</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">cp</span><span class="o">.</span><span class="n">has_option</span><span class="p">(</span><span class="s2">&quot;workflow-segments&quot;</span><span class="p">,</span> <span class="s2">&quot;segments-veto-definer-url&quot;</span><span class="p">):</span>
+        <span class="n">veto_definer</span> <span class="o">=</span> <span class="n">save_veto_definer</span><span class="p">(</span><span class="n">workflow</span><span class="o">.</span><span class="n">cp</span><span class="p">,</span> <span class="n">out_dir</span><span class="p">,</span> <span class="p">[])</span>
+
+    <span class="c1"># Check for provided server</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="s2">&quot;segments.ligo.org&quot;</span>
+    <span class="k">if</span> <span class="n">cp</span><span class="o">.</span><span class="n">has_option</span><span class="p">(</span><span class="s2">&quot;workflow-segments&quot;</span><span class="p">,</span> <span class="s2">&quot;segments-database-url&quot;</span><span class="p">):</span>
+        <span class="n">server</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get_opt_tags</span><span class="p">(</span><span class="s2">&quot;workflow-segments&quot;</span><span class="p">,</span>
+                                 <span class="s2">&quot;segments-database-url&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">ifo</span><span class="p">])</span>
+
+    <span class="n">segs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">ifo</span> <span class="ow">in</span> <span class="n">workflow</span><span class="o">.</span><span class="n">ifos</span><span class="p">:</span>
+        <span class="n">flag_str</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get_opt_tags</span><span class="p">(</span><span class="s2">&quot;workflow-segments&quot;</span><span class="p">,</span> <span class="n">option_name</span><span class="p">,</span> <span class="p">[</span><span class="n">ifo</span><span class="p">])</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">ifo</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="n">name</span>
+        <span class="n">segs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">query_str</span><span class="p">(</span><span class="n">ifo</span><span class="p">,</span> <span class="n">flag_str</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span>
+                              <span class="n">server</span><span class="o">=</span><span class="n">server</span><span class="p">,</span>
+                              <span class="n">veto_definer</span><span class="o">=</span><span class="n">veto_definer</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">: got </span><span class="si">%s</span><span class="s2"> flags&quot;</span><span class="p">,</span> <span class="n">ifo</span><span class="p">,</span> <span class="n">option_name</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">SegFile</span><span class="o">.</span><span class="n">from_segment_list_dict</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">segs</span><span class="p">,</span>
+                                          <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.xml&#39;</span><span class="p">,</span>
+                                          <span class="n">valid_segment</span><span class="o">=</span><span class="n">workflow</span><span class="o">.</span><span class="n">analysis_time</span><span class="p">,</span>
+                                          <span class="n">directory</span><span class="o">=</span><span class="n">out_dir</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
@@ -1607,7 +1661,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Mar 07, 2019.
+        Last updated on Mar 08, 2019.
       </span>
 
     </p>

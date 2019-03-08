@@ -77,6 +77,14 @@ pycbc.detector module
     :undoc-members:
     :show-inheritance:
 
+pycbc.dq module
+---------------
+
+.. automodule:: pycbc.dq
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 pycbc.libutils module
 ---------------------
 
