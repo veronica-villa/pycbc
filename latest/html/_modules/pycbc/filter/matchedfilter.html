@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.filter.matchedfilter &mdash; PyCBC 88ee49 documentation</title>
+  <title>pycbc.filter.matchedfilter &mdash; PyCBC 46710f documentation</title>
   
 
   
@@ -1965,16 +1965,17 @@
 
     <span class="c1"># Require all strain be valid within lookback time</span>
     <span class="k">if</span> <span class="n">data_reader</span><span class="o">.</span><span class="n">state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">state_end</span> <span class="o">=</span> <span class="n">data_reader</span><span class="o">.</span><span class="n">strain</span><span class="o">.</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">data_reader</span><span class="o">.</span><span class="n">reduced_pad</span>
-        <span class="n">state_start</span> <span class="o">=</span> <span class="n">state_end</span> <span class="o">-</span> <span class="n">lookback</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">data_reader</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">is_extent_valid</span><span class="p">(</span><span class="n">state_start</span><span class="p">,</span> <span class="n">state_end</span><span class="p">):</span>
+        <span class="n">state_start_time</span> <span class="o">=</span> <span class="n">data_reader</span><span class="o">.</span><span class="n">strain</span><span class="o">.</span><span class="n">end_time</span> \
+                <span class="o">-</span> <span class="n">data_reader</span><span class="o">.</span><span class="n">reduced_pad</span> <span class="o">-</span> <span class="n">lookback</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">data_reader</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">is_extent_valid</span><span class="p">(</span><span class="n">state_start_time</span><span class="p">,</span> <span class="n">lookback</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
 
     <span class="c1"># We won&#39;t require that all DQ checks be valid for now, except at</span>
     <span class="c1"># onsource time.</span>
     <span class="k">if</span> <span class="n">data_reader</span><span class="o">.</span><span class="n">dq</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">data_reader</span><span class="o">.</span><span class="n">dq</span><span class="o">.</span><span class="n">is_extent_valid</span><span class="p">(</span><span class="n">onsource_start</span> <span class="o">-</span> <span class="n">duration</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
-                                              <span class="n">onsource_end</span> <span class="o">+</span> <span class="n">duration</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">):</span>
+        <span class="n">dq_start_time</span> <span class="o">=</span> <span class="n">onsource_start</span> <span class="o">-</span> <span class="n">duration</span> <span class="o">/</span> <span class="mf">2.0</span>
+        <span class="n">dq_duration</span> <span class="o">=</span> <span class="n">onsource_end</span> <span class="o">-</span> <span class="n">onsource_start</span> <span class="o">+</span> <span class="n">duration</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">data_reader</span><span class="o">.</span><span class="n">dq</span><span class="o">.</span><span class="n">is_extent_valid</span><span class="p">(</span><span class="n">dq_start_time</span><span class="p">,</span> <span class="n">dq_duration</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
 
     <span class="c1"># Calculate SNR time series for this duration</span>
