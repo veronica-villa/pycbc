@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.events.stat &mdash; PyCBC 46710f documentation</title>
+  <title>pycbc.events.stat &mdash; PyCBC 9106f2 documentation</title>
   
 
   
@@ -456,6 +456,8 @@
                     <span class="p">(</span><span class="s1">&#39;sigmasq&#39;</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
                     <span class="p">(</span><span class="s1">&#39;snr&#39;</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)]</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_newsnr</span> <span class="o">=</span> <span class="n">get_newsnr</span>
+
 <div class="viewcode-block" id="PhaseTDStatistic.single"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.PhaseTDStatistic.single">[docs]</a>    <span class="k">def</span> <span class="nf">single</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trigs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the single detector statistic and assemble other parameters</span>
@@ -472,7 +474,7 @@
 <span class="sd">        numpy.ndarray</span>
 <span class="sd">            Array of single detector parameter values</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">sngl_stat</span> <span class="o">=</span> <span class="n">get_newsnr</span><span class="p">(</span><span class="n">trigs</span><span class="p">)</span>
+        <span class="n">sngl_stat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_newsnr</span><span class="p">(</span><span class="n">trigs</span><span class="p">)</span>
         <span class="n">singles</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sngl_stat</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">single_dtype</span><span class="p">)</span>
         <span class="n">singles</span><span class="p">[</span><span class="s1">&#39;snglstat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sngl_stat</span>
         <span class="n">singles</span><span class="p">[</span><span class="s1">&#39;coa_phase&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">trigs</span><span class="p">[</span><span class="s1">&#39;coa_phase&#39;</span><span class="p">][:]</span>
@@ -544,6 +546,17 @@
         <span class="n">cstat</span> <span class="o">=</span> <span class="n">rstat</span> <span class="o">+</span> <span class="mf">2.</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">logsignalrate</span><span class="p">(</span><span class="n">s0</span><span class="p">,</span> <span class="n">s1</span><span class="p">,</span> <span class="n">slide</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
         <span class="n">cstat</span><span class="p">[</span><span class="n">cstat</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">return</span> <span class="n">cstat</span> <span class="o">**</span> <span class="mf">0.5</span></div></div>
+
+
+<div class="viewcode-block" id="PhaseTDSGStatistic"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.PhaseTDSGStatistic">[docs]</a><span class="k">class</span> <span class="nc">PhaseTDSGStatistic</span><span class="p">(</span><span class="n">PhaseTDStatistic</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;PhaseTDStatistic but with sine-Gaussian veto added to the</span>
+
+<span class="sd">    single detector ranking</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">):</span>
+        <span class="n">PhaseTDStatistic</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_newsnr</span> <span class="o">=</span> <span class="n">get_newsnr_sgveto</span></div>
 
 
 <div class="viewcode-block" id="ExpFitStatistic"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.ExpFitStatistic">[docs]</a><span class="k">class</span> <span class="nc">ExpFitStatistic</span><span class="p">(</span><span class="n">NewSNRStatistic</span><span class="p">):</span>
@@ -757,6 +770,7 @@
     <span class="s1">&#39;network_snr&#39;</span><span class="p">:</span> <span class="n">NetworkSNRStatistic</span><span class="p">,</span>
     <span class="s1">&#39;newsnr_cut&#39;</span><span class="p">:</span> <span class="n">NewSNRCutStatistic</span><span class="p">,</span>
     <span class="s1">&#39;phasetd_newsnr&#39;</span><span class="p">:</span> <span class="n">PhaseTDStatistic</span><span class="p">,</span>
+    <span class="s1">&#39;phasetd_newsnr_sgveto&#39;</span><span class="p">:</span> <span class="n">PhaseTDSGStatistic</span><span class="p">,</span>
     <span class="s1">&#39;exp_fit_stat&#39;</span><span class="p">:</span> <span class="n">ExpFitStatistic</span><span class="p">,</span>
     <span class="s1">&#39;exp_fit_csnr&#39;</span><span class="p">:</span> <span class="n">ExpFitCombinedSNR</span><span class="p">,</span>
     <span class="s1">&#39;exp_fit_sg_csnr&#39;</span><span class="p">:</span> <span class="n">ExpFitSGCombinedSNR</span><span class="p">,</span>
@@ -839,7 +853,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Mar 09, 2019.
+        Last updated on Mar 11, 2019.
       </span>
 
     </p>

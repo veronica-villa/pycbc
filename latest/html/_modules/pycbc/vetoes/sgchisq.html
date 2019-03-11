@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.vetoes.sgchisq &mdash; PyCBC 46710f documentation</title>
+  <title>pycbc.vetoes.sgchisq &mdash; PyCBC 9106f2 documentation</title>
   
 
   
@@ -202,10 +202,11 @@
            <div itemprop="articleBody">
             
   <h1>Source code for pycbc.vetoes.sgchisq</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot; Chisq based on sine-gaussian tiles &quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;Chisq based on sine-gaussian tiles.</span>
+<span class="sd">See https://arxiv.org/abs/1709.08974 for a discussion.</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span>
-<span class="kn">import</span> <span class="nn">logging</span>
 
 <span class="kn">from</span> <span class="nn">pycbc.waveform.utils</span> <span class="k">import</span> <span class="n">apply_fseries_time_shift</span>
 <span class="kn">from</span> <span class="nn">pycbc.filter</span> <span class="k">import</span> <span class="n">sigma</span>
@@ -377,7 +378,6 @@
                 <span class="n">chisq</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">chisq</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/=</span> <span class="n">dof</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Found chisq </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">chisq</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">chisq</span></div></div>
 
 </pre></div>
@@ -394,7 +394,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Mar 09, 2019.
+        Last updated on Mar 11, 2019.
       </span>
 
     </p>

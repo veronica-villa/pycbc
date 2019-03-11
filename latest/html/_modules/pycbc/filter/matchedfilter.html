@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.filter.matchedfilter &mdash; PyCBC 46710f documentation</title>
+  <title>pycbc.filter.matchedfilter &mdash; PyCBC 9106f2 documentation</title>
   
 
   
@@ -1831,8 +1831,10 @@
             <span class="n">chisq</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">dof</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-            <span class="n">sg_chisq</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sg_chisq</span><span class="o">.</span><span class="n">values</span>\
-                <span class="p">(</span><span class="n">stilde</span><span class="p">,</span> <span class="n">htilde</span><span class="p">,</span> <span class="n">stilde</span><span class="o">.</span><span class="n">psd</span><span class="p">,</span> <span class="n">snrv</span><span class="p">,</span> <span class="n">norm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="p">[</span><span class="n">l</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">sgv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sg_chisq</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">stilde</span><span class="p">,</span> <span class="n">htilde</span><span class="p">,</span> <span class="n">stilde</span><span class="o">.</span><span class="n">psd</span><span class="p">,</span>
+                                       <span class="n">snrv</span><span class="p">,</span> <span class="n">norm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="p">[</span><span class="n">l</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">sgv</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">sg_chisq</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sgv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">newsnr_threshold</span><span class="p">:</span>
                 <span class="n">newsnr</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">newsnr</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;snr&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">chisq</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
@@ -2118,7 +2120,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Mar 09, 2019.
+        Last updated on Mar 11, 2019.
       </span>
 
     </p>
