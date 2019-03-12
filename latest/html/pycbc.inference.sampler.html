@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.sampler package &mdash; PyCBC 5a0e70 documentation</title>
+  <title>pycbc.inference.sampler package &mdash; PyCBC ee0a0d documentation</title>
   
 
   
@@ -1232,7 +1232,7 @@ in an an append state.</td>
 packages for parameter estimation.</p>
 <dl class="class">
 <dt id="pycbc.inference.sampler.emcee_pt.EmceePTSampler">
-<em class="property">class </em><code class="descclassname">pycbc.inference.sampler.emcee_pt.</code><code class="descname">EmceePTSampler</code><span class="sig-paren">(</span><em>model</em>, <em>ntemps</em>, <em>nwalkers</em>, <em>checkpoint_interval=None</em>, <em>loglikelihood_function=None</em>, <em>nprocesses=1</em>, <em>use_mpi=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/sampler/emcee_pt.html#EmceePTSampler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.sampler.emcee_pt.EmceePTSampler" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pycbc.inference.sampler.emcee_pt.</code><code class="descname">EmceePTSampler</code><span class="sig-paren">(</span><em>model</em>, <em>ntemps</em>, <em>nwalkers</em>, <em>betas=None</em>, <em>checkpoint_interval=None</em>, <em>loglikelihood_function=None</em>, <em>nprocesses=1</em>, <em>use_mpi=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/sampler/emcee_pt.html#EmceePTSampler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.sampler.emcee_pt.EmceePTSampler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pycbc.inference.sampler.base_multitemper.MultiTemperedAutocorrSupport" title="pycbc.inference.sampler.base_multitemper.MultiTemperedAutocorrSupport"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.sampler.base_multitemper.MultiTemperedAutocorrSupport</span></code></a>, <a class="reference internal" href="#pycbc.inference.sampler.base_multitemper.MultiTemperedSupport" title="pycbc.inference.sampler.base_multitemper.MultiTemperedSupport"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.sampler.base_multitemper.MultiTemperedSupport</span></code></a>, <a class="reference internal" href="#pycbc.inference.sampler.base_mcmc.BaseMCMC" title="pycbc.inference.sampler.base_mcmc.BaseMCMC"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.sampler.base_mcmc.BaseMCMC</span></code></a>, <a class="reference internal" href="#pycbc.inference.sampler.base.BaseSampler" title="pycbc.inference.sampler.base.BaseSampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.sampler.base.BaseSampler</span></code></a></p>
 <p>This class is used to construct a parallel-tempered MCMC sampler from
 the emcee package’s PTSampler.</p>
@@ -1244,6 +1244,10 @@ the emcee package’s PTSampler.</p>
 <li><strong>model</strong> (<em>model</em>) – A model from <code class="docutils literal notranslate"><span class="pre">pycbc.inference.models</span></code>.</li>
 <li><strong>ntemps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of temeratures to use in the sampler.</li>
 <li><strong>nwalkers</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of walkers to use in sampler.</li>
+<li><strong>betas</strong> (<em>array</em>) – An array of inverse temperature values to be used in emcee_pt’s
+temperature ladder. If not provided, emcee_pt will use the number of
+temperatures and the number of dimensions of the parameter space to
+construct the ladder with geometrically spaced temperatures.</li>
 <li><strong>pool</strong> (<em>function with map</em><em>, </em><em>Optional</em>) – A provider of a map function that allows a function call to be run
 over multiple sets of arguments and possibly maps them to
 cores/nodes/etc.</li>
@@ -1320,6 +1324,14 @@ retrieved from the checkpoint file’s thinning attributes.</p>
 <dt id="pycbc.inference.sampler.emcee_pt.EmceePTSampler.from_config">
 <em class="property">classmethod </em><code class="descname">from_config</code><span class="sig-paren">(</span><em>cp</em>, <em>model</em>, <em>nprocesses=1</em>, <em>use_mpi=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/sampler/emcee_pt.html#EmceePTSampler.from_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.sampler.emcee_pt.EmceePTSampler.from_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads the sampler from the given config file.</p>
+<p>For generating the temperature ladder to be used by emcee_pt, either
+the number of temperatures (provided by the option ‘ntemps’),
+or the path to a file storing inverse temperature values (provided
+under a subsection inverse-temperatures-file) can be loaded from the
+config file. If the latter, the file should be of hdf format, having
+an attribute named ‘betas’ storing the list of inverse temperature
+values to be provided to emcee_pt. If the former, emcee_pt will
+construct the ladder with “ntemps” geometrically spaced temperatures.</p>
 </dd></dl>
 
 <dl class="attribute">

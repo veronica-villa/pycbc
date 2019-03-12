@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.filter.resample &mdash; PyCBC 5a0e70 documentation</title>
+  <title>pycbc.filter.resample &mdash; PyCBC ee0a0d documentation</title>
   
 
   
@@ -305,7 +305,7 @@
     <span class="c1"># If the number of filter coefficients is odd, the central point *should*</span>
     <span class="c1"># be included in the output so we only zero out a region of len(coeff) - 1</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">timeseries</span><span class="p">))</span>
-    <span class="n">data</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">series</span><span class="p">[(</span><span class="nb">len</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="p">:]</span>
+    <span class="n">data</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">series</span><span class="p">[(</span><span class="nb">len</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="p">:]</span>
     <span class="k">return</span> <span class="n">data</span></div>
 
 <div class="viewcode-block" id="resample_to_delta_t"><a class="viewcode-back" href="../../../pycbc.filter.html#pycbc.filter.resample.resample_to_delta_t">[docs]</a><span class="k">def</span> <span class="nf">resample_to_delta_t</span><span class="p">(</span><span class="n">timeseries</span><span class="p">,</span> <span class="n">delta_t</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;butterworth&#39;</span><span class="p">):</span>

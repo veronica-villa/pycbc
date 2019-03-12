@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.sampler.emcee_pt &mdash; PyCBC 5a0e70 documentation</title>
+  <title>pycbc.inference.sampler.emcee_pt &mdash; PyCBC ee0a0d documentation</title>
   
 
   
@@ -229,6 +229,7 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">import</span> <span class="nn">emcee</span>
+<span class="kn">import</span> <span class="nn">h5py</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">pycbc.pool</span> <span class="k">import</span> <span class="n">choose_pool</span>
 
@@ -255,6 +256,11 @@
 <span class="sd">        Number of temeratures to use in the sampler.</span>
 <span class="sd">    nwalkers : int</span>
 <span class="sd">        Number of walkers to use in sampler.</span>
+<span class="sd">    betas : array</span>
+<span class="sd">        An array of inverse temperature values to be used in emcee_pt&#39;s</span>
+<span class="sd">        temperature ladder. If not provided, emcee_pt will use the number of</span>
+<span class="sd">        temperatures and the number of dimensions of the parameter space to</span>
+<span class="sd">        construct the ladder with geometrically spaced temperatures.</span>
 <span class="sd">    pool : function with map, Optional</span>
 <span class="sd">        A provider of a map function that allows a function call to be run</span>
 <span class="sd">        over multiple sets of arguments and possibly maps them to</span>
@@ -264,8 +270,9 @@
     <span class="n">_io</span> <span class="o">=</span> <span class="n">EmceePTFile</span>
     <span class="n">burn_in_class</span> <span class="o">=</span> <span class="n">MultiTemperedMCMCBurnInTests</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">ntemps</span><span class="p">,</span> <span class="n">nwalkers</span><span class="p">,</span> <span class="n">checkpoint_interval</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">loglikelihood_function</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nprocesses</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">use_mpi</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">ntemps</span><span class="p">,</span> <span class="n">nwalkers</span><span class="p">,</span> <span class="n">betas</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">checkpoint_interval</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">loglikelihood_function</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">nprocesses</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">use_mpi</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
 
@@ -294,7 +301,8 @@
         <span class="c1"># functions separately</span>
         <span class="n">ndim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">variable_params</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sampler</span> <span class="o">=</span> <span class="n">emcee</span><span class="o">.</span><span class="n">PTSampler</span><span class="p">(</span><span class="n">ntemps</span><span class="p">,</span> <span class="n">nwalkers</span><span class="p">,</span> <span class="n">ndim</span><span class="p">,</span>
-                                        <span class="n">model_call</span><span class="p">,</span> <span class="n">prior_call</span><span class="p">,</span> <span class="n">pool</span><span class="o">=</span><span class="n">pool</span><span class="p">)</span>
+                                        <span class="n">model_call</span><span class="p">,</span> <span class="n">prior_call</span><span class="p">,</span> <span class="n">pool</span><span class="o">=</span><span class="n">pool</span><span class="p">,</span>
+                                        <span class="n">betas</span><span class="o">=</span><span class="n">betas</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_nwalkers</span> <span class="o">=</span> <span class="n">nwalkers</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ntemps</span> <span class="o">=</span> <span class="n">ntemps</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_checkpoint_interval</span> <span class="o">=</span> <span class="n">checkpoint_interval</span>
@@ -313,20 +321,47 @@
 
 <div class="viewcode-block" id="EmceePTSampler.from_config"><a class="viewcode-back" href="../../../../pycbc.inference.sampler.html#pycbc.inference.sampler.emcee_pt.EmceePTSampler.from_config">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_config</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">cp</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">nprocesses</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">use_mpi</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Loads the sampler from the given config file.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads the sampler from the given config file.</span>
+
+<span class="sd">        For generating the temperature ladder to be used by emcee_pt, either</span>
+<span class="sd">        the number of temperatures (provided by the option &#39;ntemps&#39;),</span>
+<span class="sd">        or the path to a file storing inverse temperature values (provided</span>
+<span class="sd">        under a subsection inverse-temperatures-file) can be loaded from the</span>
+<span class="sd">        config file. If the latter, the file should be of hdf format, having</span>
+<span class="sd">        an attribute named &#39;betas&#39; storing the list of inverse temperature</span>
+<span class="sd">        values to be provided to emcee_pt. If the former, emcee_pt will</span>
+<span class="sd">        construct the ladder with &quot;ntemps&quot; geometrically spaced temperatures.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">section</span> <span class="o">=</span> <span class="s2">&quot;sampler&quot;</span>
         <span class="c1"># check name</span>
         <span class="k">assert</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="bp">cls</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="p">(</span>
             <span class="s2">&quot;name in section [sampler] must match mine&quot;</span><span class="p">)</span>
         <span class="c1"># get the number of walkers to use</span>
         <span class="n">nwalkers</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="s2">&quot;nwalkers&quot;</span><span class="p">))</span>
-        <span class="c1"># get the number of temps</span>
-        <span class="n">ntemps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="s2">&quot;ntemps&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">cp</span><span class="o">.</span><span class="n">has_option</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="s2">&quot;ntemps&quot;</span><span class="p">)</span> <span class="ow">and</span> \
+                <span class="n">cp</span><span class="o">.</span><span class="n">has_option</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="s2">&quot;inverse-temperatures-file&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Must specify either ntemps or &quot;</span>
+                             <span class="s2">&quot;inverse-temperatures-file, not both.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cp</span><span class="o">.</span><span class="n">has_option</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="s2">&quot;inverse-temperatures-file&quot;</span><span class="p">):</span>
+            <span class="c1"># get the path of the file containing inverse temperatures values.</span>
+            <span class="n">inverse_temperatures_file</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">section</span><span class="p">,</span>
+                                               <span class="s2">&quot;inverse-temperatures-file&quot;</span><span class="p">)</span>
+            <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">inverse_temperatures_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">betas</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fp</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;betas&#39;</span><span class="p">])</span>
+                    <span class="n">ntemps</span> <span class="o">=</span> <span class="n">betas</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;No attribute called betas&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># get the number of temperatures</span>
+            <span class="n">betas</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">ntemps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="s2">&quot;ntemps&quot;</span><span class="p">))</span>
         <span class="c1"># get the checkpoint interval, if it&#39;s specified</span>
         <span class="n">checkpoint_interval</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">checkpoint_from_config</span><span class="p">(</span><span class="n">cp</span><span class="p">,</span> <span class="n">section</span><span class="p">)</span>
         <span class="c1"># get the loglikelihood function</span>
         <span class="n">logl</span> <span class="o">=</span> <span class="n">get_optional_arg_from_config</span><span class="p">(</span><span class="n">cp</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="s1">&#39;logl-function&#39;</span><span class="p">)</span>
-        <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ntemps</span><span class="p">,</span> <span class="n">nwalkers</span><span class="p">,</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ntemps</span><span class="p">,</span> <span class="n">nwalkers</span><span class="p">,</span> <span class="n">betas</span><span class="o">=</span><span class="n">betas</span><span class="p">,</span>
                   <span class="n">checkpoint_interval</span><span class="o">=</span><span class="n">checkpoint_interval</span><span class="p">,</span>
                   <span class="n">loglikelihood_function</span><span class="o">=</span><span class="n">logl</span><span class="p">,</span> <span class="n">nprocesses</span><span class="o">=</span><span class="n">nprocesses</span><span class="p">,</span>
                   <span class="n">use_mpi</span><span class="o">=</span><span class="n">use_mpi</span><span class="p">)</span>
