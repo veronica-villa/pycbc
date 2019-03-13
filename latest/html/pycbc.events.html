@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.events package &mdash; PyCBC f2cca1 documentation</title>
+  <title>pycbc.events package &mdash; PyCBC 379005 documentation</title>
   
 
   
@@ -774,6 +774,13 @@ Previous implementation in glue/ligolw/lsctables.py</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="pycbc.events.events.newsnr_sgveto_psdvar">
+<code class="descclassname">pycbc.events.events.</code><code class="descname">newsnr_sgveto_psdvar</code><span class="sig-paren">(</span><em>snr</em>, <em>bchisq</em>, <em>sgchisq</em>, <em>psd_var_val</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/events.html#newsnr_sgveto_psdvar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.events.newsnr_sgveto_psdvar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Combined SNR derived from NewSNR, Sine-Gaussian Chisq and PSD
+variation statistic</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="pycbc.events.events.findchirp_cluster_over_window">
 <code class="descclassname">pycbc.events.events.</code><code class="descname">findchirp_cluster_over_window</code><span class="sig-paren">(</span><em>times</em>, <em>values</em>, <em>window_length</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/events.html#findchirp_cluster_over_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.events.findchirp_cluster_over_window" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reduce the events by clustering over a window using
@@ -1093,6 +1100,14 @@ approximates combined (new)snr for coincs with similar newsnr in each ifo</p>
 </dd></dl>
 
 <dl class="class">
+<dt id="pycbc.events.stat.ExpFitSGPSDCombinedSNR">
+<em class="property">class </em><code class="descclassname">pycbc.events.stat.</code><code class="descname">ExpFitSGPSDCombinedSNR</code><span class="sig-paren">(</span><em>files</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/stat.html#ExpFitSGPSDCombinedSNR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.stat.ExpFitSGPSDCombinedSNR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycbc.events.stat.ExpFitCombinedSNR" title="pycbc.events.stat.ExpFitCombinedSNR"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.events.stat.ExpFitCombinedSNR</span></code></a></p>
+<p>ExpFitCombinedSNR but with sine-Gaussian veto and PSD variation added to</p>
+<p>the single detector ranking</p>
+</dd></dl>
+
+<dl class="class">
 <dt id="pycbc.events.stat.ExpFitStatistic">
 <em class="property">class </em><code class="descclassname">pycbc.events.stat.</code><code class="descname">ExpFitStatistic</code><span class="sig-paren">(</span><em>files</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/stat.html#ExpFitStatistic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.stat.ExpFitStatistic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pycbc.events.stat.NewSNRStatistic" title="pycbc.events.stat.NewSNRStatistic"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.events.stat.NewSNRStatistic</span></code></a></p>
@@ -1241,6 +1256,34 @@ are required keys for this statistic.</td>
 </dd></dl>
 
 <dl class="class">
+<dt id="pycbc.events.stat.NewSNRSGPSDStatistic">
+<em class="property">class </em><code class="descclassname">pycbc.events.stat.</code><code class="descname">NewSNRSGPSDStatistic</code><span class="sig-paren">(</span><em>files</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/stat.html#NewSNRSGPSDStatistic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.stat.NewSNRSGPSDStatistic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycbc.events.stat.NewSNRSGStatistic" title="pycbc.events.stat.NewSNRSGStatistic"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.events.stat.NewSNRSGStatistic</span></code></a></p>
+<p>Calculate the NewSNRSGPSD coincident detection statistic</p>
+<dl class="method">
+<dt id="pycbc.events.stat.NewSNRSGPSDStatistic.single">
+<code class="descname">single</code><span class="sig-paren">(</span><em>trigs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/stat.html#NewSNRSGPSDStatistic.single"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.stat.NewSNRSGPSDStatistic.single" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Calculate the single detector statistic, here equal to newsnr</dt>
+<dd>combined with sgveto and psdvar statistic</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>trigs</strong> (<em>dict of numpy.ndarrays</em>) – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The array of single detector values</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="pycbc.events.stat.NewSNRSGStatistic">
 <em class="property">class </em><code class="descclassname">pycbc.events.stat.</code><code class="descname">NewSNRSGStatistic</code><span class="sig-paren">(</span><em>files</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/stat.html#NewSNRSGStatistic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.stat.NewSNRSGStatistic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pycbc.events.stat.NewSNRStatistic" title="pycbc.events.stat.NewSNRStatistic"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.events.stat.NewSNRStatistic</span></code></a></p>
@@ -1336,6 +1379,15 @@ are required keys for this statistic.</td>
 </table>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="class">
+<dt id="pycbc.events.stat.PhaseTDExpFitSGPSDStatistic">
+<em class="property">class </em><code class="descclassname">pycbc.events.stat.</code><code class="descname">PhaseTDExpFitSGPSDStatistic</code><span class="sig-paren">(</span><em>files</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/stat.html#PhaseTDExpFitSGPSDStatistic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.stat.PhaseTDExpFitSGPSDStatistic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycbc.events.stat.PhaseTDExpFitSGStatistic" title="pycbc.events.stat.PhaseTDExpFitSGStatistic"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.events.stat.PhaseTDExpFitSGStatistic</span></code></a></p>
+<p>Statistic combining exponential noise model with signal histogram PDF
+and adding the sine-Gaussian veto and PSD variation statistic to the
+single detector ranking</p>
 </dd></dl>
 
 <dl class="class">
@@ -1510,6 +1562,31 @@ are required keys.</td>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Array of newsnr values</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pycbc.events.stat.get_newsnr_sgveto_psdvar">
+<code class="descclassname">pycbc.events.stat.</code><code class="descname">get_newsnr_sgveto_psdvar</code><span class="sig-paren">(</span><em>trigs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/stat.html#get_newsnr_sgveto_psdvar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.stat.get_newsnr_sgveto_psdvar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate newsnr re-weighted by the sine-gaussian veto and psd variation
+statistic</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>trigs</strong> (<em>dict of numpy.ndarrays</em>) – Dictionary holding single detector trigger information.</li>
+<li><strong>'snr'</strong><strong>, </strong><strong>'chisq' and 'psd_var_val' are required keys</strong> (<em>'chisq_dof'</em><em>,</em>) – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Array of newsnr values</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
 </tr>
 </tbody>
 </table>

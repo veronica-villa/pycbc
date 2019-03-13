@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>The workflow template bank generation module &mdash; PyCBC f2cca1 documentation</title>
+  <title>The workflow template bank generation module &mdash; PyCBC 379005 documentation</title>
   
 
   
@@ -490,11 +490,12 @@ usage: pycbc_geom_nonspinbank [-h] [--version] [-V]
                               [--psd-inverse-length PSD_INVERSE_LENGTH]
                               [--psd-file-xml-ifo-string PSD_FILE_XML_IFO_STRING]
                               [--psd-file-xml-root-name PSD_FILE_XML_ROOT_NAME]
-                              [--psdvar_short_segment SECONDS]
-                              [--psdvar_long_segment SECONDS]
-                              [--psdvar_overlap SECONDS]
-                              [--psdvar_low_freq HERTZ]
-                              [--psdvar_high_freq HERTZ]
+                              [--psdvar-short-segment SECONDS]
+                              [--psdvar-long-segment SECONDS]
+                              [--psdvar-short-psd-duration SECONDS]
+                              [--psdvar-short-psd-stride SECONDS]
+                              [--psdvar-low-freq HERTZ]
+                              [--psdvar-high-freq HERTZ]
                               [--psd-estimation {mean,median,median-mean}]
                               [--psd-segment-length PSD_SEGMENT_LENGTH]
                               [--psd-segment-stride PSD_SEGMENT_STRIDE]
@@ -669,18 +670,22 @@ Options to select the method of PSD generation:
                         If given use this as the root name for the PSD XML
                         file. If this means nothing to you, then it is
                         probably safe to ignore this option. (default: psd)
-  --psdvar_short_segment SECONDS
+  --psdvar-short-segment SECONDS
                         Length of short segment when calculating the PSD
                         variability. (default: None)
-  --psdvar_long_segment SECONDS
+  --psdvar-long-segment SECONDS
                         Length of long segment when calculating the PSD
                         variability. (default: None)
-  --psdvar_overlap SECONDS
-                        Sample length of the PSD. (default: None)
-  --psdvar_low_freq HERTZ
+  --psdvar-short-psd-duration SECONDS
+                        Duration of short segments for PSD estimation.
+                        (default: None)
+  --psdvar-short-psd-stride SECONDS
+                        Separation between PSD estimation segments. (default:
+                        None)
+  --psdvar-low-freq HERTZ
                         Minimum frequency to consider in PSD comparison.
                         (default: None)
-  --psdvar_high_freq HERTZ
+  --psdvar-high-freq HERTZ
                         Maximum frequency to consider in PSD comparison.
                         (default: None)
   --psd-estimation {mean,median,median-mean}

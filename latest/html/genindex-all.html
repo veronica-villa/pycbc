@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; PyCBC f2cca1 documentation</title>
+  <title>Index &mdash; PyCBC 379005 documentation</title>
   
 
   
@@ -1668,6 +1668,8 @@
 </li>
       <li><a href="pycbc.events.html#pycbc.events.stat.ExpFitSGCombinedSNR">ExpFitSGCombinedSNR (class in pycbc.events.stat)</a>
 </li>
+      <li><a href="pycbc.events.html#pycbc.events.stat.ExpFitSGPSDCombinedSNR">ExpFitSGPSDCombinedSNR (class in pycbc.events.stat)</a>
+</li>
       <li><a href="pycbc.events.html#pycbc.events.stat.ExpFitStatistic">ExpFitStatistic (class in pycbc.events.stat)</a>
 </li>
       <li><a href="pycbc.events.html#pycbc.events.coinc.MultiRingBuffer.expire_vector">expire_vector() (pycbc.events.coinc.MultiRingBuffer method)</a>
@@ -2287,6 +2289,8 @@
       <li><a href="pycbc.events.html#pycbc.events.stat.get_newsnr">get_newsnr() (in module pycbc.events.stat)</a>
 </li>
       <li><a href="pycbc.events.html#pycbc.events.stat.get_newsnr_sgveto">get_newsnr_sgveto() (in module pycbc.events.stat)</a>
+</li>
+      <li><a href="pycbc.events.html#pycbc.events.stat.get_newsnr_sgveto_psdvar">get_newsnr_sgveto_psdvar() (in module pycbc.events.stat)</a>
 </li>
       <li><a href="pycbc.workflow.html#pycbc.workflow.core.Executable.get_opt">get_opt() (pycbc.workflow.core.Executable method)</a>
 </li>
@@ -3700,9 +3704,15 @@
 </li>
       <li><a href="pycbc.events.html#pycbc.events.events.newsnr_sgveto">newsnr_sgveto() (in module pycbc.events.events)</a>
 </li>
+      <li><a href="pycbc.io.html#pycbc.io.hdf.SingleDetTriggers.newsnr_sgveto_psdvar">newsnr_sgveto_psdvar (pycbc.io.hdf.SingleDetTriggers attribute)</a>
+</li>
+      <li><a href="pycbc.events.html#pycbc.events.events.newsnr_sgveto_psdvar">newsnr_sgveto_psdvar() (in module pycbc.events.events)</a>
+</li>
       <li><a href="pycbc.events.html#pycbc.events.events.EventManager.newsnr_threshold">newsnr_threshold() (pycbc.events.events.EventManager method)</a>
 </li>
       <li><a href="pycbc.events.html#pycbc.events.stat.NewSNRCutStatistic">NewSNRCutStatistic (class in pycbc.events.stat)</a>
+</li>
+      <li><a href="pycbc.events.html#pycbc.events.stat.NewSNRSGPSDStatistic">NewSNRSGPSDStatistic (class in pycbc.events.stat)</a>
 </li>
       <li><a href="pycbc.events.html#pycbc.events.stat.NewSNRSGStatistic">NewSNRSGStatistic (class in pycbc.events.stat)</a>
 </li>
@@ -3930,6 +3940,8 @@
 </li>
       <li><a href="pycbc.waveform.html#pycbc.waveform.utils.phase_from_polarizations">phase_from_polarizations() (in module pycbc.waveform.utils)</a>
 </li>
+      <li><a href="pycbc.events.html#pycbc.events.stat.PhaseTDExpFitSGPSDStatistic">PhaseTDExpFitSGPSDStatistic (class in pycbc.events.stat)</a>
+</li>
       <li><a href="pycbc.events.html#pycbc.events.stat.PhaseTDExpFitSGStatistic">PhaseTDExpFitSGStatistic (class in pycbc.events.stat)</a>
 </li>
       <li><a href="pycbc.events.html#pycbc.events.stat.PhaseTDExpFitStatistic">PhaseTDExpFitStatistic (class in pycbc.events.stat)</a>
@@ -4066,6 +4078,8 @@
 </li>
       <li><a href="pycbc.strain.html#pycbc.strain.gate.psd_gates_from_cli">psd_gates_from_cli() (in module pycbc.strain.gate)</a>
 </li>
+      <li><a href="pycbc.io.html#pycbc.io.hdf.SingleDetTriggers.psd_var_val">psd_var_val (pycbc.io.hdf.SingleDetTriggers attribute)</a>
+</li>
       <li><a href="pycbc.types.html#pycbc.types.array.Array.ptr">ptr (pycbc.types.array.Array attribute)</a>
 </li>
       <li><a href="pycbc.types.html#pycbc.types.array_cpu.ptr">ptr() (in module pycbc.types.array_cpu)</a>
@@ -4180,10 +4194,10 @@
 </li>
       <li><a href="pycbc.filter.html#module-pycbc.filter.simd_correlate">pycbc.filter.simd_correlate (module)</a>
 </li>
-      <li><a href="pycbc.filter.html#module-pycbc.filter.zpk">pycbc.filter.zpk (module)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pycbc.filter.html#module-pycbc.filter.zpk">pycbc.filter.zpk (module)</a>
+</li>
       <li><a href="pycbc.frame.html#module-pycbc.frame">pycbc.frame (module)</a>
 </li>
       <li><a href="pycbc.frame.html#module-pycbc.frame.frame">pycbc.frame.frame (module)</a>
@@ -5082,6 +5096,8 @@
         <li><a href="pycbc.events.html#pycbc.events.stat.NetworkSNRStatistic.single">(pycbc.events.stat.NetworkSNRStatistic method)</a>
 </li>
         <li><a href="pycbc.events.html#pycbc.events.stat.NewSNRCutStatistic.single">(pycbc.events.stat.NewSNRCutStatistic method)</a>
+</li>
+        <li><a href="pycbc.events.html#pycbc.events.stat.NewSNRSGPSDStatistic.single">(pycbc.events.stat.NewSNRSGPSDStatistic method)</a>
 </li>
         <li><a href="pycbc.events.html#pycbc.events.stat.NewSNRSGStatistic.single">(pycbc.events.stat.NewSNRSGStatistic method)</a>
 </li>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.psd package &mdash; PyCBC f2cca1 documentation</title>
+  <title>pycbc.psd package &mdash; PyCBC 379005 documentation</title>
   
 
   
@@ -1024,9 +1024,9 @@ nothing to you, then it is probably safe to ignore this option.</li>
 <p>PSD Variation</p>
 <dl class="function">
 <dt id="pycbc.psd.variation.calc_psd_variation">
-<code class="descclassname">pycbc.psd.variation.</code><code class="descname">calc_psd_variation</code><span class="sig-paren">(</span><em>strain</em>, <em>psd_short_segment</em>, <em>psd_long_segment</em>, <em>overlap</em>, <em>low_freq</em>, <em>high_freq</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/psd/variation.html#calc_psd_variation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.psd.variation.calc_psd_variation" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pycbc.psd.variation.</code><code class="descname">calc_psd_variation</code><span class="sig-paren">(</span><em>strain</em>, <em>psd_short_segment</em>, <em>psd_long_segment</em>, <em>short_psd_duration</em>, <em>short_psd_stride</em>, <em>psd_avg_method</em>, <em>low_freq</em>, <em>high_freq</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/psd/variation.html#calc_psd_variation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.psd.variation.calc_psd_variation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates time series of PSD variability</p>
-<p>This function first splits the segment up in to 512 second chunks. It
+<p>This function first splits the segment up into 512 second chunks. It
 then calculates the PSD over this 512 second period as well as in 4
 second chunks throughout each 512 second period. Next the function
 estimates how different the 4 second PSD is to the 512 second PSD and
@@ -1037,11 +1037,13 @@ produces a timeseries of this variability.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>strain</strong> (<a class="reference internal" href="pycbc.types.html#pycbc.types.timeseries.TimeSeries" title="pycbc.types.timeseries.TimeSeries"><em>TimeSeries</em></a>) – Input strain time series to estimate PSDs</li>
-<li><strong>psd_short_segment</strong> (<em>{float</em><em>, </em><em>4}</em>) – Duration of the short segments for PSD estimation in seconds.</li>
+<li><strong>psd_short_segment</strong> (<em>{float</em><em>, </em><em>8}</em>) – Duration of the short segments for PSD estimation in seconds.</li>
 <li><strong>psd_long_segment</strong> (<em>{float</em><em>, </em><em>512}</em>) – Duration of the long segments for PSD estimation in seconds.</li>
-<li><strong>overlap</strong> (<em>{float</em><em>, </em><em>0.5}</em>) – Duration in seconds to use for each sample of the PSD.</li>
+<li><strong>short_psd_duration</strong> (<em>{float</em><em>, </em><em>4}</em>) – Duration of the segments for PSD estimation in seconds.</li>
+<li><strong>short_psd_stride</strong> (<em>{float</em><em>, </em><em>2}</em>) – Separation between PSD estimation segments in seconds.</li>
+<li><strong>psd_avg_method</strong> (<em>{string</em><em>, </em><em>'median'}</em>) – Method for averaging PSD estimation segments.</li>
 <li><strong>low_freq</strong> (<em>{float</em><em>, </em><em>20}</em>) – Minimum frequency to consider the comparison between PSDs.</li>
-<li><strong>high_freq</strong> (<em>{float</em><em>, </em><em>512}</em>) – Maximum frequency to consider the comparison between PSDs.</li>
+<li><strong>high_freq</strong> (<em>{float</em><em>, </em><em>480}</em>) – Maximum frequency to consider the comparison between PSDs.</li>
 </ul>
 </td>
 </tr>

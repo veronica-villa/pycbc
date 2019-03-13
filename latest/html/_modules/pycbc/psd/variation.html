@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.psd.variation &mdash; PyCBC f2cca1 documentation</title>
+  <title>pycbc.psd.variation &mdash; PyCBC 379005 documentation</title>
   
 
   
@@ -207,14 +207,16 @@
 <span></span><span class="sd">&quot;&quot;&quot; PSD Variation &quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">pycbc.psd</span>
 
 <span class="kn">from</span> <span class="nn">pycbc.types</span> <span class="k">import</span> <span class="n">TimeSeries</span><span class="p">,</span> <span class="n">FrequencySeries</span><span class="p">,</span> <span class="n">zeros</span>
 
 <div class="viewcode-block" id="calc_psd_variation"><a class="viewcode-back" href="../../../pycbc.psd.html#pycbc.psd.variation.calc_psd_variation">[docs]</a><span class="k">def</span> <span class="nf">calc_psd_variation</span><span class="p">(</span><span class="n">strain</span><span class="p">,</span> <span class="n">psd_short_segment</span><span class="p">,</span> <span class="n">psd_long_segment</span><span class="p">,</span>
-                       <span class="n">overlap</span><span class="p">,</span> <span class="n">low_freq</span><span class="p">,</span> <span class="n">high_freq</span><span class="p">):</span>
+                       <span class="n">short_psd_duration</span><span class="p">,</span> <span class="n">short_psd_stride</span><span class="p">,</span> <span class="n">psd_avg_method</span><span class="p">,</span>
+                       <span class="n">low_freq</span><span class="p">,</span> <span class="n">high_freq</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Calculates time series of PSD variability</span>
 
-<span class="sd">    This function first splits the segment up in to 512 second chunks. It</span>
+<span class="sd">    This function first splits the segment up into 512 second chunks. It</span>
 <span class="sd">    then calculates the PSD over this 512 second period as well as in 4</span>
 <span class="sd">    second chunks throughout each 512 second period. Next the function</span>
 <span class="sd">    estimates how different the 4 second PSD is to the 512 second PSD and</span>
@@ -224,15 +226,19 @@
 <span class="sd">    ----------</span>
 <span class="sd">    strain : TimeSeries</span>
 <span class="sd">        Input strain time series to estimate PSDs</span>
-<span class="sd">    psd_short_segment : {float, 4}</span>
+<span class="sd">    psd_short_segment : {float, 8}</span>
 <span class="sd">        Duration of the short segments for PSD estimation in seconds.</span>
 <span class="sd">    psd_long_segment : {float, 512}</span>
 <span class="sd">        Duration of the long segments for PSD estimation in seconds.</span>
-<span class="sd">    overlap : {float, 0.5}</span>
-<span class="sd">        Duration in seconds to use for each sample of the PSD.</span>
+<span class="sd">    short_psd_duration : {float, 4}</span>
+<span class="sd">        Duration of the segments for PSD estimation in seconds.</span>
+<span class="sd">    short_psd_stride : {float, 2}</span>
+<span class="sd">        Separation between PSD estimation segments in seconds.</span>
+<span class="sd">    psd_avg_method : {string, &#39;median&#39;}</span>
+<span class="sd">        Method for averaging PSD estimation segments.</span>
 <span class="sd">    low_freq : {float, 20}</span>
 <span class="sd">        Minimum frequency to consider the comparison between PSDs.</span>
-<span class="sd">    high_freq : {float, 512}</span>
+<span class="sd">    high_freq : {float, 480}</span>
 <span class="sd">        Maximum frequency to consider the comparison between PSDs.</span>
 
 <span class="sd">    Returns</span>
@@ -265,24 +271,47 @@
         <span class="c1"># Calculate PSD for long segment and separate the long segment in to</span>
         <span class="c1"># overlapping shorter segments</span>
         <span class="k">if</span> <span class="n">tlong</span> <span class="o">+</span> <span class="n">psd_long_segment</span> <span class="o">&lt;=</span> <span class="n">end_time</span><span class="p">:</span>
-            <span class="n">psd_long</span> <span class="o">=</span> <span class="n">strain</span><span class="o">.</span><span class="n">time_slice</span><span class="p">(</span><span class="n">tlong</span><span class="p">,</span>
-                          <span class="n">tlong</span> <span class="o">+</span> <span class="n">psd_long_segment</span><span class="p">)</span><span class="o">.</span><span class="n">psd</span><span class="p">(</span><span class="n">overlap</span><span class="p">)</span>
+            <span class="n">psd_long</span> <span class="o">=</span> <span class="n">pycbc</span><span class="o">.</span><span class="n">psd</span><span class="o">.</span><span class="n">welch</span><span class="p">(</span>
+                           <span class="n">strain</span><span class="o">.</span><span class="n">time_slice</span><span class="p">(</span><span class="n">tlong</span><span class="p">,</span> <span class="n">tlong</span> <span class="o">+</span> <span class="n">psd_long_segment</span><span class="p">),</span>
+                           <span class="n">seg_len</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">short_psd_duration</span> <span class="o">*</span> <span class="n">strain</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">),</span>
+                           <span class="n">seg_stride</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">short_psd_stride</span> <span class="o">*</span>
+                                          <span class="n">strain</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">),</span>
+                           <span class="n">avg_method</span><span class="o">=</span><span class="n">psd_avg_method</span><span class="p">)</span>
             <span class="n">times_short</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">tlong</span><span class="p">,</span> <span class="n">tlong</span> <span class="o">+</span> <span class="n">psd_long_segment</span><span class="p">,</span>
                                        <span class="n">psd_short_segment</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">psd_long</span> <span class="o">=</span> <span class="n">strain</span><span class="o">.</span><span class="n">time_slice</span><span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">psd_long_segment</span><span class="p">,</span>
-                                         <span class="n">end_time</span><span class="p">)</span><span class="o">.</span><span class="n">psd</span><span class="p">(</span><span class="n">overlap</span><span class="p">)</span>
+            <span class="n">psd_long</span> <span class="o">=</span> <span class="n">pycbc</span><span class="o">.</span><span class="n">psd</span><span class="o">.</span><span class="n">welch</span><span class="p">(</span>
+                           <span class="n">strain</span><span class="o">.</span><span class="n">time_slice</span><span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">psd_long_segment</span><span class="p">,</span>
+                                             <span class="n">end_time</span><span class="p">),</span>
+                           <span class="n">seg_len</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">short_psd_duration</span> <span class="o">*</span> <span class="n">strain</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">),</span>
+                           <span class="n">seg_stride</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">short_psd_stride</span> <span class="o">*</span>
+                                          <span class="n">strain</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">),</span>
+                           <span class="n">avg_method</span><span class="o">=</span><span class="n">psd_avg_method</span><span class="p">)</span>
             <span class="n">times_short</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">tlong</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="n">psd_short_segment</span><span class="p">)</span>
+
         <span class="c1"># Calculate the PSD of the shorter segments</span>
         <span class="n">psd_short</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">tshort</span> <span class="ow">in</span> <span class="n">times_short</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">tshort</span> <span class="o">+</span> <span class="n">psd_short_segment</span><span class="o">*</span><span class="mi">2</span> <span class="o">&lt;=</span> <span class="n">end_time</span><span class="p">:</span>
-                <span class="n">pshort</span> <span class="o">=</span> <span class="n">strain</span><span class="o">.</span><span class="n">time_slice</span><span class="p">(</span><span class="n">tshort</span><span class="p">,</span>
-                             <span class="n">tshort</span> <span class="o">+</span> <span class="n">psd_short_segment</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">psd</span><span class="p">(</span><span class="n">overlap</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">tshort</span> <span class="o">+</span> <span class="n">psd_short_segment</span> <span class="o">&lt;=</span> <span class="n">end_time</span><span class="p">:</span>
+                <span class="n">pshort</span> <span class="o">=</span> <span class="n">pycbc</span><span class="o">.</span><span class="n">psd</span><span class="o">.</span><span class="n">welch</span><span class="p">(</span>
+                            <span class="n">strain</span><span class="o">.</span><span class="n">time_slice</span><span class="p">(</span><span class="n">tshort</span><span class="p">,</span> <span class="n">tshort</span> <span class="o">+</span>
+                                              <span class="n">psd_short_segment</span><span class="p">),</span>
+                            <span class="n">seg_len</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">short_psd_duration</span> <span class="o">*</span>
+                                        <span class="n">strain</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">),</span>
+                            <span class="n">seg_stride</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">short_psd_stride</span> <span class="o">*</span>
+                                           <span class="n">strain</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">),</span>
+                            <span class="n">avg_method</span><span class="o">=</span><span class="n">psd_avg_method</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">pshort</span> <span class="o">=</span> <span class="n">strain</span><span class="o">.</span><span class="n">time_slice</span><span class="p">(</span><span class="n">tshort</span> <span class="o">-</span> <span class="n">psd_short_segment</span><span class="p">,</span>
-                                           <span class="n">end_time</span><span class="p">)</span><span class="o">.</span><span class="n">psd</span><span class="p">(</span><span class="n">overlap</span><span class="p">)</span>
+                <span class="n">pshort</span> <span class="o">=</span> <span class="n">pycbc</span><span class="o">.</span><span class="n">psd</span><span class="o">.</span><span class="n">welch</span><span class="p">(</span>
+                            <span class="n">strain</span><span class="o">.</span><span class="n">time_slice</span><span class="p">(</span><span class="n">tshort</span> <span class="o">-</span> <span class="n">psd_short_segment</span><span class="p">,</span>
+                                              <span class="n">end_time</span><span class="p">),</span>
+                            <span class="n">seg_len</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">short_psd_duration</span> <span class="o">*</span>
+                                        <span class="n">strain</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">),</span>
+                            <span class="n">seg_stride</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">short_psd_stride</span> <span class="o">*</span>
+                                           <span class="n">strain</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">),</span>
+                            <span class="n">avg_method</span><span class="o">=</span><span class="n">psd_avg_method</span><span class="p">)</span>
             <span class="n">psd_short</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pshort</span><span class="p">)</span>
+
         <span class="c1"># Estimate the range of the PSD to compare</span>
         <span class="n">kmin</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">low_freq</span> <span class="o">/</span> <span class="n">psd_long</span><span class="o">.</span><span class="n">delta_f</span><span class="p">)</span>
         <span class="n">kmax</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">high_freq</span> <span class="o">/</span> <span class="n">psd_long</span><span class="o">.</span><span class="n">delta_f</span><span class="p">)</span>
