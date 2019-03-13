@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.workflow.plotting &mdash; PyCBC 379005 documentation</title>
+  <title>pycbc.workflow.plotting &mdash; PyCBC 342505 documentation</title>
   
 
   
@@ -331,7 +331,7 @@
     <span class="n">node</span><span class="o">.</span><span class="n">new_output_file_opt</span><span class="p">(</span><span class="n">workflow</span><span class="o">.</span><span class="n">analysis_time</span><span class="p">,</span> <span class="s1">&#39;.png&#39;</span><span class="p">,</span> <span class="s1">&#39;--output-file&#39;</span><span class="p">)</span>
     <span class="n">workflow</span> <span class="o">+=</span> <span class="n">node</span></div>
 
-<div class="viewcode-block" id="make_foreground_table"><a class="viewcode-back" href="../../../pycbc.workflow.html#pycbc.workflow.plotting.make_foreground_table">[docs]</a><span class="k">def</span> <span class="nf">make_foreground_table</span><span class="p">(</span><span class="n">workflow</span><span class="p">,</span> <span class="n">trig_file</span><span class="p">,</span> <span class="n">bank_file</span><span class="p">,</span> <span class="n">ftag</span><span class="p">,</span> <span class="n">out_dir</span><span class="p">,</span>
+<div class="viewcode-block" id="make_foreground_table"><a class="viewcode-back" href="../../../pycbc.workflow.html#pycbc.workflow.plotting.make_foreground_table">[docs]</a><span class="k">def</span> <span class="nf">make_foreground_table</span><span class="p">(</span><span class="n">workflow</span><span class="p">,</span> <span class="n">trig_file</span><span class="p">,</span> <span class="n">bank_file</span><span class="p">,</span> <span class="n">out_dir</span><span class="p">,</span>
                           <span class="n">singles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.html&#39;</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                           <span class="n">hierarchical_level</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 
@@ -347,7 +347,6 @@
     <span class="n">node</span> <span class="o">=</span> <span class="n">PlotExecutable</span><span class="p">(</span><span class="n">workflow</span><span class="o">.</span><span class="n">cp</span><span class="p">,</span> <span class="s1">&#39;page_foreground&#39;</span><span class="p">,</span> <span class="n">ifos</span><span class="o">=</span><span class="n">workflow</span><span class="o">.</span><span class="n">ifos</span><span class="p">,</span>
                     <span class="n">out_dir</span><span class="o">=</span><span class="n">out_dir</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">)</span><span class="o">.</span><span class="n">create_node</span><span class="p">()</span>
     <span class="n">node</span><span class="o">.</span><span class="n">add_input_opt</span><span class="p">(</span><span class="s1">&#39;--bank-file&#39;</span><span class="p">,</span> <span class="n">bank_file</span><span class="p">)</span>
-    <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s1">&#39;--foreground-tag&#39;</span><span class="p">,</span> <span class="n">ftag</span><span class="p">)</span>
     <span class="n">node</span><span class="o">.</span><span class="n">add_input_opt</span><span class="p">(</span><span class="s1">&#39;--trigger-file&#39;</span><span class="p">,</span> <span class="n">trig_file</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">hierarchical_level</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s1">&#39;--use-hierarchical-level&#39;</span><span class="p">,</span> <span class="n">hierarchical_level</span><span class="p">)</span>
