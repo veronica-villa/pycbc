@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.waveform package &mdash; PyCBC 3f6c49 documentation</title>
+  <title>pycbc.waveform package &mdash; PyCBC 00b9cf documentation</title>
   
 
   
@@ -1985,7 +1985,7 @@ See table II in <a class="reference external" href="https://arxiv.org/abs/1107.0
 fundamental mode, as many as the number of subdominant modes.</li>
 <li><strong>philmn</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Phase of the lmn overtone, as many as the number of modes. Should also
 include the information from the azimuthal angle (phi + m*Phi).</li>
-<li><strong>inclination</strong> (<em>{0.</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – Inclination of the system in radians. Default is 0 (face on).</li>
+<li><strong>inclination</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Inclination of the system in radians.</li>
 <li><strong>delta_f</strong> (<em>{None</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – The frequency step used to generate the ringdown.
 If None, it will be set to the inverse of the time at which the
 amplitude is 1/1000 of the peak amplitude (the minimum of all modes).</li>
@@ -2032,7 +2032,8 @@ Example: lmns = [‘223’,‘331’] are the modes 220, 221, 222, and 330</li>
 fundamental mode, as many as the number of subdominant modes.</li>
 <li><strong>philmn</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Phase of the lmn overtone, as many as the number of modes. Should also
 include the information from the azimuthal angle (phi + m*Phi).</li>
-<li><strong>inclination</strong> (<em>{0.</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – Inclination of the system in radians. Default is 0 (face on).</li>
+<li><strong>inclination</strong> (<em>{None</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – Inclination of the system in radians. If None, the spherical harmonics
+will be set to 1.</li>
 <li><strong>delta_f</strong> (<em>{None</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – The frequency step used to generate the ringdown.
 If None, it will be set to the inverse of the time at which the
 amplitude is 1/1000 of the peak amplitude (the minimum of all modes).</li>
@@ -2078,7 +2079,7 @@ as many as number of modes.</li>
 <li><strong>amplmn</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Amplitude of the lmn overtone, as many as the number of nmodes.</li>
 <li><strong>philmn</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Phase of the lmn overtone, as many as the number of modes. Should also
 include the information from the azimuthal angle (phi + m*Phi).</li>
-<li><strong>inclination</strong> (<em>{0.</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – Inclination of the system in radians. Default is 0 (face on).</li>
+<li><strong>inclination</strong> (<em>{None</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – Inclination of the system in radians for the spherical harmonics.</li>
 <li><strong>delta_f</strong> (<em>{None</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – The frequency step used to generate the ringdown.
 If None, it will be set to the inverse of the time at which the
 amplitude is 1/1000 of the peak amplitude (the minimum of all modes).</li>
@@ -2117,7 +2118,7 @@ for keyword arguments. A common example would be a row in an xml table.</li>
 <li><strong>amp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – The amplitude of the ringdown (constant for now).</li>
 <li><strong>phi</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – The initial phase of the ringdown. Should also include the information
 from the azimuthal angle (phi_0 + m*Phi).</li>
-<li><strong>inclination</strong> (<em>{0.</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – Inclination of the system in radians. Default is 0 (face on).</li>
+<li><strong>inclination</strong> (<em>{None</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – Inclination of the system in radians for the spherical harmonics.</li>
 <li><strong>l</strong> (<em>{2</em><em>, </em><em>int}</em><em>, </em><em>optional</em>) – l mode for the spherical harmonics. Default is l=2.</li>
 <li><strong>m</strong> (<em>{2</em><em>, </em><em>int}</em><em>, </em><em>optional</em>) – m mode for the spherical harmonics. Default is m=2.</li>
 <li><strong>t_0</strong> (<em>{0</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – The starting time of the ringdown.</li>
@@ -2177,7 +2178,7 @@ See table II in <a class="reference external" href="https://arxiv.org/abs/1107.0
 fundamental mode, as many as the number of subdominant modes.</li>
 <li><strong>philmn</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Phase of the lmn overtone, as many as the number of modes. Should also
 include the information from the azimuthal angle (phi + m*Phi).</li>
-<li><strong>inclination</strong> (<em>{0.</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – Inclination of the system in radians. Default is 0 (face on).</li>
+<li><strong>inclination</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Inclination of the system in radians.</li>
 <li><strong>delta_t</strong> (<em>{None</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – The time step used to generate the ringdown.
 If None, it will be set to the inverse of the frequency at which the
 amplitude is 1/1000 of the peak amplitude (the minimum of all modes).</li>
@@ -2230,7 +2231,8 @@ Example: lmns = [‘223’,‘331’] are the modes 220, 221, 222, and 330</li>
 fundamental mode, as many as the number of subdominant modes.</li>
 <li><strong>philmn</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Phase of the lmn overtone, as many as the number of modes. Should also
 include the information from the azimuthal angle (phi + m*Phi).</li>
-<li><strong>inclination</strong> (<em>{0.</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – Inclination of the system in radians. Default is 0 (face on).</li>
+<li><strong>inclination</strong> (<em>{None</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – Inclination of the system in radians. If None, the spherical harmonics
+will be set to 1.</li>
 <li><strong>delta_t</strong> (<em>{None</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – The time step used to generate the ringdown.
 If None, it will be set to the inverse of the frequency at which the
 amplitude is 1/1000 of the peak amplitude (the minimum of all modes).</li>
@@ -2284,7 +2286,7 @@ as many as number of modes.</li>
 fundamental mode, as many as the number of subdominant modes.</li>
 <li><strong>philmn</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Phase of the lmn overtone, as many as the number of modes. Should also
 include the information from the azimuthal angle (phi + m*Phi).</li>
-<li><strong>inclination</strong> (<em>{0.</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – Inclination of the system in radians. Default is 0 (face on).</li>
+<li><strong>inclination</strong> (<em>{None</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – Inclination of the system in radians for the spherical harmonics.</li>
 <li><strong>delta_t</strong> (<em>{None</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – The time step used to generate the ringdown.
 If None, it will be set to the inverse of the frequency at which the
 amplitude is 1/1000 of the peak amplitude (the minimum of all modes).</li>
@@ -2327,7 +2329,7 @@ taper will add a rapid ringup with timescale tau/10.</li>
 <li><strong>amp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – The amplitude of the ringdown (constant for now).</li>
 <li><strong>phi</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – The initial phase of the ringdown. Should also include the information
 from the azimuthal angle (phi_0 + m*Phi)</li>
-<li><strong>inclination</strong> (<em>{0.</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – Inclination of the system in radians. Default is 0 (face on).</li>
+<li><strong>inclination</strong> (<em>{None</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – Inclination of the system in radians for the spherical harmonics.</li>
 <li><strong>l</strong> (<em>{2</em><em>, </em><em>int}</em><em>, </em><em>optional</em>) – l mode for the spherical harmonics. Default is l=2.</li>
 <li><strong>m</strong> (<em>{2</em><em>, </em><em>int}</em><em>, </em><em>optional</em>) – m mode for the spherical harmonics. Default is m=2.</li>
 <li><strong>delta_t</strong> (<em>{None</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – The time step used to generate the ringdown.
