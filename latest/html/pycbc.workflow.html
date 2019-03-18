@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.workflow package &mdash; PyCBC c038bc documentation</title>
+  <title>pycbc.workflow package &mdash; PyCBC 3f6c49 documentation</title>
   
 
   
@@ -3470,6 +3470,36 @@ data is available.</p>
 </dd></dl>
 
 <dl class="class">
+<dt id="pycbc.workflow.jobsetup.PyCBCMultiInspiralExecutable">
+<em class="property">class </em><code class="descclassname">pycbc.workflow.jobsetup.</code><code class="descname">PyCBCMultiInspiralExecutable</code><span class="sig-paren">(</span><em>cp</em>, <em>name</em>, <em>universe=None</em>, <em>ifo=None</em>, <em>injection_file=None</em>, <em>gate_files=None</em>, <em>out_dir=None</em>, <em>tags=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/workflow/jobsetup.html#PyCBCMultiInspiralExecutable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.workflow.jobsetup.PyCBCMultiInspiralExecutable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycbc.workflow.core.Executable" title="pycbc.workflow.core.Executable"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.workflow.core.Executable</span></code></a></p>
+<p>The class responsible for setting up jobs for the
+pycbc_multi_inspiral executable.</p>
+<dl class="method">
+<dt id="pycbc.workflow.jobsetup.PyCBCMultiInspiralExecutable.create_node">
+<code class="descname">create_node</code><span class="sig-paren">(</span><em>data_seg</em>, <em>valid_seg</em>, <em>parent=None</em>, <em>inj_file=None</em>, <em>dfParents=None</em>, <em>bankVetoBank=None</em>, <em>ipn_file=None</em>, <em>slide=None</em>, <em>tags=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/workflow/jobsetup.html#PyCBCMultiInspiralExecutable.create_node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.workflow.jobsetup.PyCBCMultiInspiralExecutable.create_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default node constructor.</p>
+<p>This is usually overridden by subclasses of Executable.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.workflow.jobsetup.PyCBCMultiInspiralExecutable.current_retention_level">
+<code class="descname">current_retention_level</code><em class="property"> = 2</em><a class="headerlink" href="#pycbc.workflow.jobsetup.PyCBCMultiInspiralExecutable.current_retention_level" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.workflow.jobsetup.PyCBCMultiInspiralExecutable.file_input_options">
+<code class="descname">file_input_options</code><em class="property"> = ['--gating-file']</em><a class="headerlink" href="#pycbc.workflow.jobsetup.PyCBCMultiInspiralExecutable.file_input_options" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pycbc.workflow.jobsetup.PyCBCMultiInspiralExecutable.get_valid_times">
+<code class="descname">get_valid_times</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/workflow/jobsetup.html#PyCBCMultiInspiralExecutable.get_valid_times"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.workflow.jobsetup.PyCBCMultiInspiralExecutable.get_valid_times" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="pycbc.workflow.jobsetup.PyCBCTmpltbankExecutable">
 <em class="property">class </em><code class="descclassname">pycbc.workflow.jobsetup.</code><code class="descname">PyCBCTmpltbankExecutable</code><span class="sig-paren">(</span><em>cp</em>, <em>exe_name</em>, <em>ifo=None</em>, <em>out_dir=None</em>, <em>tags=None</em>, <em>write_psd=False</em>, <em>psd_files=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/workflow/jobsetup.html#PyCBCTmpltbankExecutable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.workflow.jobsetup.PyCBCTmpltbankExecutable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pycbc.workflow.core.Executable" title="pycbc.workflow.core.Executable"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.workflow.core.Executable</span></code></a></p>
@@ -5820,7 +5850,7 @@ interferometer data</p>
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Mar 14, 2019.
+        Last updated on Mar 18, 2019.
       </span>
 
     </p>

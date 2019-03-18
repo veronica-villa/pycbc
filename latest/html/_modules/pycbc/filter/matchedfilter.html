@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.filter.matchedfilter &mdash; PyCBC c038bc documentation</title>
+  <title>pycbc.filter.matchedfilter &mdash; PyCBC 3f6c49 documentation</title>
   
 
   
@@ -531,7 +531,7 @@
         <span class="n">corr</span> <span class="o">=</span> <span class="n">FrequencySeries</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">corr_mem</span><span class="p">,</span> <span class="n">delta_f</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">delta_f</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">snr</span><span class="p">,</span> <span class="n">norm</span><span class="p">,</span> <span class="n">corr</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">snrv</span></div>
 
-<div class="viewcode-block" id="MatchedFilterControl.full_matched_filter_thresh_only"><a class="viewcode-back" href="../../../pycbc.filter.html#pycbc.filter.matchedfilter.MatchedFilterControl.full_matched_filter_thresh_only">[docs]</a>    <span class="k">def</span> <span class="nf">full_matched_filter_thresh_only</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">segnum</span><span class="p">,</span> <span class="n">template_norm</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="MatchedFilterControl.full_matched_filter_thresh_only"><a class="viewcode-back" href="../../../pycbc.filter.html#pycbc.filter.matchedfilter.MatchedFilterControl.full_matched_filter_thresh_only">[docs]</a>    <span class="k">def</span> <span class="nf">full_matched_filter_thresh_only</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">segnum</span><span class="p">,</span> <span class="n">template_norm</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Returns the complex snr timeseries, normalization of the complex snr,</span>
 <span class="sd">        the correlation vector frequency series, the list of indices of the</span>
 <span class="sd">        triggers, and the snr values at the trigger locations. Returns empty</span>
@@ -563,15 +563,11 @@
 <span class="sd">        snrv : Array</span>
 <span class="sd">            The snr values at the trigger locations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">norm</span> <span class="o">=</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">stilde_delta_f</span><span class="p">)</span> <span class="o">/</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">template_norm</span><span class="p">)</span>
+        <span class="n">norm</span> <span class="o">=</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta_f</span><span class="p">)</span> <span class="o">/</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">template_norm</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">correlators</span><span class="p">[</span><span class="n">segnum</span><span class="p">]</span><span class="o">.</span><span class="n">correlate</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ifft</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
-        <span class="n">snrv</span><span class="p">,</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">threshold_only</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">snr_mem</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="p">[</span><span class="n">segnum</span><span class="p">]</span><span class="o">.</span><span class="n">analyze</span><span class="p">],</span>
+        <span class="n">idx</span><span class="p">,</span> <span class="n">snrv</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">threshold_only</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">snr_mem</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="p">[</span><span class="n">segnum</span><span class="p">]</span><span class="o">.</span><span class="n">analyze</span><span class="p">],</span>
                                           <span class="bp">self</span><span class="o">.</span><span class="n">snr_threshold</span> <span class="o">/</span> <span class="n">norm</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
-
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> points above threshold&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">idx</span><span class="p">)))</span>
 
         <span class="n">snr</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">snr_mem</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="n">epoch</span><span class="p">,</span> <span class="n">delta_t</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">delta_t</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -2120,7 +2116,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Mar 14, 2019.
+        Last updated on Mar 18, 2019.
       </span>
 
     </p>

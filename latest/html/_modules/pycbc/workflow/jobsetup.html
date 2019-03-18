@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.workflow.jobsetup &mdash; PyCBC c038bc documentation</title>
+  <title>pycbc.workflow.jobsetup &mdash; PyCBC 3f6c49 documentation</title>
   
 
   
@@ -309,7 +309,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">exe_to_class_map</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;pycbc_inspiral&#39;</span>          <span class="p">:</span> <span class="n">PyCBCInspiralExecutable</span><span class="p">,</span>
-        <span class="s1">&#39;pycbc_inspiral_skymax&#39;</span>   <span class="p">:</span> <span class="n">PyCBCInspiralExecutable</span>
+        <span class="s1">&#39;pycbc_inspiral_skymax&#39;</span>   <span class="p">:</span> <span class="n">PyCBCInspiralExecutable</span><span class="p">,</span>
+        <span class="s1">&#39;pycbc_multi_inspiral&#39;</span>    <span class="p">:</span> <span class="n">PyCBCMultiInspiralExecutable</span><span class="p">,</span>
     <span class="p">}</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">exe_to_class_map</span><span class="p">[</span><span class="n">curr_exe</span><span class="p">]</span>
@@ -982,6 +983,128 @@
             <span class="n">new_data_seg</span> <span class="o">=</span> <span class="n">segments</span><span class="o">.</span><span class="n">segment</span><span class="p">([</span><span class="n">new_data_start</span><span class="p">,</span> <span class="n">new_data_end</span><span class="p">])</span>
             <span class="k">return</span> <span class="n">new_data_seg</span></div></div>
 
+<div class="viewcode-block" id="PyCBCMultiInspiralExecutable"><a class="viewcode-back" href="../../../pycbc.workflow.html#pycbc.workflow.jobsetup.PyCBCMultiInspiralExecutable">[docs]</a><span class="k">class</span> <span class="nc">PyCBCMultiInspiralExecutable</span><span class="p">(</span><span class="n">Executable</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The class responsible for setting up jobs for the</span>
+<span class="sd">    pycbc_multi_inspiral executable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">current_retention_level</span> <span class="o">=</span> <span class="n">Executable</span><span class="o">.</span><span class="n">ALL_TRIGGERS</span>
+    <span class="n">file_input_options</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;--gating-file&#39;</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cp</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">universe</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ifo</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">injection_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">gate_files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">out_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">tags</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">tags</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PyCBCMultiInspiralExecutable</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">cp</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">universe</span><span class="p">,</span>
+                <span class="n">ifo</span><span class="p">,</span> <span class="n">out_dir</span><span class="o">=</span><span class="n">out_dir</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">injection_file</span> <span class="o">=</span> <span class="n">injection_file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_seg</span> <span class="o">=</span> <span class="n">segments</span><span class="o">.</span><span class="n">segment</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;workflow&#39;</span><span class="p">,</span> <span class="s1">&#39;start-time&#39;</span><span class="p">)),</span>
+                                         <span class="nb">int</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;workflow&#39;</span><span class="p">,</span> <span class="s1">&#39;end-time&#39;</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_threads</span> <span class="o">=</span> <span class="mi">1</span>
+
+<div class="viewcode-block" id="PyCBCMultiInspiralExecutable.create_node"><a class="viewcode-back" href="../../../pycbc.workflow.html#pycbc.workflow.jobsetup.PyCBCMultiInspiralExecutable.create_node">[docs]</a>    <span class="k">def</span> <span class="nf">create_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_seg</span><span class="p">,</span> <span class="n">valid_seg</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inj_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">dfParents</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bankVetoBank</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ipn_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">slide</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">tags</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">tags</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">dfParents</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> must be supplied with frame or cache files&quot;</span>
+                              <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="c1"># If doing single IFO search, make sure slides are disabled</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ifo_list</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="ow">and</span> \
+                <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">get_opt</span><span class="p">(</span><span class="s1">&#39;--do-short-slides&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> \
+                 <span class="n">node</span><span class="o">.</span><span class="n">get_opt</span><span class="p">(</span><span class="s1">&#39;--short-slide-offset&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot run with time slides in a single IFO &quot;</span>
+                             <span class="s2">&quot;configuration! Please edit your configuration &quot;</span>
+                             <span class="s2">&quot;file accordingly.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Set instuments</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s2">&quot;--instruments&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ifo_list</span><span class="p">))</span>
+
+        <span class="n">pad_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_opt</span><span class="p">(</span><span class="s1">&#39;pad-data&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pad_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The option pad-data is a required option of &quot;</span>
+                             <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">. Please check the ini file.&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="c1"># Feed in bank_veto_bank.xml</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cp</span><span class="o">.</span><span class="n">has_option</span><span class="p">(</span><span class="s1">&#39;inspiral&#39;</span><span class="p">,</span> <span class="s1">&#39;do-bank-veto&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">bankVetoBank</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> must be given a bank veto file if the &quot;</span>
+                                 <span class="s2">&quot;argument &#39;do-bank-veto&#39; is given&quot;</span>
+                                 <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">add_input_opt</span><span class="p">(</span><span class="s1">&#39;--bank-veto-templates&#39;</span><span class="p">,</span> <span class="n">bankVetoBank</span><span class="p">)</span>
+
+        <span class="c1"># Set time options</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s1">&#39;--gps-start-time&#39;</span><span class="p">,</span> <span class="n">data_seg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">pad_data</span><span class="p">))</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s1">&#39;--gps-end-time&#39;</span><span class="p">,</span> <span class="n">data_seg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">pad_data</span><span class="p">))</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s1">&#39;--trig-start-time&#39;</span><span class="p">,</span> <span class="n">valid_seg</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s1">&#39;--trig-end-time&#39;</span><span class="p">,</span> <span class="n">valid_seg</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="n">node</span><span class="o">.</span><span class="n">add_profile</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span> <span class="s1">&#39;request_cpus&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_threads</span><span class="p">)</span>
+
+        <span class="c1"># Set the input and output files</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">new_output_file_opt</span><span class="p">(</span><span class="n">data_seg</span><span class="p">,</span> <span class="s1">&#39;.hdf&#39;</span><span class="p">,</span> <span class="s1">&#39;--output&#39;</span><span class="p">,</span>
+                                 <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span> <span class="n">store_file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">retain_files</span><span class="p">)</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">add_input_opt</span><span class="p">(</span><span class="s1">&#39;--bank-file&#39;</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="p">)</span>
+
+        <span class="c1"># TODO: isn&#39;t there a cleaner way of doing this?</span>
+        <span class="k">if</span> <span class="n">dfParents</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">add_arg</span><span class="p">(</span><span class="s1">&#39;--frame-cache </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> \
+                         <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;:&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">frameCache</span><span class="o">.</span><span class="n">ifo</span><span class="p">,</span> <span class="n">frameCache</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>\
+                                   <span class="k">for</span> <span class="n">frameCache</span> <span class="ow">in</span> <span class="n">dfParents</span><span class="p">]))</span>
+            <span class="k">for</span> <span class="n">frameCache</span> <span class="ow">in</span> <span class="n">dfParents</span><span class="p">:</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">_add_input</span><span class="p">(</span><span class="n">frameCache</span><span class="p">)</span>
+            <span class="c1">#node.add_input_list_opt(&#39;--frame-cache&#39;, dfParents)</span>
+
+        <span class="k">if</span> <span class="n">ipn_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">add_input_opt</span><span class="p">(</span><span class="s1">&#39;--sky-positions-file&#39;</span><span class="p">,</span> <span class="n">ipn_file</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">inj_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_opt</span><span class="p">(</span><span class="s1">&#39;--do-short-slides&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> \
+                    <span class="bp">self</span><span class="o">.</span><span class="n">get_opt</span><span class="p">(</span><span class="s1">&#39;--short-slide-offset&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot run with short slides in an &quot;</span>
+                                 <span class="s2">&quot;injection job. Please edit your &quot;</span>
+                                 <span class="s2">&quot;configuration file accordingly.&quot;</span><span class="p">)</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">add_input_opt</span><span class="p">(</span><span class="s1">&#39;--injection-file&#39;</span><span class="p">,</span> <span class="n">inj_file</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">slide</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">ifo</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ifo_list</span><span class="p">:</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s1">&#39;--</span><span class="si">%s</span><span class="s1">-slide-segment&#39;</span> <span class="o">%</span> <span class="n">ifo</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">slide</span><span class="p">[</span><span class="n">ifo</span><span class="p">])</span>
+
+        <span class="c1"># Channels</span>
+        <span class="n">channel_names</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">ifo</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ifo_list</span><span class="p">:</span>
+            <span class="n">channel_names</span><span class="p">[</span><span class="n">ifo</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cp</span><span class="o">.</span><span class="n">get_opt_tags</span><span class="p">(</span>
+                               <span class="s2">&quot;workflow&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">-channel-name&quot;</span> <span class="o">%</span> <span class="n">ifo</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">channel_names_str</span> <span class="o">=</span> \
+            <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">val</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">channel_names</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s2">&quot;--channel-name&quot;</span><span class="p">,</span> <span class="n">channel_names_str</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">node</span></div>
+
+<div class="viewcode-block" id="PyCBCMultiInspiralExecutable.get_valid_times"><a class="viewcode-back" href="../../../pycbc.workflow.html#pycbc.workflow.jobsetup.PyCBCMultiInspiralExecutable.get_valid_times">[docs]</a>    <span class="k">def</span> <span class="nf">get_valid_times</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pad_data</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_opt</span><span class="p">(</span><span class="s1">&#39;pad-data&#39;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_opt</span><span class="p">(</span><span class="s2">&quot;segment-start-pad&quot;</span><span class="p">):</span>
+            <span class="n">pad_data</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_opt</span><span class="p">(</span><span class="s2">&quot;pad-data&quot;</span><span class="p">))</span>
+            <span class="n">start_pad</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_opt</span><span class="p">(</span><span class="s2">&quot;segment-start-pad&quot;</span><span class="p">))</span>
+            <span class="n">end_pad</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_opt</span><span class="p">(</span><span class="s2">&quot;segment-end-pad&quot;</span><span class="p">))</span>
+            <span class="n">valid_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_seg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">pad_data</span> <span class="o">+</span> <span class="n">start_pad</span>
+            <span class="n">valid_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_seg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">pad_data</span> <span class="o">-</span> <span class="n">end_pad</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_opt</span><span class="p">(</span><span class="s1">&#39;analyse-segment-end&#39;</span><span class="p">):</span>
+            <span class="n">safety</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">deadtime</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_opt</span><span class="p">(</span><span class="s1">&#39;segment-length&#39;</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span>
+            <span class="n">spec_len</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_opt</span><span class="p">(</span><span class="s1">&#39;inverse-spec-length&#39;</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span>
+            <span class="n">valid_start</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_seg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">deadtime</span> <span class="o">-</span> <span class="n">spec_len</span> <span class="o">+</span> <span class="n">pad_data</span> <span class="o">-</span>
+                           <span class="n">safety</span><span class="p">)</span>
+            <span class="n">valid_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_seg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">spec_len</span> <span class="o">-</span> <span class="n">pad_data</span> <span class="o">-</span> <span class="n">safety</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">overlap</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_opt</span><span class="p">(</span><span class="s1">&#39;segment-length&#39;</span><span class="p">))</span> <span class="o">/</span> <span class="mi">4</span>
+            <span class="n">valid_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_seg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">overlap</span> <span class="o">+</span> <span class="n">pad_data</span>
+            <span class="n">valid_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_seg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">overlap</span> <span class="o">-</span> <span class="n">pad_data</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_seg</span><span class="p">,</span> <span class="n">segments</span><span class="o">.</span><span class="n">segment</span><span class="p">(</span><span class="n">valid_start</span><span class="p">,</span> <span class="n">valid_end</span><span class="p">)</span></div></div>
 
 <div class="viewcode-block" id="PyCBCTmpltbankExecutable"><a class="viewcode-back" href="../../../pycbc.workflow.html#pycbc.workflow.jobsetup.PyCBCTmpltbankExecutable">[docs]</a><span class="k">class</span> <span class="nc">PyCBCTmpltbankExecutable</span><span class="p">(</span><span class="n">Executable</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; The class used to create jobs for pycbc_geom_nonspin_bank Executable and</span>
@@ -1963,7 +2086,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Mar 14, 2019.
+        Last updated on Mar 18, 2019.
       </span>
 
     </p>
