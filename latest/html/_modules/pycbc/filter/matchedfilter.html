@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.filter.matchedfilter &mdash; PyCBC 00b9cf documentation</title>
+  <title>pycbc.filter.matchedfilter &mdash; PyCBC 99557f documentation</title>
   
 
   
@@ -1447,10 +1447,9 @@
         <span class="n">h_norm</span> <span class="o">=</span> <span class="n">sigmasq</span><span class="p">(</span><span class="n">htilde</span><span class="p">,</span> <span class="n">psd</span><span class="p">,</span> <span class="n">low_frequency_cutoff</span><span class="p">,</span> <span class="n">high_frequency_cutoff</span><span class="p">)</span>
 
     <span class="n">norm</span> <span class="o">=</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">stilde</span><span class="o">.</span><span class="n">delta_f</span><span class="p">)</span> <span class="o">/</span> <span class="n">sqrt</span><span class="p">(</span> <span class="n">h_norm</span><span class="p">)</span>
-    <span class="n">delta_t</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span> <span class="o">*</span> <span class="n">stilde</span><span class="o">.</span><span class="n">delta_f</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="p">(</span><span class="n">TimeSeries</span><span class="p">(</span><span class="n">_q</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="n">stilde</span><span class="o">.</span><span class="n">_epoch</span><span class="p">,</span> <span class="n">delta_t</span><span class="o">=</span><span class="n">delta_t</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
-           <span class="n">FrequencySeries</span><span class="p">(</span><span class="n">qtilde</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="n">stilde</span><span class="o">.</span><span class="n">_epoch</span><span class="p">,</span> <span class="n">delta_f</span><span class="o">=</span><span class="n">htilde</span><span class="o">.</span><span class="n">delta_f</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">TimeSeries</span><span class="p">(</span><span class="n">_q</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="n">stilde</span><span class="o">.</span><span class="n">_epoch</span><span class="p">,</span> <span class="n">delta_t</span><span class="o">=</span><span class="n">stilde</span><span class="o">.</span><span class="n">delta_t</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+           <span class="n">FrequencySeries</span><span class="p">(</span><span class="n">qtilde</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="n">stilde</span><span class="o">.</span><span class="n">_epoch</span><span class="p">,</span> <span class="n">delta_f</span><span class="o">=</span><span class="n">stilde</span><span class="o">.</span><span class="n">delta_f</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
            <span class="n">norm</span><span class="p">)</span></div>
 
 <span class="k">def</span> <span class="nf">smear</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">factor</span><span class="p">):</span>
