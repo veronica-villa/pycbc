@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.dq &mdash; PyCBC 9cb8ca documentation</title>
+  <title>pycbc.dq &mdash; PyCBC 3f0e35 documentation</title>
   
 
   
@@ -233,7 +233,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">from</span> <span class="nn">astropy.utils.data</span> <span class="k">import</span> <span class="n">download_file</span>
 <span class="kn">from</span> <span class="nn">ligo.segments</span> <span class="k">import</span> <span class="n">segmentlist</span><span class="p">,</span> <span class="n">segment</span>
-
+<span class="kn">from</span> <span class="nn">pycbc.frame.losc</span> <span class="k">import</span> <span class="n">get_run</span>
 
 <div class="viewcode-block" id="parse_veto_definer"><a class="viewcode-back" href="../../pycbc.html#pycbc.dq.parse_veto_definer">[docs]</a><span class="k">def</span> <span class="nf">parse_veto_definer</span><span class="p">(</span><span class="n">veto_def_filename</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Parse a veto definer file from the filename and return a dictionary</span>
@@ -296,7 +296,7 @@
     <span class="k">return</span> <span class="n">data</span></div>
 
 
-<span class="n">GWOSC_URL</span> <span class="o">=</span> <span class="s1">&#39;https://www.gw-openscience.org/timeline/segments/json/O1/</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">/&#39;</span>
+<span class="n">GWOSC_URL</span> <span class="o">=</span> <span class="s1">&#39;https://www.gw-openscience.org/timeline/segments/json/</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">/&#39;</span>
 
 
 <div class="viewcode-block" id="query_flag"><a class="viewcode-back" href="../../pycbc.html#pycbc.dq.query_flag">[docs]</a><span class="k">def</span> <span class="nf">query_flag</span><span class="p">(</span><span class="n">ifo</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span>
@@ -355,7 +355,8 @@
             <span class="k">return</span> <span class="p">(</span><span class="n">data</span> <span class="o">-</span> <span class="n">negate</span><span class="p">)</span><span class="o">.</span><span class="n">coalesce</span><span class="p">()</span>
 
         <span class="n">duration</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="n">GWOSC_URL</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ifo</span><span class="p">,</span> <span class="n">segment_name</span><span class="p">,</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">GWOSC_URL</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">get_run</span><span class="p">(</span><span class="n">start_time</span> <span class="o">+</span> <span class="n">duration</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span>
+                               <span class="n">ifo</span><span class="p">,</span> <span class="n">segment_name</span><span class="p">,</span>
                                <span class="nb">int</span><span class="p">(</span><span class="n">start_time</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">duration</span><span class="p">))</span>
 
         <span class="k">try</span><span class="p">:</span>
@@ -626,7 +627,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Mar 22, 2019.
+        Last updated on Mar 25, 2019.
       </span>
 
     </p>

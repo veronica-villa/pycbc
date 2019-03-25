@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.frame.losc &mdash; PyCBC 9cb8ca documentation</title>
+  <title>pycbc.frame.losc &mdash; PyCBC 3f0e35 documentation</title>
   
 
   
@@ -224,7 +224,7 @@
 
 <span class="n">_losc_url</span> <span class="o">=</span> <span class="s2">&quot;https://losc.ligo.org/archive/links/</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">/json/&quot;</span>
 
-<span class="k">def</span> <span class="nf">_get_run</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
+<div class="viewcode-block" id="get_run"><a class="viewcode-back" href="../../../pycbc.frame.html#pycbc.frame.losc.get_run">[docs]</a><span class="k">def</span> <span class="nf">get_run</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
     <span class="k">if</span> <span class="mi">1164556817</span> <span class="o">&lt;=</span> <span class="n">time</span> <span class="o">&lt;=</span> <span class="mi">1187733618</span><span class="p">:</span>
         <span class="k">return</span> <span class="s1">&#39;O2_16KHZ_R1&#39;</span>
     <span class="k">if</span> <span class="mi">1126051217</span> <span class="o">&lt;=</span> <span class="n">time</span> <span class="o">&lt;=</span> <span class="mi">1137254417</span><span class="p">:</span>
@@ -234,7 +234,7 @@
     <span class="k">elif</span> <span class="mi">930787215</span> <span class="o">&lt;=</span> <span class="n">time</span> <span class="o">&lt;=</span> <span class="mi">971568015</span><span class="p">:</span>
         <span class="k">return</span> <span class="s1">&#39;S6&#39;</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Time </span><span class="si">%s</span><span class="s1"> not available in a public dataset&#39;</span> <span class="o">%</span> <span class="n">time</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Time </span><span class="si">%s</span><span class="s1"> not available in a public dataset&#39;</span> <span class="o">%</span> <span class="n">time</span><span class="p">)</span></div>
 
 <span class="k">def</span> <span class="nf">_get_channel</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
     <span class="k">if</span> <span class="mi">1164556817</span> <span class="o">&lt;=</span> <span class="n">time</span> <span class="o">&lt;=</span> <span class="mi">1187733618</span><span class="p">:</span>
@@ -261,8 +261,8 @@
 <span class="sd">        requested times.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">import</span> <span class="nn">urllib</span><span class="o">,</span> <span class="nn">json</span>
-    <span class="n">run</span> <span class="o">=</span> <span class="n">_get_run</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
-    <span class="n">run2</span> <span class="o">=</span> <span class="n">_get_run</span><span class="p">(</span><span class="n">end_time</span><span class="p">)</span>
+    <span class="n">run</span> <span class="o">=</span> <span class="n">get_run</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
+    <span class="n">run2</span> <span class="o">=</span> <span class="n">get_run</span><span class="p">(</span><span class="n">end_time</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">run</span> <span class="o">!=</span> <span class="n">run2</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Spanning multiple runs is not currently supported.&#39;</span>
                          <span class="s1">&#39;You have requested data that uses &#39;</span>
@@ -373,7 +373,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Mar 22, 2019.
+        Last updated on Mar 25, 2019.
       </span>
 
     </p>
