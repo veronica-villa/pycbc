@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.workflow.jobsetup &mdash; PyCBC a949a3 documentation</title>
+  <title>pycbc.workflow.jobsetup &mdash; PyCBC a70f63 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                1.13.5
+                None
               </div>
             
           
@@ -2070,6 +2070,13 @@
         <span class="n">inference_file</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">new_output_file_opt</span><span class="p">(</span><span class="n">analysis_time</span><span class="p">,</span>
                                                   <span class="s2">&quot;.hdf&quot;</span><span class="p">,</span> <span class="s2">&quot;--output-file&quot;</span><span class="p">,</span>
                                                   <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cp</span><span class="o">.</span><span class="n">has_option</span><span class="p">(</span><span class="s2">&quot;pegasus_profile-inference&quot;</span><span class="p">,</span>
+                              <span class="s2">&quot;condor|+CheckpointSig&quot;</span><span class="p">):</span>
+            <span class="n">ckpt_file_name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.checkpoint&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inference_file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">ckpt_file</span> <span class="o">=</span> <span class="n">dax</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">ckpt_file_name</span><span class="p">)</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">_dax_node</span><span class="o">.</span><span class="n">uses</span><span class="p">(</span><span class="n">ckpt_file</span><span class="p">,</span> <span class="n">link</span><span class="o">=</span><span class="n">dax</span><span class="o">.</span><span class="n">Link</span><span class="o">.</span><span class="n">OUTPUT</span><span class="p">,</span>
+                                <span class="n">register</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">transfer</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">node</span><span class="p">,</span> <span class="n">inference_file</span></div></div>
 </pre></div>

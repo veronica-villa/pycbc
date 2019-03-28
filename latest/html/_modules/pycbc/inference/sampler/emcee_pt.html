@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.sampler.emcee_pt &mdash; PyCBC a949a3 documentation</title>
+  <title>pycbc.inference.sampler.emcee_pt &mdash; PyCBC a70f63 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                1.13.5
+                None
               </div>
             
           
@@ -271,7 +271,8 @@
     <span class="n">burn_in_class</span> <span class="o">=</span> <span class="n">MultiTemperedMCMCBurnInTests</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">ntemps</span><span class="p">,</span> <span class="n">nwalkers</span><span class="p">,</span> <span class="n">betas</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">checkpoint_interval</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">loglikelihood_function</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">checkpoint_interval</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">checkpoint_signal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">loglikelihood_function</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">nprocesses</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">use_mpi</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
@@ -306,6 +307,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_nwalkers</span> <span class="o">=</span> <span class="n">nwalkers</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ntemps</span> <span class="o">=</span> <span class="n">ntemps</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_checkpoint_interval</span> <span class="o">=</span> <span class="n">checkpoint_interval</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_checkpoint_signal</span> <span class="o">=</span> <span class="n">checkpoint_signal</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">io</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -359,10 +361,12 @@
             <span class="n">ntemps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="s2">&quot;ntemps&quot;</span><span class="p">))</span>
         <span class="c1"># get the checkpoint interval, if it&#39;s specified</span>
         <span class="n">checkpoint_interval</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">checkpoint_from_config</span><span class="p">(</span><span class="n">cp</span><span class="p">,</span> <span class="n">section</span><span class="p">)</span>
+        <span class="n">checkpoint_signal</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">ckpt_signal_from_config</span><span class="p">(</span><span class="n">cp</span><span class="p">,</span> <span class="n">section</span><span class="p">)</span>
         <span class="c1"># get the loglikelihood function</span>
         <span class="n">logl</span> <span class="o">=</span> <span class="n">get_optional_arg_from_config</span><span class="p">(</span><span class="n">cp</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="s1">&#39;logl-function&#39;</span><span class="p">)</span>
         <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ntemps</span><span class="p">,</span> <span class="n">nwalkers</span><span class="p">,</span> <span class="n">betas</span><span class="o">=</span><span class="n">betas</span><span class="p">,</span>
                   <span class="n">checkpoint_interval</span><span class="o">=</span><span class="n">checkpoint_interval</span><span class="p">,</span>
+                  <span class="n">checkpoint_signal</span><span class="o">=</span><span class="n">checkpoint_signal</span><span class="p">,</span>
                   <span class="n">loglikelihood_function</span><span class="o">=</span><span class="n">logl</span><span class="p">,</span> <span class="n">nprocesses</span><span class="o">=</span><span class="n">nprocesses</span><span class="p">,</span>
                   <span class="n">use_mpi</span><span class="o">=</span><span class="n">use_mpi</span><span class="p">)</span>
         <span class="c1"># set target</span>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>PyCBC inference documentation (pycbc.inference) &mdash; PyCBC a949a3 documentation</title>
+  <title>PyCBC inference documentation (pycbc.inference) &mdash; PyCBC a70f63 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                1.13.5
+                None
               </div>
             
           
@@ -1312,13 +1312,13 @@ cluster:</strong> you need to obtain the data from the
 <a class="reference external" href="https://www.gw-openscience.org">Gravitational Wave Open Science Center</a>.
 First run the following commands to download the needed frame files to your
 working directory:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget https://www.gw-openscience.org/GW150914data/H-H1_LOSC_4_V2-1126257414-4096.gwf
-wget https://www.gw-openscience.org/GW150914data/L-L1_LOSC_4_V2-1126257414-4096.gwf
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget https://www.gw-openscience.org/catalog/GWTC-1-confident/data/GW150914/H-H1_GWOSC_4KHZ_R1-1126257415-4096.gwf
+wget https://www.gw-openscience.org/catalog/GWTC-1-confident/data/GW150914/L-L1_GWOSC_4KHZ_R1-1126257415-4096.gwf
 </pre></div>
 </div>
 <p>Then set the following enviornment variables:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">FRAMES</span><span class="o">=</span><span class="s2">&quot;--frame-files H1:H-H1_LOSC_4_V2-1126257414-4096.gwf L1:L-L1_LOSC_4_V2-1126257414-4096.gwf&quot;</span>
-<span class="nb">export</span> <span class="nv">CHANNELS</span><span class="o">=</span><span class="s2">&quot;H1:LOSC-STRAIN L1:LOSC-STRAIN&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">FRAMES</span><span class="o">=</span><span class="s2">&quot;--frame-files H1:H-H1_GWOSC_4KHZ_R1-1126257415-4096.gwf L1:L-L1_GWOSC_4KHZ_R1-1126257415-4096.gwf&quot;</span>
+<span class="nb">export</span> <span class="nv">CHANNELS</span><span class="o">=</span><span class="s2">&quot;H1:GWOSC-4KHZ_R1_STRAIN L1:GWOSC-4KHZ_R1_STRAIN&quot;</span>
 </pre></div>
 </div>
 </li>

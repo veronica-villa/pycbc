@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.sampler package &mdash; PyCBC a949a3 documentation</title>
+  <title>pycbc.inference.sampler package &mdash; PyCBC a70f63 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                1.13.5
+                None
               </div>
             
           
@@ -521,6 +521,11 @@ the given filename. Also allows for other keyword arguments.</dd>
 <dd></dd></dl>
 
 <dl class="attribute">
+<dt id="pycbc.inference.sampler.base_mcmc.BaseMCMC.checkpoint_signal">
+<code class="descname">checkpoint_signal</code><a class="headerlink" href="#pycbc.inference.sampler.base_mcmc.BaseMCMC.checkpoint_signal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="pycbc.inference.sampler.base_mcmc.BaseMCMC.target_niterations">
 <code class="descname">target_niterations</code><a class="headerlink" href="#pycbc.inference.sampler.base_mcmc.BaseMCMC.target_niterations" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -631,6 +636,37 @@ temperatures this would be <code class="docutils literal notranslate"><span clas
 <dt>
 <code class="descname">checkpoint_interval</code></dt>
 <dd><p>The number of iterations to do between checkpoints.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">checkpoint_signal</code></dt>
+<dd><p>The signal to use when checkpointing.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pycbc.inference.sampler.base_mcmc.BaseMCMC.ckpt_signal_from_config">
+<em class="property">static </em><code class="descname">ckpt_signal_from_config</code><span class="sig-paren">(</span><em>cp</em>, <em>section</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/sampler/base_mcmc.html#BaseMCMC.ckpt_signal_from_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.sampler.base_mcmc.BaseMCMC.ckpt_signal_from_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the checkpoint signal from the given config file.</p>
+<p>This looks for ‘checkpoint-signal’ in the section.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cp</strong> (<em>ConfigParser</em>) – Open config parser to retrieve the argument from.</li>
+<li><strong>section</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Name of the section to retrieve from.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The checkpoint interval, if it is in the section. Otherw</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)">None</a></p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -1113,7 +1149,7 @@ number of samples per walker is less than this, will just set to
 packages for parameter estimation.</p>
 <dl class="class">
 <dt id="pycbc.inference.sampler.emcee.EmceeEnsembleSampler">
-<em class="property">class </em><code class="descclassname">pycbc.inference.sampler.emcee.</code><code class="descname">EmceeEnsembleSampler</code><span class="sig-paren">(</span><em>model</em>, <em>nwalkers</em>, <em>checkpoint_interval=None</em>, <em>logpost_function=None</em>, <em>nprocesses=1</em>, <em>use_mpi=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/sampler/emcee.html#EmceeEnsembleSampler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.sampler.emcee.EmceeEnsembleSampler" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pycbc.inference.sampler.emcee.</code><code class="descname">EmceeEnsembleSampler</code><span class="sig-paren">(</span><em>model</em>, <em>nwalkers</em>, <em>checkpoint_interval=None</em>, <em>checkpoint_signal=None</em>, <em>logpost_function=None</em>, <em>nprocesses=1</em>, <em>use_mpi=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/sampler/emcee.html#EmceeEnsembleSampler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.sampler.emcee.EmceeEnsembleSampler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pycbc.inference.sampler.base_mcmc.MCMCAutocorrSupport" title="pycbc.inference.sampler.base_mcmc.MCMCAutocorrSupport"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.sampler.base_mcmc.MCMCAutocorrSupport</span></code></a>, <a class="reference internal" href="#pycbc.inference.sampler.base_mcmc.BaseMCMC" title="pycbc.inference.sampler.base_mcmc.BaseMCMC"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.sampler.base_mcmc.BaseMCMC</span></code></a>, <a class="reference internal" href="#pycbc.inference.sampler.base.BaseSampler" title="pycbc.inference.sampler.base.BaseSampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.sampler.base.BaseSampler</span></code></a></p>
 <p>This class is used to construct an MCMC sampler from the emcee
 package’s EnsembleSampler.</p>
@@ -1232,7 +1268,7 @@ in an an append state.</td>
 packages for parameter estimation.</p>
 <dl class="class">
 <dt id="pycbc.inference.sampler.emcee_pt.EmceePTSampler">
-<em class="property">class </em><code class="descclassname">pycbc.inference.sampler.emcee_pt.</code><code class="descname">EmceePTSampler</code><span class="sig-paren">(</span><em>model</em>, <em>ntemps</em>, <em>nwalkers</em>, <em>betas=None</em>, <em>checkpoint_interval=None</em>, <em>loglikelihood_function=None</em>, <em>nprocesses=1</em>, <em>use_mpi=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/sampler/emcee_pt.html#EmceePTSampler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.sampler.emcee_pt.EmceePTSampler" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pycbc.inference.sampler.emcee_pt.</code><code class="descname">EmceePTSampler</code><span class="sig-paren">(</span><em>model</em>, <em>ntemps</em>, <em>nwalkers</em>, <em>betas=None</em>, <em>checkpoint_interval=None</em>, <em>checkpoint_signal=None</em>, <em>loglikelihood_function=None</em>, <em>nprocesses=1</em>, <em>use_mpi=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/sampler/emcee_pt.html#EmceePTSampler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.sampler.emcee_pt.EmceePTSampler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pycbc.inference.sampler.base_multitemper.MultiTemperedAutocorrSupport" title="pycbc.inference.sampler.base_multitemper.MultiTemperedAutocorrSupport"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.sampler.base_multitemper.MultiTemperedAutocorrSupport</span></code></a>, <a class="reference internal" href="#pycbc.inference.sampler.base_multitemper.MultiTemperedSupport" title="pycbc.inference.sampler.base_multitemper.MultiTemperedSupport"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.sampler.base_multitemper.MultiTemperedSupport</span></code></a>, <a class="reference internal" href="#pycbc.inference.sampler.base_mcmc.BaseMCMC" title="pycbc.inference.sampler.base_mcmc.BaseMCMC"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.sampler.base_mcmc.BaseMCMC</span></code></a>, <a class="reference internal" href="#pycbc.inference.sampler.base.BaseSampler" title="pycbc.inference.sampler.base.BaseSampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.sampler.base.BaseSampler</span></code></a></p>
 <p>This class is used to construct a parallel-tempered MCMC sampler from
 the emcee package’s PTSampler.</p>
