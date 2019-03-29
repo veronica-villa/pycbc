@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>The workflow matched-filter module &mdash; PyCBC a70f63 documentation</title>
+  <title>The workflow matched-filter module &mdash; PyCBC d87bb9 documentation</title>
   
 
   
@@ -545,6 +545,8 @@ optional arguments:
   --user-tag TAG        This is used to identify FULL_DATA jobs for
                         compatibility with pipedown post-processing. Option
                         will be removed when no longer needed.
+  --keep-loudest-log-chirp-window KEEP_LOUDEST_LOG_CHIRP_WINDOW
+                        Keep loudest triggers within ln chirp mass window
   --keep-loudest-interval KEEP_LOUDEST_INTERVAL
                         Window in seconds to maximize triggers over bank
   --keep-loudest-num KEEP_LOUDEST_NUM
@@ -728,7 +730,7 @@ Options for segmenting the strain:
 Options for selecting the processing scheme in this program.:
   --processing-scheme PROCESSING_SCHEME
                         The choice of processing scheme. Choices are [&#39;mkl&#39;,
-                        &#39;numpy&#39;, &#39;cuda&#39;, &#39;cpu&#39;]. (optional for CPU scheme) The
+                        &#39;numpy&#39;, &#39;cpu&#39;, &#39;cuda&#39;]. (optional for CPU scheme) The
                         number of execution threads can be indicated by
                         cpu:NUM_THREADS, where NUM_THREADS is an integer. The
                         default is a single thread. If the scheme is provided
@@ -1019,7 +1021,7 @@ stage you can call the various sub-functions directly.</p>
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Mar 28, 2019.
+        Last updated on Mar 29, 2019.
       </span>
 
     </p>
