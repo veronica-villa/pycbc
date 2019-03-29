@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>PyCBC inference documentation (pycbc.inference) &mdash; PyCBC 7ba3ec documentation</title>
+  <title>PyCBC inference documentation (pycbc.inference) &mdash; PyCBC 312fd5 documentation</title>
   
 
   
@@ -1095,14 +1095,14 @@ it <code class="docutils literal notranslate"><span class="pre">inference.ini</s
 
 <span class="k">[sampler]</span>
 <span class="na">name</span> <span class="o">=</span> <span class="s">emcee_pt</span>
-<span class="na">nwalkers</span> <span class="o">=</span> <span class="s">200</span>
-<span class="na">ntemps</span> <span class="o">=</span> <span class="s">20</span>
+<span class="na">nwalkers</span> <span class="o">=</span> <span class="s">1000</span>
+<span class="na">ntemps</span> <span class="o">=</span> <span class="s">4</span>
 <span class="na">effective-nsamples</span> <span class="o">=</span> <span class="s">1000</span>
 <span class="na">checkpoint-interval</span> <span class="o">=</span> <span class="s">2000</span>
 <span class="na">max-samples-per-chain</span> <span class="o">=</span> <span class="s">1000</span>
 
 <span class="k">[sampler-burn_in]</span>
-<span class="na">burn-in-test</span> <span class="o">=</span> <span class="s">nacl</span>
+<span class="na">burn-in-test</span> <span class="o">=</span> <span class="s">nacl &amp; max_posterior</span>
 
 <span class="k">[variable_params]</span>
 <span class="c1">; waveform parameters that will vary in MCMC</span>
