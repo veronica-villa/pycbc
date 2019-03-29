@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.workflow.configuration &mdash; PyCBC 312fd5 documentation</title>
+  <title>pycbc.workflow.configuration &mdash; PyCBC 7da695 documentation</title>
   
 
   
@@ -503,8 +503,9 @@
 <span class="sd">    parser : argparse.ArgumentParser instance</span>
 <span class="sd">        The initialized argparse instance to add the workflow option group to.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">workflowArgs</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span><span class="s1">&#39;workflow&#39;</span><span class="p">,</span>
-                                          <span class="s1">&#39;Options needed for workflow setup.&#39;</span><span class="p">)</span>
+    <span class="n">workflowArgs</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span><span class="s1">&#39;Configuration&#39;</span><span class="p">,</span>
+                                             <span class="s1">&#39;Options needed for parsing &#39;</span>
+                                             <span class="s1">&#39;config file(s).&#39;</span><span class="p">)</span>
     <span class="n">workflowArgs</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--config-files&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store&#39;</span><span class="p">,</span>
                            <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;CONFIGFILE&quot;</span><span class="p">,</span>
                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;List of config files to be used in &quot;</span>
