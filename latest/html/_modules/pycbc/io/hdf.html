@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.io.hdf &mdash; PyCBC edb919 documentation</title>
+  <title>pycbc.io.hdf &mdash; PyCBC 7f565c documentation</title>
   
 
   
@@ -222,6 +222,7 @@
 <span class="kn">from</span> <span class="nn">pycbc.tmpltbank</span> <span class="k">import</span> <span class="n">return_search_summary</span>
 <span class="kn">from</span> <span class="nn">pycbc.tmpltbank</span> <span class="k">import</span> <span class="n">return_empty_sngl</span>
 <span class="kn">from</span> <span class="nn">pycbc</span> <span class="k">import</span> <span class="n">events</span><span class="p">,</span> <span class="n">conversions</span><span class="p">,</span> <span class="n">pnutils</span>
+<span class="kn">from</span> <span class="nn">pycbc.events</span> <span class="k">import</span> <span class="n">ranking</span>
 <span class="kn">from</span> <span class="nn">pycbc.events.stat</span> <span class="k">import</span> <span class="n">sngl_statistic_dict</span>
 
 <div class="viewcode-block" id="HFile"><a class="viewcode-back" href="../../../pycbc.io.html#pycbc.io.hdf.HFile">[docs]</a><span class="k">class</span> <span class="nc">HFile</span><span class="p">(</span><span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">):</span>
@@ -804,15 +805,15 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">newsnr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">events</span><span class="o">.</span><span class="n">newsnr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">snr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rchisq</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ranking</span><span class="o">.</span><span class="n">newsnr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">snr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rchisq</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">newsnr_sgveto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">events</span><span class="o">.</span><span class="n">newsnr_sgveto</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">snr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rchisq</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sgchisq</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ranking</span><span class="o">.</span><span class="n">newsnr_sgveto</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">snr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rchisq</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sgchisq</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">newsnr_sgveto_psdvar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">events</span><span class="o">.</span><span class="n">newsnr_sgveto_psdvar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">snr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rchisq</span><span class="p">,</span>
+        <span class="k">return</span> <span class="n">ranking</span><span class="o">.</span><span class="n">newsnr_sgveto_psdvar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">snr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rchisq</span><span class="p">,</span>
                                            <span class="bp">self</span><span class="o">.</span><span class="n">sgchisq</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">psd_var_val</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SingleDetTriggers.get_column"><a class="viewcode-back" href="../../../pycbc.io.html#pycbc.io.hdf.SingleDetTriggers.get_column">[docs]</a>    <span class="k">def</span> <span class="nf">get_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cname</span><span class="p">):</span>
@@ -1152,7 +1153,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Mar 30, 2019.
+        Last updated on Apr 01, 2019.
       </span>
 
     </p>

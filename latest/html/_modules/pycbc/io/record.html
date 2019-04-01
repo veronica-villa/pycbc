@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.io.record &mdash; PyCBC edb919 documentation</title>
+  <title>pycbc.io.record &mdash; PyCBC 7f565c documentation</title>
   
 
   
@@ -226,8 +226,8 @@
 <span class="c1"># =============================================================================</span>
 <span class="c1">#</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">This modules provides definitions of, and helper functions for, FieldArrays.</span>
-<span class="sd">FieldArrays are wrappers of numpy recarrays with additional functionality</span>
+<span class="sd">This modules provides definitions of, and helper functions for, FieldArray.</span>
+<span class="sd">FieldArray are wrappers of numpy recarrays with additional functionality</span>
 <span class="sd">useful for storing and retrieving data created by a search for gravitationa</span>
 <span class="sd">waves.</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -308,16 +308,16 @@
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
-<span class="sd">    &gt;&gt;&gt; from pycbc.io import FieldArrays</span>
-<span class="sd">    &gt;&gt;&gt; FieldArrays.lstring_as_obj()</span>
+<span class="sd">    &gt;&gt;&gt; from pycbc.io import FieldArray</span>
+<span class="sd">    &gt;&gt;&gt; FieldArray.lstring_as_obj()</span>
 <span class="sd">        True</span>
-<span class="sd">    &gt;&gt;&gt; FieldArrays.FieldArray.from_arrays([numpy.zeros(10)], dtype=[(&#39;foo&#39;, &#39;lstring&#39;)])</span>
+<span class="sd">    &gt;&gt;&gt; FieldArray.FieldArray.from_arrays([numpy.zeros(10)], dtype=[(&#39;foo&#39;, &#39;lstring&#39;)])</span>
 <span class="sd">    FieldArray([(0.0,), (0.0,), (0.0,), (0.0,), (0.0,), (0.0,), (0.0,), (0.0,),</span>
 <span class="sd">           (0.0,), (0.0,)],</span>
 <span class="sd">          dtype=[(&#39;foo&#39;, &#39;O&#39;)])</span>
-<span class="sd">    &gt;&gt;&gt; FieldArrays.lstring_as_obj(False)</span>
+<span class="sd">    &gt;&gt;&gt; FieldArray.lstring_as_obj(False)</span>
 <span class="sd">        False</span>
-<span class="sd">    &gt;&gt;&gt; FieldArrays.FieldArray.from_arrays([numpy.zeros(10)], dtype=[(&#39;foo&#39;, &#39;lstring&#39;)])</span>
+<span class="sd">    &gt;&gt;&gt; FieldArray.FieldArray.from_arrays([numpy.zeros(10)], dtype=[(&#39;foo&#39;, &#39;lstring&#39;)])</span>
 <span class="sd">    FieldArray([(&#39;0.0&#39;,), (&#39;0.0&#39;,), (&#39;0.0&#39;,), (&#39;0.0&#39;,), (&#39;0.0&#39;,), (&#39;0.0&#39;,),</span>
 <span class="sd">           (&#39;0.0&#39;,), (&#39;0.0&#39;,), (&#39;0.0&#39;,), (&#39;0.0&#39;,)],</span>
 <span class="sd">          dtype=[(&#39;foo&#39;, &#39;S50&#39;)])</span>
@@ -499,7 +499,7 @@
 
 <span class="k">def</span> <span class="nf">_ensure_array_list</span><span class="p">(</span><span class="n">arrays</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Ensures that every element in a list is an instance of a numpy array.&quot;&quot;&quot;</span>
-    <span class="c1"># Note: the isinstance test is needed below so that instances of FieldArrays</span>
+    <span class="c1"># Note: the isinstance test is needed below so that instances of FieldArray</span>
     <span class="c1"># are not converted to numpy arrays</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">ndmin</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
             <span class="k">else</span> <span class="n">arr</span> <span class="k">for</span> <span class="n">arr</span> <span class="ow">in</span> <span class="n">arrays</span><span class="p">]</span>
@@ -720,7 +720,7 @@
 
 <span class="sd">    * **Subfields and &#39;.&#39; indexing**:</span>
 <span class="sd">      Structured arrays, which are the base class for recarrays and, by</span>
-<span class="sd">      inheritance, FieldArrays, allows for fields to themselves have fields. For</span>
+<span class="sd">      inheritance, FieldArray, allows for fields to themselves have fields. For</span>
 <span class="sd">      example, an array ``x`` may have fields ``a`` and ``b``, with ``b`` having</span>
 <span class="sd">      subfields ``c`` and ``d``. You can access subfields using other index</span>
 <span class="sd">      notation or attribute notation. So, the subfields ``d`` may be retrieved</span>
@@ -1709,7 +1709,7 @@
 <span class="c1">#</span>
 <span class="c1"># =============================================================================</span>
 <span class="c1">#</span>
-<span class="c1">#                           FieldArrays with default fields</span>
+<span class="c1">#                           FieldArray with default fields</span>
 <span class="c1">#</span>
 <span class="c1"># =============================================================================</span>
 <span class="c1">#</span>
@@ -2093,7 +2093,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Mar 30, 2019.
+        Last updated on Apr 01, 2019.
       </span>
 
     </p>

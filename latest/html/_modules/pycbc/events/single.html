@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.events.single &mdash; PyCBC edb919 documentation</title>
+  <title>pycbc.events.single &mdash; PyCBC 7f565c documentation</title>
   
 
   
@@ -204,7 +204,7 @@
   <h1>Source code for pycbc.events.single</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot; utilities for assigning FAR to single detector triggers</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">pycbc.events</span> <span class="k">import</span> <span class="n">newsnr</span>
+<span class="kn">from</span> <span class="nn">pycbc.events</span> <span class="k">import</span> <span class="n">ranking</span>
 <span class="kn">from</span> <span class="nn">pycbc.types</span> <span class="k">import</span> <span class="n">MultiDetOptionAction</span>
 
 <div class="viewcode-block" id="LiveSingleFarThreshold"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.single.LiveSingleFarThreshold">[docs]</a><span class="k">class</span> <span class="nc">LiveSingleFarThreshold</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -250,7 +250,7 @@
         <span class="c1"># This uses the pycbc live convention of chisq always meaning the</span>
         <span class="c1"># reduced chisq.</span>
         <span class="n">rchisq</span> <span class="o">=</span> <span class="n">triggers</span><span class="p">[</span><span class="s1">&#39;chisq&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
-        <span class="n">nsnr</span> <span class="o">=</span> <span class="n">newsnr</span><span class="p">(</span><span class="n">triggers</span><span class="p">[</span><span class="s1">&#39;snr&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">rchisq</span><span class="p">)</span>
+        <span class="n">nsnr</span> <span class="o">=</span> <span class="n">ranking</span><span class="o">.</span><span class="n">newsnr</span><span class="p">(</span><span class="n">triggers</span><span class="p">[</span><span class="s1">&#39;snr&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">rchisq</span><span class="p">)</span>
         <span class="n">dur</span> <span class="o">=</span> <span class="n">triggers</span><span class="p">[</span><span class="s1">&#39;template_duration&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="n">nsnr</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">newsnr_threshold</span> <span class="ow">and</span> \
@@ -277,7 +277,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Mar 30, 2019.
+        Last updated on Apr 01, 2019.
       </span>
 
     </p>

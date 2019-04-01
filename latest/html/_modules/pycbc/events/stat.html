@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.events.stat &mdash; PyCBC edb919 documentation</title>
+  <title>pycbc.events.stat &mdash; PyCBC 7f565c documentation</title>
   
 
   
@@ -225,74 +225,11 @@
 <span class="c1">#</span>
 <span class="c1"># =============================================================================</span>
 <span class="c1">#</span>
-<span class="sd">&quot;&quot;&quot; This modules contains functions for calculating coincident ranking</span>
+<span class="sd">&quot;&quot;&quot; This module contains functions for calculating coincident ranking</span>
 <span class="sd">statistic values</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">events</span>
-
-<div class="viewcode-block" id="get_newsnr"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.get_newsnr">[docs]</a><span class="k">def</span> <span class="nf">get_newsnr</span><span class="p">(</span><span class="n">trigs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Calculate newsnr (&#39;reweighted SNR&#39;) for a trigs object</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    trigs: dict of numpy.ndarrays, h5py group (or similar dict-like object)</span>
-<span class="sd">        Dictionary-like object holding single detector trigger information.</span>
-<span class="sd">        &#39;chisq_dof&#39;, &#39;snr&#39;, and &#39;chisq&#39; are required keys</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    numpy.ndarray</span>
-<span class="sd">        Array of newsnr values</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">dof</span> <span class="o">=</span> <span class="mf">2.</span> <span class="o">*</span> <span class="n">trigs</span><span class="p">[</span><span class="s1">&#39;chisq_dof&#39;</span><span class="p">][:]</span> <span class="o">-</span> <span class="mf">2.</span>
-    <span class="n">newsnr</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">newsnr</span><span class="p">(</span><span class="n">trigs</span><span class="p">[</span><span class="s1">&#39;snr&#39;</span><span class="p">][:],</span> <span class="n">trigs</span><span class="p">[</span><span class="s1">&#39;chisq&#39;</span><span class="p">][:]</span> <span class="o">/</span> <span class="n">dof</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">newsnr</span><span class="p">,</span> <span class="n">ndmin</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="get_newsnr_sgveto"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.get_newsnr_sgveto">[docs]</a><span class="k">def</span> <span class="nf">get_newsnr_sgveto</span><span class="p">(</span><span class="n">trigs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Calculate newsnr re-weigthed by the sine-gaussian veto</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    trigs: dict of numpy.ndarrays, h5py group (or similar dict-like object)</span>
-<span class="sd">        Dictionary-like object holding single detector trigger information.</span>
-<span class="sd">        &#39;chisq_dof&#39;, &#39;snr&#39;, &#39;sg_chisq&#39; and &#39;chisq&#39; are required keys</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    numpy.ndarray</span>
-<span class="sd">        Array of newsnr values</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">dof</span> <span class="o">=</span> <span class="mf">2.</span> <span class="o">*</span> <span class="n">trigs</span><span class="p">[</span><span class="s1">&#39;chisq_dof&#39;</span><span class="p">][:]</span> <span class="o">-</span> <span class="mf">2.</span>
-    <span class="n">nsnr_sg</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">newsnr_sgveto</span><span class="p">(</span><span class="n">trigs</span><span class="p">[</span><span class="s1">&#39;snr&#39;</span><span class="p">][:],</span>
-                                   <span class="n">trigs</span><span class="p">[</span><span class="s1">&#39;chisq&#39;</span><span class="p">][:]</span> <span class="o">/</span> <span class="n">dof</span><span class="p">,</span>
-                                   <span class="n">trigs</span><span class="p">[</span><span class="s1">&#39;sg_chisq&#39;</span><span class="p">][:])</span>
-    <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">nsnr_sg</span><span class="p">,</span> <span class="n">ndmin</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="get_newsnr_sgveto_psdvar"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.get_newsnr_sgveto_psdvar">[docs]</a><span class="k">def</span> <span class="nf">get_newsnr_sgveto_psdvar</span><span class="p">(</span><span class="n">trigs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Calculate newsnr re-weighted by the sine-gaussian veto and psd variation</span>
-<span class="sd">    statistic</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    trigs: dict of numpy.ndarrays</span>
-<span class="sd">        Dictionary holding single detector trigger information.</span>
-<span class="sd">    &#39;chisq_dof&#39;, &#39;snr&#39;, &#39;chisq&#39; and &#39;psd_var_val&#39; are required keys</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">     numpy.ndarray</span>
-<span class="sd">        Array of newsnr values</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">dof</span> <span class="o">=</span> <span class="mf">2.</span> <span class="o">*</span> <span class="n">trigs</span><span class="p">[</span><span class="s1">&#39;chisq_dof&#39;</span><span class="p">][:]</span> <span class="o">-</span> <span class="mf">2.</span>
-    <span class="n">nsnr_sg_psd</span> <span class="o">=</span> \
-        <span class="n">events</span><span class="o">.</span><span class="n">newsnr_sgveto_psdvar</span><span class="p">(</span><span class="n">trigs</span><span class="p">[</span><span class="s1">&#39;snr&#39;</span><span class="p">][:],</span> <span class="n">trigs</span><span class="p">[</span><span class="s1">&#39;chisq&#39;</span><span class="p">][:]</span> <span class="o">/</span> <span class="n">dof</span><span class="p">,</span>
-                                    <span class="n">trigs</span><span class="p">[</span><span class="s1">&#39;sg_chisq&#39;</span><span class="p">][:],</span>
-                                    <span class="n">trigs</span><span class="p">[</span><span class="s1">&#39;psd_var_val&#39;</span><span class="p">][:])</span>
-    <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">nsnr_sg_psd</span><span class="p">,</span> <span class="n">ndmin</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span></div>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">ranking</span>
 
 
 <div class="viewcode-block" id="Stat"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.Stat">[docs]</a><span class="k">class</span> <span class="nc">Stat</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -339,7 +276,7 @@
 <span class="sd">        numpy.ndarray</span>
 <span class="sd">            The array of single detector values</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">get_newsnr</span><span class="p">(</span><span class="n">trigs</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">ranking</span><span class="o">.</span><span class="n">get_newsnr</span><span class="p">(</span><span class="n">trigs</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="NewSNRStatistic.coinc"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.NewSNRStatistic.coinc">[docs]</a>    <span class="k">def</span> <span class="nf">coinc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s0</span><span class="p">,</span> <span class="n">s1</span><span class="p">,</span> <span class="n">slide</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span> <span class="c1"># pylint:disable=unused-argument</span>
         <span class="sd">&quot;&quot;&quot;Calculate the coincident detection statistic.</span>
@@ -394,7 +331,7 @@
 <span class="sd">        numpy.ndarray</span>
 <span class="sd">            The array of single detector values</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">get_newsnr_sgveto</span><span class="p">(</span><span class="n">trigs</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">ranking</span><span class="o">.</span><span class="n">get_newsnr_sgveto</span><span class="p">(</span><span class="n">trigs</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="NewSNRSGPSDStatistic"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.NewSNRSGPSDStatistic">[docs]</a><span class="k">class</span> <span class="nc">NewSNRSGPSDStatistic</span><span class="p">(</span><span class="n">NewSNRSGStatistic</span><span class="p">):</span>
@@ -414,7 +351,7 @@
 <span class="sd">        numpy.ndarray</span>
 <span class="sd">            The array of single detector values</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">get_newsnr_sgveto_psdvar</span><span class="p">(</span><span class="n">trigs</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">ranking</span><span class="o">.</span><span class="n">get_newsnr_sgveto_psdvar</span><span class="p">(</span><span class="n">trigs</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="NetworkSNRStatistic"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.NetworkSNRStatistic">[docs]</a><span class="k">class</span> <span class="nc">NetworkSNRStatistic</span><span class="p">(</span><span class="n">NewSNRStatistic</span><span class="p">):</span>
@@ -442,7 +379,7 @@
 <span class="sd">        newsnr: numpy.ndarray</span>
 <span class="sd">            Array of single detector values</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">newsnr</span> <span class="o">=</span> <span class="n">get_newsnr</span><span class="p">(</span><span class="n">trigs</span><span class="p">)</span>
+        <span class="n">newsnr</span> <span class="o">=</span> <span class="n">ranking</span><span class="o">.</span><span class="n">get_newsnr</span><span class="p">(</span><span class="n">trigs</span><span class="p">)</span>
         <span class="n">rchisq</span> <span class="o">=</span> <span class="n">trigs</span><span class="p">[</span><span class="s1">&#39;chisq&#39;</span><span class="p">][:]</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.</span> <span class="o">*</span> <span class="n">trigs</span><span class="p">[</span><span class="s1">&#39;chisq_dof&#39;</span><span class="p">][:]</span> <span class="o">-</span> <span class="mf">2.</span><span class="p">)</span>
         <span class="n">newsnr</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">newsnr</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">,</span> <span class="n">rchisq</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="k">return</span> <span class="n">newsnr</span></div>
@@ -481,7 +418,7 @@
         <span class="n">NewSNRStatistic</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="p">[</span><span class="s1">&#39;phasetd_newsnr&#39;</span><span class="p">][</span><span class="s1">&#39;map&#39;</span><span class="p">][:]</span>
 
-        <span class="c1">#normalize so that peak has no effect on newsnr</span>
+        <span class="c1"># Normalize so that peak has no effect on newsnr</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hist</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hist</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hist</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hist</span><span class="p">)</span>
 
@@ -497,7 +434,8 @@
                     <span class="p">(</span><span class="s1">&#39;sigmasq&#39;</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
                     <span class="p">(</span><span class="s1">&#39;snr&#39;</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)]</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">get_newsnr</span> <span class="o">=</span> <span class="n">get_newsnr</span>
+        <span class="c1"># Assign attribute so that it can be replaced with other functions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_newsnr</span> <span class="o">=</span> <span class="n">ranking</span><span class="o">.</span><span class="n">get_newsnr</span>
 
 <div class="viewcode-block" id="PhaseTDStatistic.single"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.PhaseTDStatistic.single">[docs]</a>    <span class="k">def</span> <span class="nf">single</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trigs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -597,7 +535,7 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">):</span>
         <span class="n">PhaseTDStatistic</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">get_newsnr</span> <span class="o">=</span> <span class="n">get_newsnr_sgveto</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_newsnr</span> <span class="o">=</span> <span class="n">ranking</span><span class="o">.</span><span class="n">get_newsnr_sgveto</span></div>
 
 
 <div class="viewcode-block" id="ExpFitStatistic"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.ExpFitStatistic">[docs]</a><span class="k">class</span> <span class="nc">ExpFitStatistic</span><span class="p">(</span><span class="n">NewSNRStatistic</span><span class="p">):</span>
@@ -625,7 +563,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">fits_by_tid</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assign_fits</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">get_ref_vals</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">get_newsnr</span> <span class="o">=</span> <span class="n">get_newsnr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_newsnr</span> <span class="o">=</span> <span class="n">ranking</span><span class="o">.</span><span class="n">get_newsnr</span>
 
 <div class="viewcode-block" id="ExpFitStatistic.assign_fits"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.ExpFitStatistic.assign_fits">[docs]</a>    <span class="k">def</span> <span class="nf">assign_fits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ifo</span><span class="p">):</span>
         <span class="n">coeff_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="p">[</span><span class="n">ifo</span><span class="o">+</span><span class="s1">&#39;-fit_coeffs&#39;</span><span class="p">]</span>
@@ -734,7 +672,7 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">):</span>
         <span class="n">ExpFitCombinedSNR</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">get_newsnr</span> <span class="o">=</span> <span class="n">get_newsnr_sgveto</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_newsnr</span> <span class="o">=</span> <span class="n">ranking</span><span class="o">.</span><span class="n">get_newsnr_sgveto</span></div>
 
 
 <div class="viewcode-block" id="ExpFitSGPSDCombinedSNR"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.ExpFitSGPSDCombinedSNR">[docs]</a><span class="k">class</span> <span class="nc">ExpFitSGPSDCombinedSNR</span><span class="p">(</span><span class="n">ExpFitCombinedSNR</span><span class="p">):</span>
@@ -746,7 +684,7 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">):</span>
         <span class="n">ExpFitCombinedSNR</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">get_newsnr</span> <span class="o">=</span> <span class="n">get_newsnr_sgveto_psdvar</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_newsnr</span> <span class="o">=</span> <span class="n">ranking</span><span class="o">.</span><span class="n">get_newsnr_sgveto_psdvar</span></div>
 
 
 <div class="viewcode-block" id="PhaseTDExpFitStatistic"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.PhaseTDExpFitStatistic">[docs]</a><span class="k">class</span> <span class="nc">PhaseTDExpFitStatistic</span><span class="p">(</span><span class="n">PhaseTDStatistic</span><span class="p">,</span> <span class="n">ExpFitCombinedSNR</span><span class="p">):</span>
@@ -789,7 +727,7 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">):</span>
         <span class="n">PhaseTDExpFitStatistic</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">get_newsnr</span> <span class="o">=</span> <span class="n">get_newsnr_sgveto</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_newsnr</span> <span class="o">=</span> <span class="n">ranking</span><span class="o">.</span><span class="n">get_newsnr_sgveto</span></div>
 
 
 <div class="viewcode-block" id="PhaseTDExpFitSGPSDStatistic"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.PhaseTDExpFitSGPSDStatistic">[docs]</a><span class="k">class</span> <span class="nc">PhaseTDExpFitSGPSDStatistic</span><span class="p">(</span><span class="n">PhaseTDExpFitSGStatistic</span><span class="p">):</span>
@@ -801,7 +739,7 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">):</span>
         <span class="n">PhaseTDExpFitSGStatistic</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">get_newsnr</span> <span class="o">=</span> <span class="n">get_newsnr_sgveto_psdvar</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_newsnr</span> <span class="o">=</span> <span class="n">ranking</span><span class="o">.</span><span class="n">get_newsnr_sgveto_psdvar</span></div>
 
 
 <div class="viewcode-block" id="MaxContTradNewSNRStatistic"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.MaxContTradNewSNRStatistic">[docs]</a><span class="k">class</span> <span class="nc">MaxContTradNewSNRStatistic</span><span class="p">(</span><span class="n">NewSNRStatistic</span><span class="p">):</span>
@@ -823,9 +761,9 @@
 <span class="sd">        stat: numpy.ndarray</span>
 <span class="sd">            The array of single detector values</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">chisq_newsnr</span> <span class="o">=</span> <span class="n">get_newsnr</span><span class="p">(</span><span class="n">trigs</span><span class="p">)</span>
+        <span class="n">chisq_newsnr</span> <span class="o">=</span> <span class="n">ranking</span><span class="o">.</span><span class="n">get_newsnr</span><span class="p">(</span><span class="n">trigs</span><span class="p">)</span>
         <span class="n">rautochisq</span> <span class="o">=</span> <span class="n">trigs</span><span class="p">[</span><span class="s1">&#39;cont_chisq&#39;</span><span class="p">][:]</span> <span class="o">/</span> <span class="n">trigs</span><span class="p">[</span><span class="s1">&#39;cont_chisq_dof&#39;</span><span class="p">][:]</span>
-        <span class="n">autochisq_newsnr</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">newsnr</span><span class="p">(</span><span class="n">trigs</span><span class="p">[</span><span class="s1">&#39;snr&#39;</span><span class="p">][:],</span> <span class="n">rautochisq</span><span class="p">)</span>
+        <span class="n">autochisq_newsnr</span> <span class="o">=</span> <span class="n">ranking</span><span class="o">.</span><span class="n">newsnr</span><span class="p">(</span><span class="n">trigs</span><span class="p">[</span><span class="s1">&#39;snr&#39;</span><span class="p">][:],</span> <span class="n">rautochisq</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">chisq_newsnr</span><span class="p">,</span> <span class="n">autochisq_newsnr</span><span class="p">,</span>
                            <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="n">ndmin</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div></div>
 
@@ -922,7 +860,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Mar 30, 2019.
+        Last updated on Apr 01, 2019.
       </span>
 
     </p>

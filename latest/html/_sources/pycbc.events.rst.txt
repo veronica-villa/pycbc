@@ -12,10 +12,18 @@ pycbc.events.coinc module
     :undoc-members:
     :show-inheritance:
 
-pycbc.events.events module
---------------------------
+pycbc.events.eventmgr module
+----------------------------
 
-.. automodule:: pycbc.events.events
+.. automodule:: pycbc.events.eventmgr
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pycbc.events.ranking module
+---------------------------
+
+.. automodule:: pycbc.events.ranking
     :members:
     :undoc-members:
     :show-inheritance:
