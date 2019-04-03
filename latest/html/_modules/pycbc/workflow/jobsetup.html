@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.workflow.jobsetup &mdash; PyCBC e00ce2 documentation</title>
+  <title>pycbc.workflow.jobsetup &mdash; PyCBC ec0709 documentation</title>
   
 
   
@@ -499,7 +499,11 @@
             <span class="c1"># one job. If there are no curr_parents it is set to [None] and I</span>
             <span class="c1"># make a single job. This catches the case of a split template bank</span>
             <span class="c1"># where I run a number of jobs to cover a single range of time.</span>
-            <span class="k">for</span> <span class="n">pnum</span><span class="p">,</span> <span class="n">parent</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">curr_parent</span><span class="p">):</span>
+
+            <span class="c1"># Sort parent jobs to ensure predictable order</span>
+            <span class="n">sorted_parents</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">curr_parent</span><span class="p">,</span>
+                                    <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">fobj</span><span class="p">:</span> <span class="n">fobj</span><span class="o">.</span><span class="n">tagged_description</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">pnum</span><span class="p">,</span> <span class="n">parent</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sorted_parents</span><span class="p">):</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">curr_parent</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
                     <span class="n">tag</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;JOB</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">pnum</span><span class="p">,)]</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -2093,7 +2097,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Apr 02, 2019.
+        Last updated on Apr 03, 2019.
       </span>
 
     </p>
