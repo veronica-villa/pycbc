@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.events.coinc &mdash; PyCBC ec0709 documentation</title>
+  <title>pycbc.events.coinc &mdash; PyCBC c79552 documentation</title>
   
 
   
@@ -766,13 +766,7 @@
         <span class="sd">&quot;&quot;&quot;Advance the internal time increment by 1, expiring any triggers that</span>
 <span class="sd">        are now too old.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">+=</span> <span class="mi">1</span>
-
-        <span class="n">expired</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_time</span>
-        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">exp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer_expire</span><span class="p">):</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">exp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">expired</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">buffer_expire</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">exp</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">+=</span> <span class="mi">1</span></div>
 
 <div class="viewcode-block" id="MultiRingBuffer.add"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.coinc.MultiRingBuffer.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Add triggers in &#39;values&#39; to the buffers indicated by the indices</span>
@@ -788,6 +782,18 @@
 
 <div class="viewcode-block" id="MultiRingBuffer.data"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.coinc.MultiRingBuffer.data">[docs]</a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buffer_index</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return the data vector for a given ring buffer&quot;&quot;&quot;</span>
+        <span class="c1"># Check for expired elements and discard if they exist</span>
+        <span class="n">expired</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_time</span>     
+        <span class="n">exp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer_expire</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">]</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">exp</span><span class="p">):</span>
+            <span class="c1"># Everything before this j must be expired</span>
+            <span class="k">if</span> <span class="n">exp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">expired</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">buffer_expire</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">exp</span><span class="p">[</span><span class="n">j</span><span class="p">:]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">][</span><span class="n">j</span><span class="p">:]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                <span class="k">break</span>
+            <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+       
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">]</span></div></div>
 
 <div class="viewcode-block" id="CoincExpireBuffer"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.coinc.CoincExpireBuffer">[docs]</a><span class="k">class</span> <span class="nc">CoincExpireBuffer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -1310,10 +1316,6 @@
 <span class="sd">            A dictionary of arrays containing the coincident results.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Let&#39;s see how large everything is</span>
-        <span class="k">for</span> <span class="n">ifo</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">singles</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;BKG </span><span class="si">%s</span><span class="s1"> singles </span><span class="si">%s</span><span class="s1"> stored </span><span class="si">%s</span><span class="s1"> bytes&#39;</span><span class="p">,</span>
-                         <span class="n">ifo</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">singles</span><span class="p">[</span><span class="n">ifo</span><span class="p">]</span><span class="o">.</span><span class="n">num_elements</span><span class="p">(),</span>
-                         <span class="bp">self</span><span class="o">.</span><span class="n">singles</span><span class="p">[</span><span class="n">ifo</span><span class="p">]</span><span class="o">.</span><span class="n">nbytes</span><span class="p">)</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;BKG Coincs </span><span class="si">%s</span><span class="s1"> stored </span><span class="si">%s</span><span class="s1"> bytes&#39;</span><span class="p">,</span>
                      <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coincs</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">coincs</span><span class="o">.</span><span class="n">nbytes</span><span class="p">)</span>
 
