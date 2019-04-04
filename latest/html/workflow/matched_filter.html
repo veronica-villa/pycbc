@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>The workflow matched-filter module &mdash; PyCBC 29f6de documentation</title>
+  <title>The workflow matched-filter module &mdash; PyCBC 13286a documentation</title>
   
 
   
@@ -552,6 +552,8 @@ optional arguments:
   --keep-loudest-num KEEP_LOUDEST_NUM
                         Number of triggers to keep from each maximization
                         interval
+  --keep-loudest-stat {newsnr_sgveto_psdvar,newsnr_sgveto,snr,max_cont_trad_newsnr,newsnr_cut,exp_fit_sg_csnr_psdvar,new_snr,exp_fit_sg_csnr,exp_fit_csnr,newsnr}
+                        Statistic used to determine loudest to keep
   --gpu-callback-method GPU_CALLBACK_METHOD
   --use-compressed-waveforms
                         Use compressed waveforms from the bank file.
@@ -730,7 +732,7 @@ Options for segmenting the strain:
 Options for selecting the processing scheme in this program.:
   --processing-scheme PROCESSING_SCHEME
                         The choice of processing scheme. Choices are [&#39;mkl&#39;,
-                        &#39;numpy&#39;, &#39;cuda&#39;, &#39;cpu&#39;]. (optional for CPU scheme) The
+                        &#39;numpy&#39;, &#39;cpu&#39;, &#39;cuda&#39;]. (optional for CPU scheme) The
                         number of execution threads can be indicated by
                         cpu:NUM_THREADS, where NUM_THREADS is an integer. The
                         default is a single thread. If the scheme is provided
@@ -836,12 +838,12 @@ Sine-Gaussian Chisq:
   --sgchisq-snr-threshold SGCHISQ_SNR_THRESHOLD
                         Minimum SNR threshold to use SG chisq
   --sgchisq-locations SGCHISQ_LOCATIONS [SGCHISQ_LOCATIONS ...]
-                        The frequencies and quality factors of the sine-
-                        gaussians to use. The format is &#39;region-
-                        boolean:q1-offset1,q2-offset2&#39;.The offset is relative
-                        to the end frequency of the approximant.The region is
-                        a boolean expresion such as &#39;mtotal&gt;40&#39; and indicates
-                        where to apply this set of sine-Gaussians.
+                        Frequency offsets and quality factors of the sine-
+                        Gaussians to use, format &#39;region-
+                        boolean:q1-offset1,q2-offset2&#39;. Offset is relative to
+                        the end frequency of the approximant. Region is a
+                        boolean expression selecting templates to apply the
+                        sine-Gaussians to, ex. &#39;mtotal&gt;40&#39;
 </pre></div>
 </div>
 <p>Of these options the workflow module will automatically add the following, which are unique fo
@@ -1021,7 +1023,7 @@ stage you can call the various sub-functions directly.</p>
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Apr 03, 2019.
+        Last updated on Apr 04, 2019.
       </span>
 
     </p>
