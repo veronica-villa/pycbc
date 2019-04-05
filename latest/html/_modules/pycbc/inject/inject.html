@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inject.inject &mdash; PyCBC 14a86a documentation</title>
+  <title>pycbc.inject.inject &mdash; PyCBC 392e01 documentation</title>
   
 
   
@@ -297,7 +297,7 @@
         <span class="c1"># get parameters</span>
         <span class="n">parameters</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
         <span class="c1"># get all injection parameter values</span>
-        <span class="n">injvals</span> <span class="o">=</span> <span class="p">{</span><span class="n">param</span><span class="p">:</span> <span class="n">group</span><span class="p">[</span><span class="n">param</span><span class="p">][:]</span> <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">}</span>
+        <span class="n">injvals</span> <span class="o">=</span> <span class="p">{</span><span class="n">param</span><span class="p">:</span> <span class="n">group</span><span class="p">[</span><span class="n">param</span><span class="p">][()]</span> <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">}</span>
         <span class="c1"># if there were no variable args, then we only have a single injection</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">numinj</span> <span class="o">=</span> <span class="mi">1</span>
