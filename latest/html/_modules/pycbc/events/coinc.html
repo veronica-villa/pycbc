@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.events.coinc &mdash; PyCBC 13286a documentation</title>
+  <title>pycbc.events.coinc &mdash; PyCBC aeff2e documentation</title>
   
 
   
@@ -1298,7 +1298,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">singles</span><span class="p">[</span><span class="n">ifo</span><span class="p">]</span><span class="o">.</span><span class="n">discard_last</span><span class="p">(</span><span class="n">updated_singles</span><span class="p">[</span><span class="n">ifo</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">coincs</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">num_coincs</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="LiveCoincTimeslideBackgroundEstimator.add_singles"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.coinc.LiveCoincTimeslideBackgroundEstimator.add_singles">[docs]</a>    <span class="k">def</span> <span class="nf">add_singles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">results</span><span class="p">,</span> <span class="n">data_reader</span><span class="p">):</span>
+<div class="viewcode-block" id="LiveCoincTimeslideBackgroundEstimator.add_singles"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.coinc.LiveCoincTimeslideBackgroundEstimator.add_singles">[docs]</a>    <span class="k">def</span> <span class="nf">add_singles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">results</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Add singles to the bacckground estimate and find candidates</span>
 
 <span class="sd">        Parameters</span>
@@ -1307,8 +1307,6 @@
 <span class="sd">            Dictionary of dictionaries indexed by ifo and keys such as &#39;snr&#39;,</span>
 <span class="sd">            &#39;chisq&#39;, etc. The specific format it determined by the</span>
 <span class="sd">            LiveBatchMatchedFilter class.</span>
-<span class="sd">        data_reader: dict of StrainBuffers</span>
-<span class="sd">            A dict of StrainBuffer instances, indexed by ifos.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -1324,23 +1322,15 @@
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">valid_ifos</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="p">{}</span>
 
         <span class="c1"># Add single triggers to the internal buffer</span>
-        <span class="n">updated_indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_singles_to_buffer</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">ifos</span><span class="o">=</span><span class="n">valid_ifos</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_singles_to_buffer</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">ifos</span><span class="o">=</span><span class="n">valid_ifos</span><span class="p">)</span>
 
         <span class="c1"># Calculate zerolag and background coincidences</span>
-        <span class="n">num_background</span><span class="p">,</span> <span class="n">coinc_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_coincs</span><span class="p">(</span><span class="n">results</span><span class="p">,</span>
-                                                          <span class="n">ifos</span><span class="o">=</span><span class="n">valid_ifos</span><span class="p">)</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">coinc_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_coincs</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">ifos</span><span class="o">=</span><span class="n">valid_ifos</span><span class="p">)</span>
 
         <span class="c1"># record if a coinc is possible in this chunk</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">valid_ifos</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
             <span class="n">coinc_results</span><span class="p">[</span><span class="s1">&#39;coinc_possible&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
-        <span class="c1"># If there is a hardware injection anywhere near here dump these</span>
-        <span class="c1"># results and mark the result group as possibly being influenced</span>
-        <span class="k">for</span> <span class="n">ifo</span> <span class="ow">in</span> <span class="n">valid_ifos</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">data_reader</span><span class="p">[</span><span class="n">ifo</span><span class="p">]</span><span class="o">.</span><span class="n">near_hwinj</span><span class="p">():</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">backout_last</span><span class="p">(</span><span class="n">updated_indices</span><span class="p">,</span> <span class="n">num_background</span><span class="p">)</span>
-                <span class="n">coinc_results</span><span class="p">[</span><span class="s1">&#39;HWINJ&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-                <span class="k">break</span>
         <span class="k">return</span> <span class="n">coinc_results</span></div></div>
 </pre></div>
 
@@ -1356,7 +1346,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Apr 04, 2019.
+        Last updated on Apr 05, 2019.
       </span>
 
     </p>

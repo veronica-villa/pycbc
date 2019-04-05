@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.pool &mdash; PyCBC 13286a documentation</title>
+  <title>pycbc.pool &mdash; PyCBC aeff2e documentation</title>
   
 
   
@@ -277,6 +277,21 @@
         <span class="n">_numdone</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">return</span> <span class="n">results</span></div>
 
+<div class="viewcode-block" id="BroadcastPool.allmap"><a class="viewcode-back" href="../../pycbc.html#pycbc.pool.BroadcastPool.allmap">[docs]</a>    <span class="k">def</span> <span class="nf">allmap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fcn</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Do a function call on every worker with different arguments</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fcn: funtion</span>
+<span class="sd">            Function to call.</span>
+<span class="sd">        args: tuple</span>
+<span class="sd">            The arguments for Pool.map</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_lockstep_fcn</span><span class="p">,</span>
+                           <span class="p">[(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="n">fcn</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">])</span>
+        <span class="n">_numdone</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">results</span></div>
+
 <div class="viewcode-block" id="BroadcastPool.map"><a class="viewcode-back" href="../../pycbc.html#pycbc.pool.BroadcastPool.map">[docs]</a>    <span class="k">def</span> <span class="nf">map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">items</span><span class="p">,</span> <span class="n">chunksize</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Catch keyboard interuppts to allow the pool to exit cleanly.</span>
 
@@ -342,7 +357,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Apr 04, 2019.
+        Last updated on Apr 05, 2019.
       </span>
 
     </p>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc package &mdash; PyCBC 13286a documentation</title>
+  <title>pycbc package &mdash; PyCBC aeff2e documentation</title>
   
 
   
@@ -3286,6 +3286,24 @@ mass1/mass2 and returns the two component masses.</p>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.pool.Pool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">multiprocessing.pool.Pool</span></code></a></p>
 <p>Multiprocessing pool with a broadcast method</p>
 <dl class="method">
+<dt id="pycbc.pool.BroadcastPool.allmap">
+<code class="descname">allmap</code><span class="sig-paren">(</span><em>fcn</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/pool.html#BroadcastPool.allmap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.pool.BroadcastPool.allmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do a function call on every worker with different arguments</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fcn</strong> (<em>funtion</em>) – Function to call.</li>
+<li><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><em>tuple</em></a>) – The arguments for Pool.map</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="pycbc.pool.BroadcastPool.broadcast">
 <code class="descname">broadcast</code><span class="sig-paren">(</span><em>fcn</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/pool.html#BroadcastPool.broadcast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.pool.BroadcastPool.broadcast" title="Permalink to this definition">¶</a></dt>
 <dd><p>Do a function call on every worker.</p>
@@ -5775,7 +5793,7 @@ already exist. Will do nothing if path already exists.</p>
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Apr 04, 2019.
+        Last updated on Apr 05, 2019.
       </span>
 
     </p>

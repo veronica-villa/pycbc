@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.events package &mdash; PyCBC 13286a documentation</title>
+  <title>pycbc.events package &mdash; PyCBC aeff2e documentation</title>
   
 
   
@@ -325,25 +325,19 @@ multiple expiration vectors.</p>
 <p>Rolling buffer background estimation.</p>
 <dl class="method">
 <dt id="pycbc.events.coinc.LiveCoincTimeslideBackgroundEstimator.add_singles">
-<code class="descname">add_singles</code><span class="sig-paren">(</span><em>results</em>, <em>data_reader</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/coinc.html#LiveCoincTimeslideBackgroundEstimator.add_singles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.coinc.LiveCoincTimeslideBackgroundEstimator.add_singles" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_singles</code><span class="sig-paren">(</span><em>results</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/coinc.html#LiveCoincTimeslideBackgroundEstimator.add_singles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.coinc.LiveCoincTimeslideBackgroundEstimator.add_singles" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add singles to the bacckground estimate and find candidates</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>results</strong> (<em>dict of arrays</em>) – Dictionary of dictionaries indexed by ifo and keys such as ‘snr’,
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>results</strong> (<em>dict of arrays</em>) – Dictionary of dictionaries indexed by ifo and keys such as ‘snr’,
 ‘chisq’, etc. The specific format it determined by the
-LiveBatchMatchedFilter class.</li>
-<li><strong>data_reader</strong> (<em>dict of StrainBuffers</em>) – A dict of StrainBuffer instances, indexed by ifos.</li>
-</ul>
-</td>
+LiveBatchMatchedFilter class.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>coinc_results</strong> – A dictionary of arrays containing the coincident results.</p>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>coinc_results</strong> – A dictionary of arrays containing the coincident results.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict of arrays</p>
-</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict of arrays</td>
 </tr>
 </tbody>
 </table>
@@ -2275,7 +2269,7 @@ contain a segment table</li>
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Apr 04, 2019.
+        Last updated on Apr 05, 2019.
       </span>
 
     </p>
