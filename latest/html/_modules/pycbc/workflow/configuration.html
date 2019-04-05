@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.workflow.configuration &mdash; PyCBC aeff2e documentation</title>
+  <title>pycbc.workflow.configuration &mdash; PyCBC 14a86a documentation</title>
   
 
   
@@ -1221,7 +1221,8 @@
 
 <div class="viewcode-block" id="WorkflowConfigParser.from_cli"><a class="viewcode-back" href="../../../workflow/initialization.html#pycbc.workflow.configuration.WorkflowConfigParser.from_cli">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_cli</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">opts</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Loads a config file from the given options, with overrides applied.</span>
+        <span class="sd">&quot;&quot;&quot;Loads a config file from the given options, with overrides and</span>
+<span class="sd">        deletes applied.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># read configuration file</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Reading configuration file&quot;</span><span class="p">)</span>
@@ -1230,7 +1231,11 @@
                          <span class="k">for</span> <span class="n">override</span> <span class="ow">in</span> <span class="n">opts</span><span class="o">.</span><span class="n">config_overrides</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">overrides</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">config_files</span><span class="p">,</span> <span class="n">overrides</span><span class="p">)</span></div></div>
+        <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">config_delete</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">deletes</span> <span class="o">=</span> <span class="p">[</span><span class="n">delete</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">delete</span> <span class="ow">in</span> <span class="n">opts</span><span class="o">.</span><span class="n">config_delete</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">deletes</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">config_files</span><span class="p">,</span> <span class="n">overrides</span><span class="p">,</span> <span class="n">deleteTuples</span><span class="o">=</span><span class="n">deletes</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>
