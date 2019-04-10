@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.events package &mdash; PyCBC f9ba24 documentation</title>
+  <title>pycbc.events package &mdash; PyCBC 9c4b90 documentation</title>
   
 
   
@@ -1162,6 +1162,28 @@ approximates combined (new)snr for coincs with similar newsnr in each ifo</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="pycbc.events.stat.ExpFitCombinedSNR.coinc_multiifo">
+<code class="descname">coinc_multiifo</code><span class="sig-paren">(</span><em>s</em>, <em>slide</em>, <em>step</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/stat.html#ExpFitCombinedSNR.coinc_multiifo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.stat.ExpFitCombinedSNR.coinc_multiifo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the coincident detection statistic.
+:param s: statistics
+:type s: dictionary keyed by ifo of single detector ranking
+:param slide:
+:type slide: (unused in this statistic)
+:param step:
+:type step: (unused in this statistic)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Array of coincident ranking statistic values</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="pycbc.events.stat.ExpFitCombinedSNR.single">
 <code class="descname">single</code><span class="sig-paren">(</span><em>trigs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/stat.html#ExpFitCombinedSNR.single"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.stat.ExpFitCombinedSNR.single" title="Permalink to this definition">¶</a></dt>
 <dd><p>Single-detector statistic, here just equal to the log noise rate</p>
@@ -2269,7 +2291,7 @@ contain a segment table</li>
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Apr 09, 2019.
+        Last updated on Apr 10, 2019.
       </span>
 
     </p>

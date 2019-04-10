@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.events.stat &mdash; PyCBC f9ba24 documentation</title>
+  <title>pycbc.events.stat &mdash; PyCBC 9c4b90 documentation</title>
   
 
   
@@ -311,7 +311,7 @@
 <span class="sd">        numpy.ndarray</span>
 <span class="sd">            Array of coincident ranking statistic values</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">(</span><span class="nb">sum</span><span class="p">([</span><span class="n">x</span> <span class="o">**</span> <span class="mf">2.</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">values</span><span class="p">()]))</span> <span class="o">**</span> <span class="mf">0.5</span></div></div>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="mf">2.</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> <span class="o">**</span> <span class="mf">0.5</span></div></div>
 
 
 <div class="viewcode-block" id="NewSNRSGStatistic"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.NewSNRSGStatistic">[docs]</a><span class="k">class</span> <span class="nc">NewSNRSGStatistic</span><span class="p">(</span><span class="n">NewSNRStatistic</span><span class="p">):</span>
@@ -645,9 +645,8 @@
 
 <div class="viewcode-block" id="ExpFitCombinedSNR.use_alphamax"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.ExpFitCombinedSNR.use_alphamax">[docs]</a>    <span class="k">def</span> <span class="nf">use_alphamax</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># take reference slope as the harmonic mean of individual ifo slopes</span>
-        <span class="n">inv_alphas</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">alphamax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ifos</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">alpharef</span> <span class="o">=</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">inv_alphas</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">inv_alphas</span><span class="p">))</span><span class="o">**-</span><span class="mi">1</span>
-        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alpharef</span><span class="p">)</span></div>
+        <span class="n">inv_alphas</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">alphamax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ifos</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpharef</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">inv_alphas</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">inv_alphas</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="ExpFitCombinedSNR.single"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.ExpFitCombinedSNR.single">[docs]</a>    <span class="k">def</span> <span class="nf">single</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trigs</span><span class="p">):</span>
         <span class="n">logr_n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lognoiserate</span><span class="p">(</span><span class="n">trigs</span><span class="p">)</span>
@@ -660,7 +659,11 @@
 
 <div class="viewcode-block" id="ExpFitCombinedSNR.coinc"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.ExpFitCombinedSNR.coinc">[docs]</a>    <span class="k">def</span> <span class="nf">coinc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s0</span><span class="p">,</span> <span class="n">s1</span><span class="p">,</span> <span class="n">slide</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span> <span class="c1"># pylint:disable=unused-argument</span>
         <span class="c1"># scale by 1/sqrt(2) to resemble network SNR</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">s0</span> <span class="o">+</span> <span class="n">s1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="p">(</span><span class="n">s0</span> <span class="o">+</span> <span class="n">s1</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.</span><span class="o">**</span><span class="mf">0.5</span></div>
+
+<div class="viewcode-block" id="ExpFitCombinedSNR.coinc_multiifo"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.ExpFitCombinedSNR.coinc_multiifo">[docs]</a>    <span class="k">def</span> <span class="nf">coinc_multiifo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">slide</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span> <span class="c1"># pylint:disable=unused-argument</span>
+        <span class="c1"># scale by 1/sqrt(number of ifos) to resemble network SNR</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span></div></div>
 
 
 <div class="viewcode-block" id="ExpFitSGCombinedSNR"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.ExpFitSGCombinedSNR">[docs]</a><span class="k">class</span> <span class="nc">ExpFitSGCombinedSNR</span><span class="p">(</span><span class="n">ExpFitCombinedSNR</span><span class="p">):</span>
@@ -860,7 +863,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Apr 09, 2019.
+        Last updated on Apr 10, 2019.
       </span>
 
     </p>
