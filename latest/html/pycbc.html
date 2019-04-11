@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc package &mdash; PyCBC 2bc228 documentation</title>
+  <title>pycbc package &mdash; PyCBC 76a33e documentation</title>
   
 
   
@@ -1912,6 +1912,76 @@ returned.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a> or array</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pycbc.conversions.final_mass_from_initial">
+<code class="descclassname">pycbc.conversions.</code><code class="descname">final_mass_from_initial</code><span class="sig-paren">(</span><em>mass1</em>, <em>mass2</em>, <em>spin1x=0.0</em>, <em>spin1y=0.0</em>, <em>spin1z=0.0</em>, <em>spin2x=0.0</em>, <em>spin2y=0.0</em>, <em>spin2z=0.0</em>, <em>approximant='SEOBNRv4'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/conversions.html#final_mass_from_initial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.conversions.final_mass_from_initial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimates the final mass from the given initial parameters.</p>
+<p>This uses the fits used by the EOBNR models for converting from initial
+parameters to final. Which version used can be controlled by the
+<code class="docutils literal notranslate"><span class="pre">approximant</span></code> argument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mass1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – The mass of one of the components, in solar masses.</li>
+<li><strong>mass2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – The mass of the other component, in solar masses.</li>
+<li><strong>spin1x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>optional</em>) – The dimensionless x-component of the spin of mass1. Default is 0.</li>
+<li><strong>spin1y</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>optional</em>) – The dimensionless y-component of the spin of mass1. Default is 0.</li>
+<li><strong>spin1z</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>optional</em>) – The dimensionless z-component of the spin of mass1. Default is 0.</li>
+<li><strong>spin2x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>optional</em>) – The dimensionless x-component of the spin of mass2. Default is 0.</li>
+<li><strong>spin2y</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>optional</em>) – The dimensionless y-component of the spin of mass2. Default is 0.</li>
+<li><strong>spin2z</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>optional</em>) – The dimensionless z-component of the spin of mass2. Default is 0.</li>
+<li><strong>approximant</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>, </em><em>optional</em>) – The waveform approximant to use for the fit function. Default is
+“SEOBNRv4”.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The final mass, in solar masses.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pycbc.conversions.final_spin_from_initial">
+<code class="descclassname">pycbc.conversions.</code><code class="descname">final_spin_from_initial</code><span class="sig-paren">(</span><em>mass1</em>, <em>mass2</em>, <em>spin1x=0.0</em>, <em>spin1y=0.0</em>, <em>spin1z=0.0</em>, <em>spin2x=0.0</em>, <em>spin2y=0.0</em>, <em>spin2z=0.0</em>, <em>approximant='SEOBNRv4'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/conversions.html#final_spin_from_initial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.conversions.final_spin_from_initial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimates the final spin from the given initial parameters.</p>
+<p>This uses the fits used by the EOBNR models for converting from initial
+parameters to final. Which version used can be controlled by the
+<code class="docutils literal notranslate"><span class="pre">approximant</span></code> argument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mass1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – The mass of one of the components, in solar masses.</li>
+<li><strong>mass2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – The mass of the other component, in solar masses.</li>
+<li><strong>spin1x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>optional</em>) – The dimensionless x-component of the spin of mass1. Default is 0.</li>
+<li><strong>spin1y</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>optional</em>) – The dimensionless y-component of the spin of mass1. Default is 0.</li>
+<li><strong>spin1z</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>optional</em>) – The dimensionless z-component of the spin of mass1. Default is 0.</li>
+<li><strong>spin2x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>optional</em>) – The dimensionless x-component of the spin of mass2. Default is 0.</li>
+<li><strong>spin2y</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>optional</em>) – The dimensionless y-component of the spin of mass2. Default is 0.</li>
+<li><strong>spin2z</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>optional</em>) – The dimensionless z-component of the spin of mass2. Default is 0.</li>
+<li><strong>approximant</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>, </em><em>optional</em>) – The waveform approximant to use for the fit function. Default is
+“SEOBNRv4”.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The dimensionless final spin.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></p>
 </td>
 </tr>
 </tbody>
