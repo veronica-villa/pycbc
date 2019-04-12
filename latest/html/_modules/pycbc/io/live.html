@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.io.live &mdash; PyCBC a43424 documentation</title>
+  <title>pycbc.io.live &mdash; PyCBC b9e918 documentation</title>
   
 
   
@@ -216,6 +216,7 @@
 <span class="kn">from</span> <span class="nn">pycbc</span> <span class="k">import</span> <span class="n">version</span> <span class="k">as</span> <span class="n">pycbc_version</span>
 <span class="kn">from</span> <span class="nn">pycbc</span> <span class="k">import</span> <span class="n">pnutils</span>
 <span class="kn">from</span> <span class="nn">pycbc.tmpltbank</span> <span class="k">import</span> <span class="n">return_empty_sngl</span>
+<span class="kn">from</span> <span class="nn">pycbc.results</span> <span class="k">import</span> <span class="n">ifo_color</span>
 
 
 <span class="c1">#FIXME Legacy build PSD xml helpers, delete me when we move away entirely from</span>
@@ -309,6 +310,8 @@
 <span class="sd">            Will be recorded in the sngl_inspiral table.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">template_id</span> <span class="o">=</span> <span class="n">coinc_results</span><span class="p">[</span><span class="s1">&#39;foreground/</span><span class="si">%s</span><span class="s1">/template_id&#39;</span> <span class="o">%</span> <span class="n">ifos</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coinc_results</span> <span class="o">=</span> <span class="n">coinc_results</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ifos</span> <span class="o">=</span> <span class="n">ifos</span>
 
         <span class="c1"># remember if this should be marked as HWINJ</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_hardware_injection</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;HWINJ&#39;</span> <span class="ow">in</span> <span class="n">coinc_results</span>
@@ -482,6 +485,9 @@
 <span class="sd">            test trigger (True) or a production trigger (False).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">from</span> <span class="nn">ligo.gracedb.rest</span> <span class="k">import</span> <span class="n">GraceDb</span>
+        <span class="kn">import</span> <span class="nn">matplotlib</span>
+        <span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;Agg&#39;</span><span class="p">)</span>
+        <span class="kn">import</span> <span class="nn">pylab</span>
 
         <span class="c1"># first of all, make sure the event is saved on disk</span>
         <span class="c1"># as GraceDB operations can fail later</span>
@@ -492,11 +498,44 @@
                 <span class="n">snr_series_fname</span> <span class="o">=</span> <span class="n">fname</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.xml.gz&#39;</span><span class="p">,</span> <span class="s1">&#39;.hdf&#39;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">snr_series_fname</span> <span class="o">=</span> <span class="n">fname</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.xml&#39;</span><span class="p">,</span> <span class="s1">&#39;.hdf&#39;</span><span class="p">)</span>
+            <span class="n">snr_series_plot_fname</span> <span class="o">=</span> <span class="n">snr_series_fname</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.hdf&#39;</span><span class="p">,</span>
+                                                             <span class="s1">&#39;_snr.png&#39;</span><span class="p">)</span>
+            <span class="n">psd_series_plot_fname</span> <span class="o">=</span> <span class="n">snr_series_fname</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.hdf&#39;</span><span class="p">,</span>
+                                                             <span class="s1">&#39;_psd.png&#39;</span><span class="p">)</span>
+            <span class="n">pylab</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
             <span class="k">for</span> <span class="n">ifo</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">snr_series</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">snr_series</span><span class="p">[</span><span class="n">ifo</span><span class="p">]</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">snr_series_fname</span><span class="p">,</span>
-                                          <span class="n">group</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/snr&#39;</span> <span class="o">%</span> <span class="n">ifo</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">psds</span><span class="p">[</span><span class="n">ifo</span><span class="p">]</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">snr_series_fname</span><span class="p">,</span>
-                                    <span class="n">group</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/psd&#39;</span> <span class="o">%</span> <span class="n">ifo</span><span class="p">)</span>
+                <span class="n">curr_snrs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">snr_series</span><span class="p">[</span><span class="n">ifo</span><span class="p">]</span>
+                <span class="n">curr_snrs</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">snr_series_fname</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/snr&#39;</span> <span class="o">%</span> <span class="n">ifo</span><span class="p">)</span>
+                <span class="n">pylab</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">curr_snrs</span><span class="o">.</span><span class="n">sample_times</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">curr_snrs</span><span class="p">),</span>
+                           <span class="n">c</span><span class="o">=</span><span class="n">ifo_color</span><span class="p">(</span><span class="n">ifo</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="n">ifo</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">ifo</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ifos</span><span class="p">:</span>
+                    <span class="n">snr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coinc_results</span><span class="p">[</span><span class="s1">&#39;foreground/</span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
+                                             <span class="p">(</span><span class="n">ifo</span><span class="p">,</span> <span class="s1">&#39;snr&#39;</span><span class="p">)]</span>
+                    <span class="n">endt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coinc_results</span><span class="p">[</span><span class="s1">&#39;foreground/</span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
+                                              <span class="p">(</span><span class="n">ifo</span><span class="p">,</span> <span class="s1">&#39;end_time&#39;</span><span class="p">)]</span>
+                    <span class="n">pylab</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">endt</span><span class="p">],</span> <span class="p">[</span><span class="n">snr</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">ifo_color</span><span class="p">(</span><span class="n">ifo</span><span class="p">),</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+
+            <span class="n">pylab</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+            <span class="n">pylab</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;GPS time (s)&#39;</span><span class="p">)</span>
+            <span class="n">pylab</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;SNR&#39;</span><span class="p">)</span>
+            <span class="n">pylab</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">snr_series_plot_fname</span><span class="p">)</span>
+            <span class="n">pylab</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+            <span class="n">pylab</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">ifo</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">snr_series</span><span class="p">:</span>
+                <span class="c1"># Undo dynamic range factor</span>
+                <span class="n">curr_psd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">psds</span><span class="p">[</span><span class="n">ifo</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+                <span class="n">curr_psd</span> <span class="o">/=</span> <span class="n">pycbc</span><span class="o">.</span><span class="n">DYN_RANGE_FAC</span> <span class="o">**</span> <span class="mf">2.0</span>
+                <span class="n">curr_psd</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">snr_series_fname</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/psd&#39;</span> <span class="o">%</span> <span class="n">ifo</span><span class="p">)</span>
+                <span class="c1"># Can&#39;t plot log(0) so start from point 1</span>
+                <span class="n">pylab</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">curr_psd</span><span class="o">.</span><span class="n">sample_frequencies</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>
+                             <span class="n">curr_psd</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">**</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">ifo_color</span><span class="p">(</span><span class="n">ifo</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="n">ifo</span><span class="p">)</span>
+            <span class="n">pylab</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+            <span class="n">pylab</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mi">20</span><span class="p">,</span> <span class="mi">2000</span><span class="p">])</span>
+            <span class="n">pylab</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mf">1E-24</span><span class="p">,</span> <span class="mf">1E-21</span><span class="p">])</span>
+            <span class="n">pylab</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">)</span>
+            <span class="n">pylab</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;ASD&#39;</span><span class="p">)</span>
+            <span class="n">pylab</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">psd_series_plot_fname</span><span class="p">)</span>
 
         <span class="n">gid</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">try</span><span class="p">:</span>
@@ -531,9 +570,18 @@
             <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">extra_strings</span><span class="p">:</span>
                 <span class="n">gracedb</span><span class="o">.</span><span class="n">writeLog</span><span class="p">(</span><span class="n">gid</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
 
-            <span class="c1"># upload SNR series in HDF format</span>
+            <span class="c1"># upload SNR series in HDF format and plots</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">snr_series</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">gracedb</span><span class="o">.</span><span class="n">writeFile</span><span class="p">(</span><span class="n">gid</span><span class="p">,</span> <span class="n">snr_series_fname</span><span class="p">)</span>
+                <span class="n">gracedb</span><span class="o">.</span><span class="n">writeLog</span><span class="p">(</span><span class="n">gid</span><span class="p">,</span> <span class="s1">&#39;SNR timeseries HDF file upload&#39;</span><span class="p">,</span>
+                                 <span class="n">filename</span><span class="o">=</span><span class="n">snr_series_fname</span><span class="p">)</span>
+                <span class="n">gracedb</span><span class="o">.</span><span class="n">writeLog</span><span class="p">(</span><span class="n">gid</span><span class="p">,</span> <span class="s1">&#39;SNR timeseries plot upload&#39;</span><span class="p">,</span>
+                                 <span class="n">filename</span><span class="o">=</span><span class="n">snr_series_plot_fname</span><span class="p">,</span>
+                                 <span class="n">tag_name</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;background&#39;</span><span class="p">],</span>
+                                 <span class="n">displayName</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;SNR timeseries&#39;</span><span class="p">])</span>
+                <span class="n">gracedb</span><span class="o">.</span><span class="n">writeLog</span><span class="p">(</span><span class="n">gid</span><span class="p">,</span> <span class="s1">&#39;PSD plot upload&#39;</span><span class="p">,</span>
+                                 <span class="n">filename</span><span class="o">=</span><span class="n">psd_series_plot_fname</span><span class="p">,</span>
+                                 <span class="n">tag_name</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;psd&#39;</span><span class="p">],</span> <span class="n">displayName</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;PSDs&#39;</span><span class="p">])</span>
+
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Something failed during the upload/annotation of &#39;</span>
                           <span class="s1">&#39;event </span><span class="si">%s</span><span class="s1"> on GraceDB. The event may not have been &#39;</span>
