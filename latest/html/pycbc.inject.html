@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inject package &mdash; PyCBC 76a33e documentation</title>
+  <title>pycbc.inject package &mdash; PyCBC eb0fd4 documentation</title>
   
 
   
@@ -262,6 +262,95 @@
 <span id="pycbc-inject-inject-module"></span><h2>pycbc.inject.inject module<a class="headerlink" href="#module-pycbc.inject.inject" title="Permalink to this headline">¶</a></h2>
 <p>This module provides utilities for injecting signals into data</p>
 <dl class="class">
+<dt id="pycbc.inject.inject.CBCHDFInjectionSet">
+<em class="property">class </em><code class="descclassname">pycbc.inject.inject.</code><code class="descname">CBCHDFInjectionSet</code><span class="sig-paren">(</span><em>sim_file</em>, <em>hdf_group=None</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inject/inject.html#CBCHDFInjectionSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inject.inject.CBCHDFInjectionSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inject.inject._HDFInjectionSet</span></code></p>
+<p>Manages CBC injections.</p>
+<dl class="method">
+<dt id="pycbc.inject.inject.CBCHDFInjectionSet.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>strain</em>, <em>detector_name</em>, <em>f_lower=None</em>, <em>distance_scale=1</em>, <em>simulation_ids=None</em>, <em>inj_filter_rejector=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inject/inject.html#CBCHDFInjectionSet.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inject.inject.CBCHDFInjectionSet.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add injections (as seen by a particular detector) to a time series.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>strain</strong> (<a class="reference internal" href="pycbc.types.html#pycbc.types.timeseries.TimeSeries" title="pycbc.types.timeseries.TimeSeries"><em>TimeSeries</em></a>) – Time series to inject signals into, of type float32 or float64.</li>
+<li><strong>detector_name</strong> (<em>string</em>) – Name of the detector used for projecting injections.</li>
+<li><strong>f_lower</strong> (<em>{None</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – Low-frequency cutoff for injected signals. If None, use value
+provided by each injection.</li>
+<li><strong>distance_scale</strong> (<em>{1</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – Factor to scale the distance of an injection with. The default is
+no scaling.</li>
+<li><strong>simulation_ids</strong> (<em>iterable</em><em>, </em><em>optional</em>) – If given, only inject signals with the given simulation IDs.</li>
+<li><strong>inj_filter_rejector</strong> (<em>InjFilterRejector instance; optional</em><em>, </em><em>default=None</em>) – If given send each injected waveform to the InjFilterRejector
+instance so that it can store a reduced representation of that
+injection if necessary.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)">None</a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a> – For invalid types of <cite>strain</cite>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inject.inject.CBCHDFInjectionSet.end_times">
+<code class="descname">end_times</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inject/inject.html#CBCHDFInjectionSet.end_times"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inject.inject.CBCHDFInjectionSet.end_times" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the end times of all injections</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inject.inject.CBCHDFInjectionSet.injtype">
+<code class="descname">injtype</code><em class="property"> = 'cbc'</em><a class="headerlink" href="#pycbc.inject.inject.CBCHDFInjectionSet.injtype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inject.inject.CBCHDFInjectionSet.make_strain_from_inj_object">
+<code class="descname">make_strain_from_inj_object</code><span class="sig-paren">(</span><em>inj</em>, <em>delta_t</em>, <em>detector_name</em>, <em>f_lower=None</em>, <em>distance_scale=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inject/inject.html#CBCHDFInjectionSet.make_strain_from_inj_object"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inject.inject.CBCHDFInjectionSet.make_strain_from_inj_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a h(t) strain time-series from an injection object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>inj</strong> (<em>injection object</em>) – The injection object to turn into a strain h(t). Can be any
+object which has waveform parameters as attributes, such as an
+element in a <code class="docutils literal notranslate"><span class="pre">WaveformArray</span></code>.</li>
+<li><strong>delta_t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Sample rate to make injection at.</li>
+<li><strong>detector_name</strong> (<em>string</em>) – Name of the detector used for projecting injections.</li>
+<li><strong>f_lower</strong> (<em>{None</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – Low-frequency cutoff for injected signals. If None, use value
+provided by each injection.</li>
+<li><strong>distance_scale</strong> (<em>{1</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – Factor to scale the distance of an injection with. The default is
+no scaling.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>signal</strong> – h(t) corresponding to the injection.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pycbc.inject.inject.CBCHDFInjectionSet.supported_approximants">
+<em class="property">static </em><code class="descname">supported_approximants</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inject/inject.html#CBCHDFInjectionSet.supported_approximants"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inject.inject.CBCHDFInjectionSet.supported_approximants" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="pycbc.inject.inject.InjectionSet">
 <em class="property">class </em><code class="descclassname">pycbc.inject.inject.</code><code class="descname">InjectionSet</code><span class="sig-paren">(</span><em>sim_file</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inject/inject.html#InjectionSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inject.inject.InjectionSet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
@@ -285,6 +374,32 @@ function when generating injections.</li>
 <dt id="pycbc.inject.inject.InjectionSet.table">
 <code class="descname">table</code><a class="headerlink" href="#pycbc.inject.inject.InjectionSet.table" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="pycbc.inject.inject.InjectionSet.write">
+<em class="property">static </em><code class="descname">write</code><span class="sig-paren">(</span><em>filename</em>, <em>samples</em>, <em>write_params=None</em>, <em>static_args=None</em>, <em>injtype=None</em>, <em>**metadata</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inject/inject.html#InjectionSet.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inject.inject.InjectionSet.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes the injection samples to the given hdf file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The name of the file to write to.</li>
+<li><strong>samples</strong> (<em>io.FieldArray</em>) – FieldArray of parameters.</li>
+<li><strong>write_params</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>, </em><em>optional</em>) – Only write the given parameter names. All given names must be keys
+in <code class="docutils literal notranslate"><span class="pre">samples</span></code>. Default is to write all parameters in <code class="docutils literal notranslate"><span class="pre">samples</span></code>.</li>
+<li><strong>static_args</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a><em>, </em><em>optional</em>) – Dictionary mapping static parameter names to values. These are
+written to the <code class="docutils literal notranslate"><span class="pre">attrs</span></code>.</li>
+<li><strong>injtype</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>, </em><em>optional</em>) – Specify which <cite>HDFInjectionSet</cite> class to use for writing. If not
+provided, will try to determine it by looking for an approximant in
+the <code class="docutils literal notranslate"><span class="pre">static_args</span></code>, followed by the <code class="docutils literal notranslate"><span class="pre">samples</span></code>.</li>
+<li><strong>**metadata</strong> – All other keyword arguments will be written to the file’s attrs.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
@@ -310,27 +425,14 @@ function when generating injections.</li>
 </dd></dl>
 
 <dl class="class">
-<dt id="pycbc.inject.inject.RingdownInjectionSet">
-<em class="property">class </em><code class="descclassname">pycbc.inject.inject.</code><code class="descname">RingdownInjectionSet</code><span class="sig-paren">(</span><em>hdf_file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inject/inject.html#RingdownInjectionSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inject.inject.RingdownInjectionSet" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dt id="pycbc.inject.inject.RingdownHDFInjectionSet">
+<em class="property">class </em><code class="descclassname">pycbc.inject.inject.</code><code class="descname">RingdownHDFInjectionSet</code><span class="sig-paren">(</span><em>sim_file</em>, <em>hdf_group=None</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inject/inject.html#RingdownHDFInjectionSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inject.inject.RingdownHDFInjectionSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inject.inject._HDFInjectionSet</span></code></p>
 <p>Manages a ringdown injection: reads injection from hdf file
 and injects it into time series.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>hdf_file</strong> (<em>string</em>) – Path to hdf file containing injection definitions.</td>
-</tr>
-</tbody>
-</table>
-<dl class="attribute">
-<dt id="pycbc.inject.inject.RingdownInjectionSet.table">
-<code class="descname">table</code><a class="headerlink" href="#pycbc.inject.inject.RingdownInjectionSet.table" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
-<dt id="pycbc.inject.inject.RingdownInjectionSet.apply">
-<code class="descname">apply</code><span class="sig-paren">(</span><em>strain</em>, <em>detector_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inject/inject.html#RingdownInjectionSet.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inject.inject.RingdownInjectionSet.apply" title="Permalink to this definition">¶</a></dt>
+<dt id="pycbc.inject.inject.RingdownHDFInjectionSet.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>strain</em>, <em>detector_name</em>, <em>distance_scale=1</em>, <em>simulation_ids=None</em>, <em>inj_filter_rejector=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inject/inject.html#RingdownHDFInjectionSet.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inject.inject.RingdownHDFInjectionSet.apply" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add injection (as seen by a particular detector) to a time series.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -339,6 +441,11 @@ and injects it into time series.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>strain</strong> (<a class="reference internal" href="pycbc.types.html#pycbc.types.timeseries.TimeSeries" title="pycbc.types.timeseries.TimeSeries"><em>TimeSeries</em></a>) – Time series to inject signals into, of type float32 or float64.</li>
 <li><strong>detector_name</strong> (<em>string</em>) – Name of the detector used for projecting injections.</li>
+<li><strong>distance_scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>optional</em>) – Factor to scale the distance of an injection with. The default (=1)
+is no scaling.</li>
+<li><strong>simulation_ids</strong> (<em>iterable</em><em>, </em><em>optional</em>) – If given, only inject signals with the given simulation IDs.</li>
+<li><strong>inj_filter_rejector</strong> (<em>InjFilterRejector instance</em><em>, </em><em>optional</em>) – Not implemented. If not <code class="docutils literal notranslate"><span class="pre">None</span></code>, a <code class="docutils literal notranslate"><span class="pre">NotImplementedError</span></code> will
+be raised.</li>
 </ul>
 </td>
 </tr>
@@ -348,7 +455,10 @@ and injects it into time series.</p>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)">None</a></p>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a> – For invalid types of <cite>strain</cite>.</p>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a> – If an <code class="docutils literal notranslate"><span class="pre">inj_filter_rejector</span></code> is provided.</li>
+<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a> – For invalid types of <cite>strain</cite>.</li>
+</ul>
 </td>
 </tr>
 </tbody>
@@ -356,8 +466,20 @@ and injects it into time series.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pycbc.inject.inject.RingdownInjectionSet.make_strain_from_inj_object">
-<code class="descname">make_strain_from_inj_object</code><span class="sig-paren">(</span><em>inj</em>, <em>delta_t</em>, <em>detector_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inject/inject.html#RingdownInjectionSet.make_strain_from_inj_object"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inject.inject.RingdownInjectionSet.make_strain_from_inj_object" title="Permalink to this definition">¶</a></dt>
+<dt id="pycbc.inject.inject.RingdownHDFInjectionSet.end_times">
+<code class="descname">end_times</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inject/inject.html#RingdownHDFInjectionSet.end_times"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inject.inject.RingdownHDFInjectionSet.end_times" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the approximate end times of all injections.</p>
+<p>Currently, this just assumes all ringdowns are 2 seconds long.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inject.inject.RingdownHDFInjectionSet.injtype">
+<code class="descname">injtype</code><em class="property"> = 'ringdown'</em><a class="headerlink" href="#pycbc.inject.inject.RingdownHDFInjectionSet.injtype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inject.inject.RingdownHDFInjectionSet.make_strain_from_inj_object">
+<code class="descname">make_strain_from_inj_object</code><span class="sig-paren">(</span><em>inj</em>, <em>delta_t</em>, <em>detector_name</em>, <em>distance_scale=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inject/inject.html#RingdownHDFInjectionSet.make_strain_from_inj_object"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inject.inject.RingdownHDFInjectionSet.make_strain_from_inj_object" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make a h(t) strain time-series from an injection object as read from
 an hdf file.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -368,6 +490,8 @@ an hdf file.</p>
 <li><strong>inj</strong> (<em>injection object</em>) – The injection object to turn into a strain h(t).</li>
 <li><strong>delta_t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Sample rate to make injection at.</li>
 <li><strong>detector_name</strong> (<em>string</em>) – Name of the detector used for projecting injections.</li>
+<li><strong>distance_scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>optional</em>) – Factor to scale the distance of an injection with. The default (=1)
+is no scaling.</li>
 </ul>
 </td>
 </tr>
@@ -380,6 +504,11 @@ an hdf file.</p>
 </tbody>
 </table>
 </dd></dl>
+
+<dl class="staticmethod">
+<dt id="pycbc.inject.inject.RingdownHDFInjectionSet.supported_approximants">
+<em class="property">static </em><code class="descname">supported_approximants</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inject/inject.html#RingdownHDFInjectionSet.supported_approximants"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inject.inject.RingdownHDFInjectionSet.supported_approximants" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -442,11 +571,55 @@ no scaling.</li>
 </dd></dl>
 
 <dl class="function">
+<dt id="pycbc.inject.inject.get_hdf_injtype">
+<code class="descclassname">pycbc.inject.inject.</code><code class="descname">get_hdf_injtype</code><span class="sig-paren">(</span><em>sim_file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inject/inject.html#get_hdf_injtype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inject.inject.get_hdf_injtype" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the HDFInjectionSet class to use with the given file.</p>
+<p>This looks for the <code class="docutils literal notranslate"><span class="pre">injtype</span></code> in the given file’s top level <code class="docutils literal notranslate"><span class="pre">attrs</span></code>. If
+that attribute isn’t set, will default to <a class="reference internal" href="#pycbc.inject.inject.CBCHDFInjectionSet" title="pycbc.inject.inject.CBCHDFInjectionSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">CBCHDFInjectionSet</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sim_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Name of the file. The file must already exist.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The type of HDFInjectionSet to use.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">HDFInjectionSet</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pycbc.inject.inject.hdf_injtype_from_approximant">
+<code class="descclassname">pycbc.inject.inject.</code><code class="descname">hdf_injtype_from_approximant</code><span class="sig-paren">(</span><em>approximant</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inject/inject.html#hdf_injtype_from_approximant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inject.inject.hdf_injtype_from_approximant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the HDFInjectionSet class to use with the given approximant.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>approximant</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Name of the approximant.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The type of HDFInjectionSet to use.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">HDFInjectionSet</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="pycbc.inject.inject.legacy_approximant_name">
 <code class="descclassname">pycbc.inject.inject.</code><code class="descname">legacy_approximant_name</code><span class="sig-paren">(</span><em>apx</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inject/inject.html#legacy_approximant_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inject.inject.legacy_approximant_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the old style xml approximant name to a name
-and phase_order. Alex: I hate this function. Please delet this when we
+and phase_order. Alex: I hate this function. Please delete this when we
 use Collin’s new tables.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pycbc.inject.inject.set_sim_data">
+<code class="descclassname">pycbc.inject.inject.</code><code class="descname">set_sim_data</code><span class="sig-paren">(</span><em>inj</em>, <em>field</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inject/inject.html#set_sim_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inject.inject.set_sim_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets data of a SimInspiral instance.</p>
 </dd></dl>
 
 </div>
@@ -547,7 +720,7 @@ templates.</p>
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Apr 11, 2019.
+        Last updated on Apr 12, 2019.
       </span>
 
     </p>

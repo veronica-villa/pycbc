@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.strain.strain &mdash; PyCBC 76a33e documentation</title>
+  <title>pycbc.strain.strain &mdash; PyCBC eb0fd4 documentation</title>
   
 
   
@@ -234,7 +234,7 @@
 <span class="kn">from</span> <span class="nn">pycbc.types</span> <span class="k">import</span> <span class="n">ensure_one_opt</span><span class="p">,</span> <span class="n">ensure_one_opt_multi_ifo</span>
 <span class="kn">from</span> <span class="nn">pycbc.types</span> <span class="k">import</span> <span class="n">copy_opts_for_single_ifo</span>
 <span class="kn">from</span> <span class="nn">pycbc.frame</span> <span class="k">import</span> <span class="n">read_frame</span><span class="p">,</span> <span class="n">query_and_read_frame</span>
-<span class="kn">from</span> <span class="nn">pycbc.inject</span> <span class="k">import</span> <span class="n">InjectionSet</span><span class="p">,</span> <span class="n">SGBurstInjectionSet</span><span class="p">,</span> <span class="n">RingdownInjectionSet</span>
+<span class="kn">from</span> <span class="nn">pycbc.inject</span> <span class="k">import</span> <span class="n">InjectionSet</span><span class="p">,</span> <span class="n">SGBurstInjectionSet</span>
 <span class="kn">from</span> <span class="nn">pycbc.filter</span> <span class="k">import</span> <span class="n">resample_to_delta_t</span><span class="p">,</span> <span class="n">highpass</span><span class="p">,</span> <span class="n">make_frequency_series</span>
 <span class="kn">from</span> <span class="nn">pycbc.filter.zpk</span> <span class="k">import</span> <span class="n">filter_zpk</span>
 <span class="kn">from</span> <span class="nn">pycbc.waveform.spa_tmplt</span> <span class="k">import</span> <span class="n">spa_distance</span>
@@ -468,11 +468,6 @@
             <span class="n">injector</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">strain</span><span class="p">,</span> <span class="n">opt</span><span class="o">.</span><span class="n">channel_name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span>
                              <span class="n">distance_scale</span><span class="o">=</span><span class="n">opt</span><span class="o">.</span><span class="n">injection_scale_factor</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">opt</span><span class="o">.</span><span class="n">ringdown_injection_file</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Applying ringdown-only injection.&quot;</span><span class="p">)</span>
-            <span class="n">injector</span> <span class="o">=</span> <span class="n">RingdownInjectionSet</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">ringdown_injection_file</span><span class="p">)</span>
-            <span class="n">injector</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">strain</span><span class="p">,</span> <span class="n">opt</span><span class="o">.</span><span class="n">channel_name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
-
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Highpass Filtering&quot;</span><span class="p">)</span>
         <span class="n">strain</span> <span class="o">=</span> <span class="n">highpass</span><span class="p">(</span><span class="n">strain</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="n">opt</span><span class="o">.</span><span class="n">strain_high_pass</span><span class="p">)</span>
 
@@ -584,8 +579,7 @@
             <span class="n">strain</span> <span class="o">=</span> <span class="n">resample_to_delta_t</span><span class="p">(</span><span class="n">strain</span><span class="p">,</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">opt</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">opt</span><span class="o">.</span><span class="n">channel_name</span> <span class="ow">and</span> <span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">injection_file</span> \
-                                     <span class="ow">or</span> <span class="n">opt</span><span class="o">.</span><span class="n">sgburst_injection_file</span> \
-                                     <span class="ow">or</span> <span class="n">opt</span><span class="o">.</span><span class="n">ringdown_injection_file</span><span class="p">):</span>
+                                     <span class="ow">or</span> <span class="n">opt</span><span class="o">.</span><span class="n">sgburst_injection_file</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Please provide channel names with the format &#39;</span>
                              <span class="s1">&#39;ifo:channel (e.g. H1:CALIB-STRAIN) to inject &#39;</span>
                              <span class="s1">&#39;simulated signals into fake strain&#39;</span><span class="p">)</span>
@@ -603,11 +597,6 @@
             <span class="n">injector</span> <span class="o">=</span>  <span class="n">SGBurstInjectionSet</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">sgburst_injection_file</span><span class="p">)</span>
             <span class="n">injector</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">strain</span><span class="p">,</span> <span class="n">opt</span><span class="o">.</span><span class="n">channel_name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span>
                              <span class="n">distance_scale</span><span class="o">=</span><span class="n">opt</span><span class="o">.</span><span class="n">injection_scale_factor</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">opt</span><span class="o">.</span><span class="n">ringdown_injection_file</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Applying ringdown-only injection.&quot;</span><span class="p">)</span>
-            <span class="n">injector</span> <span class="o">=</span> <span class="n">RingdownInjectionSet</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">ringdown_injection_file</span><span class="p">)</span>
-            <span class="n">injector</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">strain</span><span class="p">,</span> <span class="n">opt</span><span class="o">.</span><span class="n">channel_name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
 
         <span class="k">if</span> <span class="n">precision</span> <span class="o">==</span> <span class="s1">&#39;single&#39;</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Converting to float32&quot;</span><span class="p">)</span>
@@ -732,10 +721,6 @@
     <span class="n">data_reading_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--sgburst-injection-file&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
                       <span class="n">help</span><span class="o">=</span><span class="s2">&quot;(optional) Injection file used to add &quot;</span>
                       <span class="s2">&quot;sine-Gaussian burst waveforms into the strain&quot;</span><span class="p">)</span>
-
-    <span class="n">data_reading_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--ringdown-injection-file&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-                      <span class="n">help</span><span class="o">=</span><span class="s2">&quot;(optional) Injection file used to add &quot;</span>
-                           <span class="s2">&quot;ringdown-only waveforms into the strain.&quot;</span><span class="p">)</span>
 
     <span class="n">data_reading_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--injection-scale-factor&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
                     <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Divide injections by this factor &quot;</span>
@@ -908,11 +893,6 @@
                       <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;IFO:FILE&#39;</span><span class="p">,</span>
                       <span class="n">help</span><span class="o">=</span><span class="s2">&quot;(optional) Injection file used to add &quot;</span>
                       <span class="s2">&quot;sine-Gaussian burst waveforms into the strain&quot;</span><span class="p">)</span>
-
-    <span class="n">data_reading_group_multi</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--ringdown-injection-file&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-                    <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="n">MultiDetOptionAction</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;IFO:FILE&#39;</span><span class="p">,</span>
-                    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;(optional) Injection file used to add &quot;</span>
-                           <span class="s2">&quot;ringdown-only waveforms into the strain.&quot;</span><span class="p">)</span>
 
     <span class="n">data_reading_group_multi</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--injection-scale-factor&quot;</span><span class="p">,</span>
                     <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="n">MultiDetOptionAction</span><span class="p">,</span>
@@ -1821,7 +1801,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Apr 11, 2019.
+        Last updated on Apr 12, 2019.
       </span>
 
     </p>
