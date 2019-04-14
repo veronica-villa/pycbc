@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.filter.matchedfilter &mdash; PyCBC b9e918 documentation</title>
+  <title>pycbc.filter.matchedfilter &mdash; PyCBC 4d4e44 documentation</title>
   
 
   
@@ -1988,8 +1988,8 @@
     <span class="n">htilde</span> <span class="o">=</span> <span class="n">bank</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="n">template_id</span><span class="p">,</span> <span class="n">min_buffer</span><span class="o">=</span><span class="n">bdur</span><span class="p">)</span>
     <span class="n">stilde</span> <span class="o">=</span> <span class="n">data_reader</span><span class="o">.</span><span class="n">overwhitened_data</span><span class="p">(</span><span class="n">htilde</span><span class="o">.</span><span class="n">delta_f</span><span class="p">)</span>
 
-    <span class="n">snr</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">norm</span> <span class="o">=</span> <span class="n">matched_filter_core</span><span class="p">(</span><span class="n">htilde</span><span class="p">,</span> <span class="n">stilde</span><span class="p">,</span>
-                                          <span class="n">h_norm</span><span class="o">=</span><span class="n">htilde</span><span class="o">.</span><span class="n">sigmasq</span><span class="p">(</span><span class="n">stilde</span><span class="o">.</span><span class="n">psd</span><span class="p">))</span>
+    <span class="n">sigma2</span> <span class="o">=</span> <span class="n">htilde</span><span class="o">.</span><span class="n">sigmasq</span><span class="p">(</span><span class="n">stilde</span><span class="o">.</span><span class="n">psd</span><span class="p">)</span>
+    <span class="n">snr</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">norm</span> <span class="o">=</span> <span class="n">matched_filter_core</span><span class="p">(</span><span class="n">htilde</span><span class="p">,</span> <span class="n">stilde</span><span class="p">,</span> <span class="n">h_norm</span><span class="o">=</span><span class="n">sigma2</span><span class="p">)</span>
 
     <span class="c1"># Find peak in on-source and determine p-value</span>
     <span class="n">onsrc</span> <span class="o">=</span> <span class="n">snr</span><span class="o">.</span><span class="n">time_slice</span><span class="p">(</span><span class="n">onsource_start</span><span class="p">,</span> <span class="n">onsource_end</span><span class="p">)</span>
@@ -2013,7 +2013,7 @@
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Adding </span><span class="si">%s</span><span class="s1"> to candidate, pvalue </span><span class="si">%s</span><span class="s1">, </span><span class="si">%s</span><span class="s1"> samples&#39;</span><span class="p">,</span> <span class="n">ifo</span><span class="p">,</span>
                  <span class="n">pvalue</span><span class="p">,</span> <span class="n">nsamples</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">baysnr</span> <span class="o">*</span> <span class="n">norm</span><span class="p">,</span> <span class="n">peak_time</span><span class="p">,</span> <span class="n">pvalue</span></div>
+    <span class="k">return</span> <span class="n">baysnr</span> <span class="o">*</span> <span class="n">norm</span><span class="p">,</span> <span class="n">peak_time</span><span class="p">,</span> <span class="n">pvalue</span><span class="p">,</span> <span class="n">sigma2</span></div>
 
 <div class="viewcode-block" id="compute_followup_snr_series"><a class="viewcode-back" href="../../../pycbc.filter.html#pycbc.filter.matchedfilter.compute_followup_snr_series">[docs]</a><span class="k">def</span> <span class="nf">compute_followup_snr_series</span><span class="p">(</span><span class="n">data_reader</span><span class="p">,</span> <span class="n">htilde</span><span class="p">,</span> <span class="n">trig_time</span><span class="p">,</span>
                                 <span class="n">duration</span><span class="o">=</span><span class="mf">0.095</span><span class="p">,</span> <span class="n">check_state</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -2121,7 +2121,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Apr 12, 2019.
+        Last updated on Apr 14, 2019.
       </span>
 
     </p>
