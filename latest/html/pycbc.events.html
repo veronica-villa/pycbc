@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.events package &mdash; PyCBC ffdcd7 documentation</title>
+  <title>pycbc.events package &mdash; PyCBC d43c3e documentation</title>
   
 
   
@@ -730,6 +730,83 @@ is slid to the right by the offset in the given timeslide_offsets vector.</p>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
 </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pycbc.events.coinc_rate">
+<span id="pycbc-events-coinc-rate-module"></span><h2>pycbc.events.coinc_rate module<a class="headerlink" href="#module-pycbc.events.coinc_rate" title="Permalink to this headline">¶</a></h2>
+<p>This module contains functions for calculating expected rates of noise
+and signal coincidences.</p>
+<dl class="function">
+<dt id="pycbc.events.coinc_rate.multiifo_noise_coinc_rate">
+<code class="descclassname">pycbc.events.coinc_rate.</code><code class="descname">multiifo_noise_coinc_rate</code><span class="sig-paren">(</span><em>rates</em>, <em>slop</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/coinc_rate.html#multiifo_noise_coinc_rate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.coinc_rate.multiifo_noise_coinc_rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the expected rate of noise coincidences for multiple detectors</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>rates</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – Dictionary keyed on ifo string
+Value is a sequence of single-detector trigger rates, units assumed
+to be Hz</li>
+<li><strong>slop</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – time added to maximum time-of-flight between detectors to account
+for timing error</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>expected_coinc_rates</strong> – Dictionary keyed on the ifo combination string
+Value is expected coincidence rate in the combination, units Hz</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pycbc.events.coinc_rate.multiifo_noise_coincident_area">
+<code class="descclassname">pycbc.events.coinc_rate.</code><code class="descname">multiifo_noise_coincident_area</code><span class="sig-paren">(</span><em>ifos</em>, <em>slop</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/coinc_rate.html#multiifo_noise_coincident_area"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.coinc_rate.multiifo_noise_coincident_area" title="Permalink to this definition">¶</a></dt>
+<dd><p>calculate the total extent of time offset between 2 detectors,
+or area of the 2d space of time offsets for 3 detectors, for
+which a coincidence can be generated</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ifos</strong> (<em>list of strings</em>) – list of interferometers</li>
+<li><strong>slop</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – extra time to add to maximum time-of-flight for timing error</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>allowed_area</strong> – area in units of seconds^(n_ifos-1) that coincident values can fall in</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pycbc.events.coinc_rate.multiifo_signal_coincident_area">
+<code class="descclassname">pycbc.events.coinc_rate.</code><code class="descname">multiifo_signal_coincident_area</code><span class="sig-paren">(</span><em>ifos</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/coinc_rate.html#multiifo_signal_coincident_area"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.coinc_rate.multiifo_signal_coincident_area" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the area in which signal time differences are physically allowed</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ifos</strong> (<em>list of strings</em>) – list of interferometers</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>allowed_area</strong> – area in units of seconds^(n_ifos-1) that coincident signals will occupy</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></td>
 </tr>
 </tbody>
 </table>

@@ -12,6 +12,14 @@ pycbc.events.coinc module
     :undoc-members:
     :show-inheritance:
 
+pycbc.events.coinc\_rate module
+-------------------------------
+
+.. automodule:: pycbc.events.coinc_rate
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 pycbc.events.eventmgr module
 ----------------------------
 
