@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.frame.frame &mdash; PyCBC cf309c documentation</title>
+  <title>pycbc.frame.frame &mdash; PyCBC b06984 documentation</title>
   
 
   
@@ -185,6 +185,8 @@
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
           <li><a href="../../pycbc.html">pycbc</a> &raquo;</li>
+        
+          <li><a href="../frame.html">pycbc.frame</a> &raquo;</li>
         
       <li>pycbc.frame.frame</li>
     
@@ -869,7 +871,7 @@
 
 <span class="k">class</span> <span class="nc">StatusBuffer</span><span class="p">(</span><span class="n">DataBuffer</span><span class="p">):</span>
 
-    <span class="sd">&quot;&quot;&quot; Read state vector information from a frame file &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot; Read state vector or DQ information from a frame file &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame_src</span><span class="p">,</span>
                        <span class="n">channel_name</span><span class="p">,</span>
@@ -877,14 +879,15 @@
                        <span class="n">max_buffer</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span>
                        <span class="n">valid_mask</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
                        <span class="n">force_update_cache</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                       <span class="n">increment_update_cache</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                       <span class="n">increment_update_cache</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">valid_on_zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Create a rolling buffer of status data from a frame</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ---------</span>
 <span class="sd">        frame_src: str of list of strings</span>
 <span class="sd">            Strings that indicate where to read from files from. This can be a</span>
-<span class="sd">        list of frame files, a glob, etc.</span>
+<span class="sd">            list of frame files, a glob, etc.</span>
 <span class="sd">        channel_name: str</span>
 <span class="sd">            Name of the channel to read from the frame files</span>
 <span class="sd">        start_time:</span>
@@ -893,6 +896,9 @@
 <span class="sd">            Length of the buffer in seconds</span>
 <span class="sd">        valid_mask: {int, HOFT_OK | SCIENCE_INTENT}, Optional</span>
 <span class="sd">            Set of flags that must be on to indicate valid frame data.</span>
+<span class="sd">        valid_on_zero: bool</span>
+<span class="sd">            If True, `valid_mask` is ignored and the status is considered</span>
+<span class="sd">            &quot;good&quot; simply when the channel is zero.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">DataBuffer</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame_src</span><span class="p">,</span> <span class="n">channel_name</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span>
                             <span class="n">max_buffer</span><span class="o">=</span><span class="n">max_buffer</span><span class="p">,</span>
@@ -900,6 +906,7 @@
                             <span class="n">increment_update_cache</span><span class="o">=</span><span class="n">increment_update_cache</span><span class="p">,</span>
                             <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">valid_mask</span> <span class="o">=</span> <span class="n">valid_mask</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valid_on_zero</span> <span class="o">=</span> <span class="n">valid_on_zero</span>
 
     <span class="k">def</span> <span class="nf">check_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">flag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Check if the data contains any non-valid status information</span>
@@ -917,13 +924,13 @@
 <span class="sd">            Returns True if all of the status information if valid,</span>
 <span class="sd">             False if any is not.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">flag</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">flag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_mask</span>
-
-        <span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">bitwise_and</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">flag</span><span class="p">)</span> <span class="o">!=</span> <span class="n">flag</span><span class="p">):</span>
-            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_on_zero</span><span class="p">:</span>
+            <span class="n">valid</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">flag</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">flag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_mask</span>
+            <span class="n">valid</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">bitwise_and</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">flag</span><span class="p">)</span> <span class="o">==</span> <span class="n">flag</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">valid</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">is_extent_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">flag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Check if the duration contains any non-valid frames</span>
@@ -974,7 +981,12 @@
         <span class="n">e</span> <span class="o">=</span> <span class="n">s</span> <span class="o">+</span> <span class="nb">int</span><span class="p">((</span><span class="n">duration</span> <span class="o">+</span> <span class="n">padding</span><span class="p">)</span> <span class="o">*</span> <span class="n">sr</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_buffer</span><span class="p">[</span><span class="n">s</span><span class="p">:</span><span class="n">e</span><span class="p">]</span>
         <span class="n">stamps</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sample_times</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
-        <span class="n">invalid</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">bitwise_and</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_mask</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_mask</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_on_zero</span><span class="p">:</span>
+            <span class="n">invalid</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">invalid</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">bitwise_and</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_mask</span><span class="p">)</span> \
+                    <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_mask</span>
 
         <span class="n">starts</span> <span class="o">=</span> <span class="n">stamps</span><span class="p">[</span><span class="n">invalid</span><span class="p">]</span> <span class="o">-</span> <span class="n">padding</span>
         <span class="n">ends</span> <span class="o">=</span> <span class="n">starts</span> <span class="o">+</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">sr</span> <span class="o">+</span> <span class="n">padding</span> <span class="o">*</span> <span class="mf">2.0</span>
