@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.dq &mdash; PyCBC 680b2f documentation</title>
+  <title>pycbc.dq &mdash; PyCBC 7ea847 documentation</title>
   
 
   
@@ -355,11 +355,11 @@
             <span class="k">return</span> <span class="p">(</span><span class="n">data</span> <span class="o">-</span> <span class="n">negate</span><span class="p">)</span><span class="o">.</span><span class="n">coalesce</span><span class="p">()</span>
 
         <span class="n">duration</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="n">GWOSC_URL</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">get_run</span><span class="p">(</span><span class="n">start_time</span> <span class="o">+</span> <span class="n">duration</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span>
-                               <span class="n">ifo</span><span class="p">,</span> <span class="n">segment_name</span><span class="p">,</span>
-                               <span class="nb">int</span><span class="p">(</span><span class="n">start_time</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">duration</span><span class="p">))</span>
-
         <span class="k">try</span><span class="p">:</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">GWOSC_URL</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">get_run</span><span class="p">(</span><span class="n">start_time</span> <span class="o">+</span> <span class="n">duration</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span>
+                                   <span class="n">ifo</span><span class="p">,</span> <span class="n">segment_name</span><span class="p">,</span>
+                                   <span class="nb">int</span><span class="p">(</span><span class="n">start_time</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">duration</span><span class="p">))</span>
+
             <span class="n">fname</span> <span class="o">=</span> <span class="n">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">))</span>
             <span class="k">if</span> <span class="s1">&#39;segments&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
