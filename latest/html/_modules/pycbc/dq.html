@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.dq &mdash; PyCBC de03b0 documentation</title>
+  <title>pycbc.dq &mdash; PyCBC ab6fb9 documentation</title>
   
 
   
@@ -395,6 +395,7 @@
         <span class="c1"># a process the flags in the veto definer</span>
         <span class="k">if</span> <span class="n">veto_definer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">segment_name</span> <span class="ow">in</span> <span class="n">veto_def</span><span class="p">[</span><span class="n">ifo</span><span class="p">]:</span>
             <span class="k">for</span> <span class="n">flag</span> <span class="ow">in</span> <span class="n">veto_def</span><span class="p">[</span><span class="n">ifo</span><span class="p">][</span><span class="n">segment_name</span><span class="p">]:</span>
+                <span class="n">partial</span> <span class="o">=</span> <span class="n">segmentlist</span><span class="p">([])</span>
                 <span class="n">segs</span> <span class="o">=</span> <span class="n">query</span><span class="p">(</span><span class="s2">&quot;https&quot;</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">ifo</span><span class="p">,</span> <span class="n">flag</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
                              <span class="n">flag</span><span class="p">[</span><span class="s1">&#39;version&#39;</span><span class="p">],</span> <span class="s1">&#39;active&#39;</span><span class="p">,</span>
                              <span class="nb">int</span><span class="p">(</span><span class="n">start_time</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">end_time</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;active&#39;</span><span class="p">]</span>
@@ -403,11 +404,12 @@
                 <span class="k">for</span> <span class="n">rseg</span> <span class="ow">in</span> <span class="n">segs</span><span class="p">:</span>
                     <span class="n">seg_start</span> <span class="o">=</span> <span class="n">rseg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">flag</span><span class="p">[</span><span class="s1">&#39;start_pad&#39;</span><span class="p">]</span>
                     <span class="n">seg_end</span> <span class="o">=</span> <span class="n">rseg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">flag</span><span class="p">[</span><span class="s1">&#39;end_pad&#39;</span><span class="p">]</span>
-                    <span class="n">flag_segments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">segment</span><span class="p">(</span><span class="n">seg_start</span><span class="p">,</span> <span class="n">seg_end</span><span class="p">))</span>
+                    <span class="n">partial</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">segment</span><span class="p">(</span><span class="n">seg_start</span><span class="p">,</span> <span class="n">seg_end</span><span class="p">))</span>
 
-            <span class="c1"># Apply start / end of the veto definer segment</span>
-            <span class="n">send</span> <span class="o">=</span> <span class="n">segmentlist</span><span class="p">([</span><span class="n">segment</span><span class="p">([</span><span class="n">veto_def</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">],</span> <span class="n">veto_def</span><span class="p">[</span><span class="s1">&#39;end&#39;</span><span class="p">]])])</span>
-            <span class="n">flag_segments</span> <span class="o">=</span> <span class="p">(</span><span class="n">flag_segments</span><span class="o">.</span><span class="n">coalesce</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">send</span><span class="p">)</span>
+                <span class="c1"># Limit to the veto definer stated valid region of this flag</span>
+                <span class="n">send</span> <span class="o">=</span> <span class="n">segmentlist</span><span class="p">([</span><span class="n">segment</span><span class="p">([</span><span class="n">flag</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">],</span>
+                                             <span class="n">flag</span><span class="p">[</span><span class="s1">&#39;end&#39;</span><span class="p">]])])</span>
+                <span class="n">flag_segments</span> <span class="o">+=</span> <span class="p">(</span><span class="n">partial</span><span class="o">.</span><span class="n">coalesce</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">send</span><span class="p">)</span>
 
         <span class="k">else</span><span class="p">:</span>  <span class="c1"># Standard case just query directly.</span>
             <span class="k">try</span><span class="p">:</span>
