@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.workflow.configuration &mdash; PyCBC 7ea847 documentation</title>
+  <title>pycbc.workflow.configuration &mdash; PyCBC de03b0 documentation</title>
   
 
   
@@ -241,13 +241,13 @@
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">distutils.spawn</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
-<span class="kn">import</span> <span class="nn">glue.pipeline</span>
-
+<span class="kn">import</span> <span class="nn">six</span>
 <span class="kn">from</span> <span class="nn">six.moves</span> <span class="k">import</span> <span class="n">configparser</span> <span class="k">as</span> <span class="n">ConfigParser</span>
 <span class="kn">from</span> <span class="nn">six.moves.urllib.parse</span> <span class="k">import</span> <span class="n">urlparse</span>
 <span class="kn">from</span> <span class="nn">six.moves</span> <span class="k">import</span> <span class="n">http_cookiejar</span> <span class="k">as</span> <span class="n">cookielib</span>
 <span class="kn">from</span> <span class="nn">six.moves.http_cookiejar</span> <span class="k">import</span> <span class="p">(</span><span class="n">_warn_unhandled_exception</span><span class="p">,</span>
                                       <span class="n">LoadError</span><span class="p">,</span> <span class="n">Cookie</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">glue.pipeline</span>
 <span class="kn">from</span> <span class="nn">bs4</span> <span class="k">import</span> <span class="n">BeautifulSoup</span>
 
 <span class="k">def</span> <span class="nf">_really_load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">ignore_discard</span><span class="p">,</span> <span class="n">ignore_expires</span><span class="p">):</span>
@@ -354,16 +354,25 @@
 <span class="sd">    Code modified from</span>
 <span class="sd">    https://www.safaribooksonline.com/library/view/python-cookbook-2nd/0596007973/ch01s12.html</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">text_characters</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">chr</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">127</span><span class="p">)))</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n\r\t\b</span><span class="s2">&quot;</span>
-    <span class="n">_null_trans</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">maketrans</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
     <span class="c1"># if s contains any null, it&#39;s not text:</span>
-    <span class="k">if</span> <span class="s2">&quot;</span><span class="se">\0</span><span class="s2">&quot;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">six</span><span class="o">.</span><span class="n">PY2</span> <span class="ow">and</span> <span class="s2">&quot;</span><span class="se">\0</span><span class="s2">&quot;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="c1"># an &quot;empty&quot; string is &quot;text&quot; (arbitrary but reasonable choice):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">s</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">True</span>
-    <span class="c1"># Get the substring of s made up of non-text characters</span>
-    <span class="n">t</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">_null_trans</span><span class="p">,</span> <span class="n">text_characters</span><span class="p">)</span>
+
+    <span class="n">text_characters</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">chr</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">127</span><span class="p">)))</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n\r\t\b</span><span class="s2">&quot;</span>
+    <span class="k">if</span> <span class="n">six</span><span class="o">.</span><span class="n">PY2</span><span class="p">:</span>
+        <span class="n">_null_trans</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">maketrans</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="c1"># Get the substring of s made up of non-text characters</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">_null_trans</span><span class="p">,</span> <span class="n">text_characters</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Not yet sure how to deal with this in python3. Will need example.</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="c1"># trans = str.maketrans(&#39;&#39;, &#39;&#39;, text_characters)</span>
+        <span class="c1"># t = s.translate(trans)</span>
+
     <span class="c1"># s is &#39;text&#39; if less than 30% of its characters are non-text ones:</span>
     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="o">&lt;=</span> <span class="n">threshold</span></div>
 
@@ -435,7 +444,7 @@
                   <span class="n">desc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;content&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;https://git.ligo.org/users/sign_in&#39;</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">ecp_cookie_error</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
 
-        <span class="n">output_fp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="n">output_fp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span>
         <span class="n">output_fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
         <span class="n">output_fp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
@@ -1250,7 +1259,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on May 01, 2019.
+        Last updated on May 02, 2019.
       </span>
 
     </p>

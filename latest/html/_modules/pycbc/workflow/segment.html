@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.workflow.segment &mdash; PyCBC 7ea847 documentation</title>
+  <title>pycbc.workflow.segment &mdash; PyCBC de03b0 documentation</title>
   
 
   
@@ -233,7 +233,8 @@
 
 <span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">shutil</span><span class="o">,</span> <span class="nn">stat</span><span class="o">,</span> <span class="nn">copy</span><span class="o">,</span> <span class="nn">itertools</span>
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">urlparse</span><span class="o">,</span> <span class="nn">urllib</span>
+<span class="kn">from</span> <span class="nn">six.moves.urllib.request</span> <span class="k">import</span> <span class="n">pathname2url</span>
+<span class="kn">from</span> <span class="nn">six.moves.urllib.parse</span> <span class="k">import</span> <span class="n">urljoin</span><span class="p">,</span> <span class="n">urlunparse</span>
 <span class="kn">import</span> <span class="nn">lal</span>
 <span class="kn">from</span> <span class="nn">ligo</span> <span class="k">import</span> <span class="n">segments</span>
 <span class="kn">from</span> <span class="nn">ligo.segments</span> <span class="k">import</span> <span class="n">utils</span> <span class="k">as</span> <span class="n">segmentsUtils</span>
@@ -761,8 +762,8 @@
         <span class="n">analysedSegDict</span><span class="p">[</span><span class="n">ifo</span> <span class="o">+</span> <span class="s1">&#39;:SCIENCE_OK&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">analysedSegs</span>
         <span class="n">analysedXmlFile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_dir</span><span class="p">,</span>
                              <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">-SCIENCE_OK_SEGMENTS.xml&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">ifo</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span> <span class="p">)</span>
-        <span class="n">currUrl</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlunparse</span><span class="p">([</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">analysedXmlFile</span><span class="p">,</span>
-                          <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span>
+        <span class="n">currUrl</span> <span class="o">=</span> <span class="n">urlunparse</span><span class="p">([</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">analysedXmlFile</span><span class="p">,</span>
+                              <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span>
         <span class="k">if</span> <span class="n">tag</span><span class="p">:</span>
             <span class="n">currTags</span> <span class="o">=</span> <span class="p">[</span><span class="n">tag</span><span class="p">,</span> <span class="s1">&#39;SCIENCE_OK&#39;</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
@@ -811,8 +812,8 @@
         <span class="n">combined_veto_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_dir</span><span class="p">,</span>
                                <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">-CUMULATIVE_ALL_CATS_SEGMENTS.xml&#39;</span> \
                                <span class="o">%</span><span class="p">(</span><span class="n">ifo_string</span><span class="p">)</span> <span class="p">)</span>
-        <span class="n">curr_url</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlunparse</span><span class="p">([</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
-                                       <span class="n">combined_veto_file</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span>
+        <span class="n">curr_url</span> <span class="o">=</span> <span class="n">urlunparse</span><span class="p">([</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
+                               <span class="n">combined_veto_file</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span>
         <span class="n">curr_file</span> <span class="o">=</span> <span class="n">SegFile</span><span class="p">(</span><span class="n">ifo_string</span><span class="p">,</span> <span class="s1">&#39;SEGMENTS&#39;</span><span class="p">,</span> <span class="n">segValidSeg</span><span class="p">,</span>
                             <span class="n">file_url</span><span class="o">=</span><span class="n">curr_url</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="n">currTags</span><span class="p">)</span>
 
@@ -963,8 +964,8 @@
                          <span class="o">%</span><span class="p">(</span><span class="n">ifo</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="o">-</span><span class="n">start_time</span><span class="p">)</span>
     <span class="n">veto_xml_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_dir</span><span class="p">,</span>
                                          <span class="n">veto_xml_file_name</span><span class="p">))</span>
-    <span class="n">curr_url</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlunparse</span><span class="p">([</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
-                                   <span class="n">veto_xml_file_path</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span>
+    <span class="n">curr_url</span> <span class="o">=</span> <span class="n">urlunparse</span><span class="p">([</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
+                           <span class="n">veto_xml_file_path</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span>
     <span class="k">if</span> <span class="n">tags</span><span class="p">:</span>
         <span class="n">curr_tags</span> <span class="o">=</span> <span class="n">tags</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;VETO_CAT</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">category</span><span class="p">)]</span>
     <span class="k">else</span><span class="p">:</span>
@@ -1087,8 +1088,7 @@
             <span class="n">cum_node</span><span class="o">.</span><span class="n">executed</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">for</span> <span class="n">fil</span> <span class="ow">in</span> <span class="n">cum_node</span><span class="o">.</span><span class="n">_outputs</span><span class="p">:</span>
                 <span class="n">fil</span><span class="o">.</span><span class="n">node</span> <span class="o">=</span> <span class="kc">None</span>
-                <span class="n">fil</span><span class="o">.</span><span class="n">PFN</span><span class="p">(</span><span class="n">urlparse</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="s1">&#39;file:&#39;</span><span class="p">,</span>
-                                         <span class="n">urllib</span><span class="o">.</span><span class="n">pathname2url</span><span class="p">(</span><span class="n">fil</span><span class="o">.</span><span class="n">storage_path</span><span class="p">)),</span>
+                <span class="n">fil</span><span class="o">.</span><span class="n">PFN</span><span class="p">(</span><span class="n">urljoin</span><span class="p">(</span><span class="s1">&#39;file:&#39;</span><span class="p">,</span> <span class="n">pathname2url</span><span class="p">(</span><span class="n">fil</span><span class="o">.</span><span class="n">storage_path</span><span class="p">)),</span>
                         <span class="n">site</span><span class="o">=</span><span class="s1">&#39;local&#39;</span><span class="p">)</span>
         <span class="n">add_inputs</span> <span class="o">+=</span> <span class="n">cum_node</span><span class="o">.</span><span class="n">output_files</span>
 
@@ -1110,8 +1110,7 @@
         <span class="n">add_node</span><span class="o">.</span><span class="n">executed</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">for</span> <span class="n">fil</span> <span class="ow">in</span> <span class="n">add_node</span><span class="o">.</span><span class="n">_outputs</span><span class="p">:</span>
             <span class="n">fil</span><span class="o">.</span><span class="n">node</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="n">fil</span><span class="o">.</span><span class="n">PFN</span><span class="p">(</span><span class="n">urlparse</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="s1">&#39;file:&#39;</span><span class="p">,</span>
-                                     <span class="n">urllib</span><span class="o">.</span><span class="n">pathname2url</span><span class="p">(</span><span class="n">fil</span><span class="o">.</span><span class="n">storage_path</span><span class="p">)),</span>
+            <span class="n">fil</span><span class="o">.</span><span class="n">PFN</span><span class="p">(</span><span class="n">urljoin</span><span class="p">(</span><span class="s1">&#39;file:&#39;</span><span class="p">,</span> <span class="n">pathname2url</span><span class="p">(</span><span class="n">fil</span><span class="o">.</span><span class="n">storage_path</span><span class="p">)),</span>
                     <span class="n">site</span><span class="o">=</span><span class="s1">&#39;local&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">outfile</span></div>
 
@@ -1153,8 +1152,7 @@
         <span class="n">add_node</span><span class="o">.</span><span class="n">executed</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">for</span> <span class="n">fil</span> <span class="ow">in</span> <span class="n">add_node</span><span class="o">.</span><span class="n">_outputs</span><span class="p">:</span>
             <span class="n">fil</span><span class="o">.</span><span class="n">node</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="n">fil</span><span class="o">.</span><span class="n">PFN</span><span class="p">(</span><span class="n">urlparse</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="s1">&#39;file:&#39;</span><span class="p">,</span>
-                                     <span class="n">urllib</span><span class="o">.</span><span class="n">pathname2url</span><span class="p">(</span><span class="n">fil</span><span class="o">.</span><span class="n">storage_path</span><span class="p">)),</span>
+            <span class="n">fil</span><span class="o">.</span><span class="n">PFN</span><span class="p">(</span><span class="n">urljoin</span><span class="p">(</span><span class="s1">&#39;file:&#39;</span><span class="p">,</span> <span class="n">pathname2url</span><span class="p">(</span><span class="n">fil</span><span class="o">.</span><span class="n">storage_path</span><span class="p">)),</span>
                     <span class="n">site</span><span class="o">=</span><span class="s1">&#39;local&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">add_node</span><span class="o">.</span><span class="n">output_files</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
 
@@ -1661,7 +1659,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on May 01, 2019.
+        Last updated on May 02, 2019.
       </span>
 
     </p>

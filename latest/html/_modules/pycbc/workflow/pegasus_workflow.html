@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.workflow.pegasus_workflow &mdash; PyCBC 7ea847 documentation</title>
+  <title>pycbc.workflow.pegasus_workflow &mdash; PyCBC de03b0 documentation</title>
   
 
   
@@ -231,7 +231,8 @@
 <span class="sd">provides additional abstraction and argument handling.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">urlparse</span><span class="o">,</span> <span class="nn">urllib</span>
+<span class="kn">from</span> <span class="nn">six.moves.urllib.request</span> <span class="k">import</span> <span class="n">pathname2url</span>
+<span class="kn">from</span> <span class="nn">six.moves.urllib.parse</span> <span class="k">import</span> <span class="n">urljoin</span><span class="p">,</span> <span class="n">urlsplit</span>
 <span class="kn">from</span> <span class="nn">Pegasus.catalogs.transformation_catalog</span> <span class="k">import</span> <span class="n">TransformationCatalog</span>
 <span class="kn">import</span> <span class="nn">Pegasus.DAX3</span> <span class="k">as</span> <span class="nn">dax</span>
 
@@ -686,13 +687,12 @@
 <div class="viewcode-block" id="File.from_path"><a class="viewcode-back" href="../../../pycbc.workflow.html#pycbc.workflow.pegasus_workflow.File.from_path">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_path</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Takes a path and returns a File object with the path as the PFN.&quot;&quot;&quot;</span>
-        <span class="n">urlparts</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlsplit</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">urlparts</span> <span class="o">=</span> <span class="n">urlsplit</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="n">site</span> <span class="o">=</span> <span class="s1">&#39;nonlocal&#39;</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">urlparts</span><span class="o">.</span><span class="n">scheme</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span> <span class="ow">or</span> <span class="n">urlparts</span><span class="o">.</span><span class="n">scheme</span> <span class="o">==</span> <span class="s1">&#39;file&#39;</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">urlparts</span><span class="o">.</span><span class="n">path</span><span class="p">):</span>
                 <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">urlparts</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
-                <span class="n">path</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="s1">&#39;file:&#39;</span><span class="p">,</span>
-                                        <span class="n">urllib</span><span class="o">.</span><span class="n">pathname2url</span><span class="p">(</span><span class="n">path</span><span class="p">))</span> 
+                <span class="n">path</span> <span class="o">=</span> <span class="n">urljoin</span><span class="p">(</span><span class="s1">&#39;file:&#39;</span><span class="p">,</span> <span class="n">pathname2url</span><span class="p">(</span><span class="n">path</span><span class="p">))</span> 
                 <span class="n">site</span> <span class="o">=</span> <span class="s1">&#39;local&#39;</span>
 
         <span class="n">fil</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
@@ -715,7 +715,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on May 01, 2019.
+        Last updated on May 02, 2019.
       </span>
 
     </p>
