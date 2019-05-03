@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.io package &mdash; PyCBC ab6fb9 documentation</title>
+  <title>pycbc.io package &mdash; PyCBC 58df1c documentation</title>
   
 
   
@@ -452,9 +452,15 @@ time1, time2, stat, and timeslide_id</p>
 
 <dl class="class">
 <dt id="pycbc.io.hdf.SingleDetTriggers">
-<em class="property">class </em><code class="descclassname">pycbc.io.hdf.</code><code class="descname">SingleDetTriggers</code><span class="sig-paren">(</span><em>trig_file</em>, <em>bank_file</em>, <em>veto_file</em>, <em>segment_name</em>, <em>filter_func</em>, <em>detector</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/io/hdf.html#SingleDetTriggers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.io.hdf.SingleDetTriggers" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pycbc.io.hdf.</code><code class="descname">SingleDetTriggers</code><span class="sig-paren">(</span><em>trig_file</em>, <em>bank_file</em>, <em>veto_file</em>, <em>segment_name</em>, <em>filter_func</em>, <em>detector</em>, <em>premask=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/io/hdf.html#SingleDetTriggers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.io.hdf.SingleDetTriggers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Provides easy access to the parameters of single-detector CBC triggers.</p>
+<dl class="method">
+<dt id="pycbc.io.hdf.SingleDetTriggers.apply_mask">
+<code class="descname">apply_mask</code><span class="sig-paren">(</span><em>logic_mask</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/io/hdf.html#SingleDetTriggers.apply_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.io.hdf.SingleDetTriggers.apply_mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply a boolean array to the set of triggers</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="pycbc.io.hdf.SingleDetTriggers.checkbank">
 <code class="descname">checkbank</code><span class="sig-paren">(</span><em>param</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/io/hdf.html#SingleDetTriggers.checkbank"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.io.hdf.SingleDetTriggers.checkbank" title="Permalink to this definition">¶</a></dt>
@@ -609,6 +615,12 @@ be considered.</p>
 <dt id="pycbc.io.hdf.SingleDetTriggers.template_id">
 <code class="descname">template_id</code><a class="headerlink" href="#pycbc.io.hdf.SingleDetTriggers.template_id" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="method">
+<dt id="pycbc.io.hdf.SingleDetTriggers.trig_dict">
+<code class="descname">trig_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/io/hdf.html#SingleDetTriggers.trig_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.io.hdf.SingleDetTriggers.trig_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns dict of the masked trigger valuse</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="pycbc.io.hdf.SingleDetTriggers.u_vals">
@@ -1718,7 +1730,7 @@ example:</p>
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on May 02, 2019.
+        Last updated on May 03, 2019.
       </span>
 
     </p>
