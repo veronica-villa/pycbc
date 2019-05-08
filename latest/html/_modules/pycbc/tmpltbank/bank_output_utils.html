@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.tmpltbank.bank_output_utils &mdash; PyCBC 61bea5 documentation</title>
+  <title>pycbc.tmpltbank.bank_output_utils &mdash; PyCBC 530fac documentation</title>
   
 
   
@@ -203,6 +203,7 @@
             
   <h1>Source code for pycbc.tmpltbank.bank_output_utils</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">six.moves</span> <span class="k">import</span> <span class="nb">range</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">from</span> <span class="nn">lal</span> <span class="k">import</span> <span class="n">PI</span><span class="p">,</span> <span class="n">MTSUN_SI</span><span class="p">,</span> <span class="n">TWOPI</span><span class="p">,</span> <span class="n">GAMMA</span>
 <span class="kn">from</span> <span class="nn">glue.ligolw</span> <span class="k">import</span> <span class="n">ligolw</span><span class="p">,</span> <span class="n">lsctables</span><span class="p">,</span> <span class="n">ilwd</span><span class="p">,</span> <span class="n">utils</span> <span class="k">as</span> <span class="n">ligolw_utils</span>
@@ -557,7 +558,7 @@
                     <span class="n">spin2z</span><span class="o">=</span><span class="n">sngl</span><span class="o">.</span><span class="n">spin2z</span><span class="p">,</span> <span class="n">full_ethinca</span><span class="o">=</span><span class="n">ethincaParams</span><span class="o">.</span><span class="n">full_ethinca</span><span class="p">)</span>
                 <span class="c1"># assign the upper frequency cutoff and Gamma0-5 values</span>
                 <span class="n">sngl</span><span class="o">.</span><span class="n">f_final</span> <span class="o">=</span> <span class="n">fMax_theor</span>
-                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">GammaVals</span><span class="p">)):</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">GammaVals</span><span class="p">)):</span>
                     <span class="nb">setattr</span><span class="p">(</span><span class="n">sngl</span><span class="p">,</span> <span class="s2">&quot;Gamma&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">GammaVals</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
         <span class="c1"># If Gamma metric components are not wanted, assign f_final from an</span>
         <span class="c1"># upper frequency cutoff specified in ethincaParams</span>

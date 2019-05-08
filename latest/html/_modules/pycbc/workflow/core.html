@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.workflow.core &mdash; PyCBC 61bea5 documentation</title>
+  <title>pycbc.workflow.core &mdash; PyCBC 530fac documentation</title>
   
 
   
@@ -1948,7 +1948,7 @@
 <span class="sd">            file object for segment xml file</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># load xmldocument and SegmentDefTable and SegmentTables</span>
-        <span class="n">fp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">xml_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">fp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">xml_file</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
         <span class="n">xmldoc</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">ligolw_utils</span><span class="o">.</span><span class="n">load_fileobj</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span>
                                               <span class="n">gz</span><span class="o">=</span><span class="n">xml_file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.gz&quot;</span><span class="p">),</span>
                                               <span class="n">contenthandler</span><span class="o">=</span><span class="n">ContentHandler</span><span class="p">)</span>

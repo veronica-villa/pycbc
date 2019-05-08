@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.tmpltbank.lattice_utils &mdash; PyCBC 61bea5 documentation</title>
+  <title>pycbc.tmpltbank.lattice_utils &mdash; PyCBC 530fac documentation</title>
   
 
   
@@ -220,6 +220,7 @@
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
 <span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">from</span> <span class="nn">six.moves</span> <span class="k">import</span> <span class="nb">range</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">import</span> <span class="nn">lal</span>
 
@@ -269,7 +270,7 @@
     <span class="n">initLine2</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">initLine</span><span class="p">)</span>
     <span class="n">initLine2</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">mindist</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
     <span class="n">initLine2</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">mindist</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">initLine2</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">initLine2</span><span class="p">)):</span>
         <span class="n">v1s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">initLine2</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
         <span class="n">v2s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">initLine2</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">tmpv2_1</span> <span class="o">=</span> <span class="n">initLine</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
@@ -279,10 +280,10 @@
         <span class="n">tmpv2_2</span> <span class="o">=</span> <span class="n">tmpv2_2</span> <span class="o">+</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">mindist</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
         <span class="n">initLine</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmpv2_1</span>
         <span class="n">initLine2</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmpv2_2</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">initLine</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">initLine</span><span class="p">)):</span>
             <span class="n">v1s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">initLine</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
             <span class="n">v2s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">initLine</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">initLine2</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">initLine2</span><span class="p">)):</span>
             <span class="n">v1s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">initLine2</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
             <span class="n">v2s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">initLine2</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">v1s</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">v1s</span><span class="p">)</span>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.strain.strain &mdash; PyCBC 61bea5 documentation</title>
+  <title>pycbc.strain.strain &mdash; PyCBC 530fac documentation</title>
   
 
   
@@ -320,7 +320,7 @@
 
     <span class="c1"># zero-pad strain to a power-of-2 length</span>
     <span class="n">strain_pad_length</span> <span class="o">=</span> <span class="n">next_power_of_2</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">strain</span><span class="p">))</span>
-    <span class="n">pad_start</span> <span class="o">=</span> <span class="n">strain_pad_length</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">strain</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+    <span class="n">pad_start</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">strain_pad_length</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">strain</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
     <span class="n">pad_end</span> <span class="o">=</span> <span class="n">pad_start</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">strain</span><span class="p">)</span>
     <span class="n">strain_pad</span> <span class="o">=</span> <span class="n">pycbc</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">TimeSeries</span><span class="p">(</span>
             <span class="n">pycbc</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">strain_pad_length</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">strain</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>

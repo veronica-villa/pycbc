@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.workflow.segment &mdash; PyCBC 61bea5 documentation</title>
+  <title>pycbc.workflow.segment &mdash; PyCBC 530fac documentation</title>
   
 
   
@@ -1411,7 +1411,7 @@
             <span class="c1"># If none, offsource dict will contain segments showing criteria</span>
             <span class="c1"># that have not been met, for use in plotting</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">offsource</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">seg_lens</span> <span class="o">=</span> <span class="p">{</span><span class="n">ifos</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="n">offsource</span><span class="p">[</span><span class="n">ifos</span><span class="p">]</span><span class="o">.</span><span class="n">itervalues</span><span class="p">()</span><span class="o">.</span><span class="n">next</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">seg_lens</span> <span class="o">=</span> <span class="p">{</span><span class="n">ifos</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">offsource</span><span class="p">[</span><span class="n">ifos</span><span class="p">]</span><span class="o">.</span><span class="n">itervalues</span><span class="p">())[</span><span class="mi">0</span><span class="p">])</span>
                             <span class="k">for</span> <span class="n">ifos</span> <span class="ow">in</span> <span class="n">offsource</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
                 <span class="n">best_comb</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">seg_lens</span><span class="o">.</span><span class="n">iterkeys</span><span class="p">(),</span>
                                 <span class="n">key</span><span class="o">=</span><span class="p">(</span><span class="k">lambda</span> <span class="n">key</span><span class="p">:</span> <span class="n">seg_lens</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
@@ -1422,7 +1422,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># Identify best analysis segment</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">valid_combs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">seg_lens</span> <span class="o">=</span> <span class="p">{</span><span class="n">ifos</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="n">offsource</span><span class="p">[</span><span class="n">ifos</span><span class="p">]</span><span class="o">.</span><span class="n">itervalues</span><span class="p">()</span><span class="o">.</span><span class="n">next</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">seg_lens</span> <span class="o">=</span> <span class="p">{</span><span class="n">ifos</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">offsource</span><span class="p">[</span><span class="n">ifos</span><span class="p">]</span><span class="o">.</span><span class="n">itervalues</span><span class="p">())[</span><span class="mi">0</span><span class="p">])</span>
                             <span class="k">for</span> <span class="n">ifos</span> <span class="ow">in</span> <span class="n">valid_combs</span><span class="p">}</span>
                 <span class="n">best_comb</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">seg_lens</span><span class="o">.</span><span class="n">iterkeys</span><span class="p">(),</span>
                                 <span class="n">key</span><span class="o">=</span><span class="p">(</span><span class="k">lambda</span> <span class="n">key</span><span class="p">:</span> <span class="n">seg_lens</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
@@ -1432,11 +1432,11 @@
 
             <span class="n">offsourceSegfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_dir</span><span class="p">,</span> <span class="s2">&quot;offSourceSeg.txt&quot;</span><span class="p">)</span>
             <span class="n">segmentsUtils</span><span class="o">.</span><span class="n">tosegwizard</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">offsourceSegfile</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">),</span>
-                                      <span class="n">offsource</span><span class="p">[</span><span class="n">best_comb</span><span class="p">]</span><span class="o">.</span><span class="n">itervalues</span><span class="p">()</span><span class="o">.</span><span class="n">next</span><span class="p">())</span>
+                                      <span class="nb">next</span><span class="p">(</span><span class="n">offsource</span><span class="p">[</span><span class="n">best_comb</span><span class="p">]</span><span class="o">.</span><span class="n">itervalues</span><span class="p">()))</span>
 
             <span class="n">onsourceSegfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_dir</span><span class="p">,</span> <span class="s2">&quot;onSourceSeg.txt&quot;</span><span class="p">)</span>
             <span class="n">segmentsUtils</span><span class="o">.</span><span class="n">tosegwizard</span><span class="p">(</span><span class="n">file</span><span class="p">(</span><span class="n">onsourceSegfile</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">),</span>
-                                      <span class="n">onsource</span><span class="p">[</span><span class="n">best_comb</span><span class="p">]</span><span class="o">.</span><span class="n">itervalues</span><span class="p">()</span><span class="o">.</span><span class="n">next</span><span class="p">())</span>
+                                      <span class="nb">next</span><span class="p">(</span><span class="n">onsource</span><span class="p">[</span><span class="n">best_comb</span><span class="p">]</span><span class="o">.</span><span class="n">itervalues</span><span class="p">()))</span>
 
             <span class="n">bufferleft</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;workflow-exttrig_segments&#39;</span><span class="p">,</span>
                                     <span class="s1">&#39;num-buffer-before&#39;</span><span class="p">))</span>
