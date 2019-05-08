@@ -11,6 +11,7 @@ Name                                          Class
 ``'custom'``                                  :py:class:`pycbc.transforms.CustomTransform`
 ``'distance_to_chirp_distance'``              :py:class:`pycbc.transforms.DistanceToChirpDistance`
 ``'distance_to_redshift'``                    :py:class:`pycbc.transforms.DistanceToRedshift`
+``'lambda_from_tov_file'``                    :py:class:`pycbc.transforms.LambdaFromTOVFile`
 ``'logistic'``                                :py:class:`pycbc.transforms.Logistic`
 ``'logit'``                                   :py:class:`pycbc.transforms.Logit`
 ``'mass1_mass2_to_mchirp_eta'``               :py:class:`pycbc.transforms.Mass1Mass2ToMchirpEta`

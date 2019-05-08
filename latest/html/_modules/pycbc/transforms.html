@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.transforms &mdash; PyCBC 76a35a documentation</title>
+  <title>pycbc.transforms &mdash; PyCBC bae131 documentation</title>
   
 
   
@@ -1135,6 +1135,156 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">format_output</span><span class="p">(</span><span class="n">maps</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span></div></div>
 
 
+<div class="viewcode-block" id="LambdaFromTOVFile"><a class="viewcode-back" href="../../pycbc.html#pycbc.transforms.LambdaFromTOVFile">[docs]</a><span class="k">class</span> <span class="nc">LambdaFromTOVFile</span><span class="p">(</span><span class="n">BaseTransform</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Transforms mass values corresponding to Lambda values for a given EOS</span>
+<span class="sd">    interpolating from the mass-Lambda data for that EOS read in from an</span>
+<span class="sd">    external ASCII file. The interpolation of the mass-Lambda data is a</span>
+<span class="sd">    one-dimensional piecewise linear interpolation. The mass values to be</span>
+<span class="sd">    transformed are assumed to be detector frame masses, so a distance should</span>
+<span class="sd">    be provided along with the mass for transformation to the source frame</span>
+<span class="sd">    mass before the Lambda values are extracted from the interpolation. If</span>
+<span class="sd">    the mass value inputted is in the source frame, then provide distance=0.</span>
+<span class="sd">    If the transform is read in from a config file, an example code block</span>
+<span class="sd">    would be:</span>
+
+<span class="sd">    .. code-block:: ini</span>
+
+<span class="sd">        [{section}-lambda1]</span>
+<span class="sd">        name = lambda_from_tov_file</span>
+<span class="sd">        mass_param = mass1</span>
+<span class="sd">        lambda_param = lambda1</span>
+<span class="sd">        distance = 40</span>
+<span class="sd">        mass_lambda_file = {filepath}</span>
+
+<span class="sd">    If this transform is used in a parameter estimation analysis where</span>
+<span class="sd">    distance is a variable parameter, the distance to be used will vary</span>
+<span class="sd">    with each draw. In that case, the example code block will be:</span>
+
+<span class="sd">    .. code-block:: ini</span>
+
+<span class="sd">        [{section}-lambda1]</span>
+<span class="sd">        name = lambda_from_tov_file</span>
+<span class="sd">        mass_param = mass1</span>
+<span class="sd">        lambda_param = lambda1</span>
+<span class="sd">        mass_lambda_file = filepath</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    mass_param : str</span>
+<span class="sd">        The name of the mass parameter to transform.</span>
+<span class="sd">    lambda_param : str</span>
+<span class="sd">        The name of the tidal deformability parameter that mass_param is to</span>
+<span class="sd">        be converted to interpolating from the data in the mass-Lambda file.</span>
+<span class="sd">    mass_lambda_file : str</span>
+<span class="sd">        Path of the mass-Lambda data file. The first column in the data file</span>
+<span class="sd">        should contain mass values, and the second column Lambda values.</span>
+<span class="sd">    distance : float, optional</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;lambda_from_tov_file&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mass_param</span><span class="p">,</span> <span class="n">lambda_param</span><span class="p">,</span> <span class="n">mass_lambda_file</span><span class="p">,</span>
+                 <span class="n">distance</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mass_lambda_file</span> <span class="o">=</span> <span class="n">mass_lambda_file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mass_param</span> <span class="o">=</span> <span class="n">mass_param</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lambda_param</span> <span class="o">=</span> <span class="n">lambda_param</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_distance</span> <span class="o">=</span> <span class="n">distance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_inputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">mass_param</span><span class="p">,</span> <span class="s1">&#39;distance&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_outputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">lambda_param</span><span class="p">]</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Loading mass-Lambda data from </span><span class="si">%s</span><span class="s2"> for computing </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                     <span class="bp">self</span><span class="o">.</span><span class="n">_mass_lambda_file</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lambda_param</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mass_lambda_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mass_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lambda_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LambdaFromTOVFile</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">mass_param</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the input mass parameter.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mass_param</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">lambda_param</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the output lambda parameter.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lambda_param</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">mass_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the mass data read from the mass-Lambda data file for</span>
+<span class="sd">        an EOS.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mass_data</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">lambda_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the Lambda data read from the mass-Lambda data file for</span>
+<span class="sd">        an EOS.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lambda_data</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the fixed distance to transform mass samples from detector</span>
+<span class="sd">        to source frame if one is specified.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_distance</span>
+
+<div class="viewcode-block" id="LambdaFromTOVFile.lambda_from_tov_data"><a class="viewcode-back" href="../../pycbc.html#pycbc.transforms.LambdaFromTOVFile.lambda_from_tov_data">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">lambda_from_tov_data</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">mass_data</span><span class="p">,</span> <span class="n">lambda_data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns Lambda corresponding to a given mass interpolating from the</span>
+<span class="sd">        TOV data.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        m : float</span>
+<span class="sd">            Value of the mass.</span>
+<span class="sd">        d : float</span>
+<span class="sd">            Value of distance.</span>
+<span class="sd">        mass_data : array</span>
+<span class="sd">            Mass array from the Lambda-M curve of an EOS.</span>
+<span class="sd">        lambda_data : array</span>
+<span class="sd">            Lambda array from the Lambda-M curve of an EOS.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        lambdav : float</span>
+<span class="sd">            The Lambda corresponding to the mass `m` for the EOS considered.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">m_src</span> <span class="o">=</span> <span class="n">m</span><span class="o">/</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">cosmology</span><span class="o">.</span><span class="n">redshift</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">d</span><span class="p">)))</span>
+        <span class="n">lambdav</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">m_src</span><span class="p">,</span> <span class="n">mass_data</span><span class="p">,</span> <span class="n">lambda_data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">lambdav</span></div>
+
+<div class="viewcode-block" id="LambdaFromTOVFile.transform"><a class="viewcode-back" href="../../pycbc.html#pycbc.transforms.LambdaFromTOVFile.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maps</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Computes the transformation of mass to Lambda.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        maps : dict or FieldArray</span>
+<span class="sd">            A dictionary or FieldArray which provides a map between the</span>
+<span class="sd">            parameter name of the variable to transform and its value(s).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        out : dict or FieldArray</span>
+<span class="sd">            A map between the transformed variable name and value(s), along</span>
+<span class="sd">            with the original variable name and value(s).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">maps</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_mass_param</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_distance</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_distance</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="n">maps</span><span class="p">[</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Either provide `distance` samples in the &quot;</span>
+                                <span class="s2">&quot;list of samples to be transformed, or &quot;</span>
+                                <span class="s2">&quot;provide a fixed `distance` value as input &quot;</span>
+                                <span class="s2">&quot;when initializing `LambdaFromTOVFile`.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">e</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_lambda_param</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">lambda_from_tov_data</span><span class="p">(</span>
+            <span class="n">m</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mass_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lambda_data</span><span class="p">)}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">format_output</span><span class="p">(</span><span class="n">maps</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span></div></div>
+
+
 <div class="viewcode-block" id="Logit"><a class="viewcode-back" href="../../pycbc.html#pycbc.transforms.Logit">[docs]</a><span class="k">class</span> <span class="nc">Logit</span><span class="p">(</span><span class="n">BaseTransform</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Applies a logit transform from an `inputvar` parameter to an `outputvar`</span>
 <span class="sd">    parameter. This is the inverse of the logistic transform.</span>
@@ -1700,6 +1850,7 @@
     <span class="n">CartesianSpinToChiP</span><span class="o">.</span><span class="n">name</span> <span class="p">:</span> <span class="n">CartesianSpinToChiP</span><span class="p">,</span>
     <span class="n">Logit</span><span class="o">.</span><span class="n">name</span> <span class="p">:</span> <span class="n">Logit</span><span class="p">,</span>
     <span class="n">Logistic</span><span class="o">.</span><span class="n">name</span> <span class="p">:</span> <span class="n">Logistic</span><span class="p">,</span>
+    <span class="n">LambdaFromTOVFile</span><span class="o">.</span><span class="n">name</span> <span class="p">:</span> <span class="n">LambdaFromTOVFile</span>
 <span class="p">}</span>
 
 <span class="c1"># standard CBC transforms: these are transforms that do not require input</span>
@@ -1927,7 +2078,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on May 07, 2019.
+        Last updated on May 08, 2019.
       </span>
 
     </p>

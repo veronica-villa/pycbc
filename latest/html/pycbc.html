@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc package &mdash; PyCBC 76a35a documentation</title>
+  <title>pycbc package &mdash; PyCBC bae131 documentation</title>
   
 
   
@@ -1440,6 +1440,14 @@ Note that the convention we use is that:</p>
 <dd><p>The effective lambda parameter</p>
 <p>The mass-weighted dominant effective lambda parameter defined in
 <a class="reference external" href="https://journals.aps.org/prd/pdf/10.1103/PhysRevD.91.043002">https://journals.aps.org/prd/pdf/10.1103/PhysRevD.91.043002</a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pycbc.conversions.lambda_from_mass_tov_file">
+<code class="descclassname">pycbc.conversions.</code><code class="descname">lambda_from_mass_tov_file</code><span class="sig-paren">(</span><em>mass</em>, <em>tov_file</em>, <em>distance=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/conversions.html#lambda_from_mass_tov_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.conversions.lambda_from_mass_tov_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the lambda parameter(s) corresponding to the input mass(es)
+interpolating from the mass-Lambda data for a particular EOS read in from
+an ASCII file.</p>
 </dd></dl>
 
 <dl class="function">
@@ -4654,6 +4662,141 @@ of transformed values.</td>
 </dd></dl>
 
 <dl class="class">
+<dt id="pycbc.transforms.LambdaFromTOVFile">
+<em class="property">class </em><code class="descclassname">pycbc.transforms.</code><code class="descname">LambdaFromTOVFile</code><span class="sig-paren">(</span><em>mass_param</em>, <em>lambda_param</em>, <em>mass_lambda_file</em>, <em>distance=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/transforms.html#LambdaFromTOVFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.transforms.LambdaFromTOVFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycbc.transforms.BaseTransform" title="pycbc.transforms.BaseTransform"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.transforms.BaseTransform</span></code></a></p>
+<p>Transforms mass values corresponding to Lambda values for a given EOS
+interpolating from the mass-Lambda data for that EOS read in from an
+external ASCII file. The interpolation of the mass-Lambda data is a
+one-dimensional piecewise linear interpolation. The mass values to be
+transformed are assumed to be detector frame masses, so a distance should
+be provided along with the mass for transformation to the source frame
+mass before the Lambda values are extracted from the interpolation. If
+the mass value inputted is in the source frame, then provide distance=0.
+If the transform is read in from a config file, an example code block
+would be:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[{section}-lambda1]</span>
+<span class="na">name</span> <span class="o">=</span> <span class="s">lambda_from_tov_file</span>
+<span class="na">mass_param</span> <span class="o">=</span> <span class="s">mass1</span>
+<span class="na">lambda_param</span> <span class="o">=</span> <span class="s">lambda1</span>
+<span class="na">distance</span> <span class="o">=</span> <span class="s">40</span>
+<span class="na">mass_lambda_file</span> <span class="o">=</span> <span class="s">{filepath}</span>
+</pre></div>
+</div>
+<p>If this transform is used in a parameter estimation analysis where
+distance is a variable parameter, the distance to be used will vary
+with each draw. In that case, the example code block will be:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[{section}-lambda1]</span>
+<span class="na">name</span> <span class="o">=</span> <span class="s">lambda_from_tov_file</span>
+<span class="na">mass_param</span> <span class="o">=</span> <span class="s">mass1</span>
+<span class="na">lambda_param</span> <span class="o">=</span> <span class="s">lambda1</span>
+<span class="na">mass_lambda_file</span> <span class="o">=</span> <span class="s">filepath</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>mass_param</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The name of the mass parameter to transform.</li>
+<li><strong>lambda_param</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The name of the tidal deformability parameter that mass_param is to
+be converted to interpolating from the data in the mass-Lambda file.</li>
+<li><strong>mass_lambda_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Path of the mass-Lambda data file. The first column in the data file
+should contain mass values, and the second column Lambda values.</li>
+<li><strong>distance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>optional</em>) – </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="pycbc.transforms.LambdaFromTOVFile.distance">
+<code class="descname">distance</code><a class="headerlink" href="#pycbc.transforms.LambdaFromTOVFile.distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the fixed distance to transform mass samples from detector
+to source frame if one is specified.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.transforms.LambdaFromTOVFile.lambda_data">
+<code class="descname">lambda_data</code><a class="headerlink" href="#pycbc.transforms.LambdaFromTOVFile.lambda_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the Lambda data read from the mass-Lambda data file for
+an EOS.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pycbc.transforms.LambdaFromTOVFile.lambda_from_tov_data">
+<em class="property">static </em><code class="descname">lambda_from_tov_data</code><span class="sig-paren">(</span><em>m</em>, <em>d</em>, <em>mass_data</em>, <em>lambda_data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/transforms.html#LambdaFromTOVFile.lambda_from_tov_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.transforms.LambdaFromTOVFile.lambda_from_tov_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns Lambda corresponding to a given mass interpolating from the
+TOV data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>m</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Value of the mass.</li>
+<li><strong>d</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Value of distance.</li>
+<li><strong>mass_data</strong> (<em>array</em>) – Mass array from the Lambda-M curve of an EOS.</li>
+<li><strong>lambda_data</strong> (<em>array</em>) – Lambda array from the Lambda-M curve of an EOS.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>lambdav</strong> – The Lambda corresponding to the mass <cite>m</cite> for the EOS considered.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.transforms.LambdaFromTOVFile.lambda_param">
+<code class="descname">lambda_param</code><a class="headerlink" href="#pycbc.transforms.LambdaFromTOVFile.lambda_param" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the output lambda parameter.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.transforms.LambdaFromTOVFile.mass_data">
+<code class="descname">mass_data</code><a class="headerlink" href="#pycbc.transforms.LambdaFromTOVFile.mass_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the mass data read from the mass-Lambda data file for
+an EOS.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.transforms.LambdaFromTOVFile.mass_param">
+<code class="descname">mass_param</code><a class="headerlink" href="#pycbc.transforms.LambdaFromTOVFile.mass_param" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the input mass parameter.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.transforms.LambdaFromTOVFile.name">
+<code class="descname">name</code><em class="property"> = 'lambda_from_tov_file'</em><a class="headerlink" href="#pycbc.transforms.LambdaFromTOVFile.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pycbc.transforms.LambdaFromTOVFile.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>maps</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/transforms.html#LambdaFromTOVFile.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.transforms.LambdaFromTOVFile.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the transformation of mass to Lambda.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>maps</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a><em> or </em><a class="reference internal" href="pycbc.io.html#pycbc.io.record.FieldArray" title="pycbc.io.record.FieldArray"><em>FieldArray</em></a>) – A dictionary or FieldArray which provides a map between the
+parameter name of the variable to transform and its value(s).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>out</strong> – A map between the transformed variable name and value(s), along
+with the original variable name and value(s).</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a> or <a class="reference internal" href="pycbc.io.html#pycbc.io.record.FieldArray" title="pycbc.io.record.FieldArray">FieldArray</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="pycbc.transforms.Logistic">
 <em class="property">class </em><code class="descclassname">pycbc.transforms.</code><code class="descname">Logistic</code><span class="sig-paren">(</span><em>inputvar</em>, <em>outputvar</em>, <em>codomain=(0.0</em>, <em>1.0)</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/transforms.html#Logistic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.transforms.Logistic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pycbc.transforms.Logit" title="pycbc.transforms.Logit"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.transforms.Logit</span></code></a></p>
@@ -5864,7 +6007,7 @@ already exist. Will do nothing if path already exists.</p>
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on May 07, 2019.
+        Last updated on May 08, 2019.
       </span>
 
     </p>

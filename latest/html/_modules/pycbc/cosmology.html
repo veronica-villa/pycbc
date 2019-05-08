@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.cosmology &mdash; PyCBC 76a35a documentation</title>
+  <title>pycbc.cosmology &mdash; PyCBC bae131 documentation</title>
   
 
   
@@ -239,7 +239,7 @@
 <span class="kn">import</span> <span class="nn">astropy.cosmology</span>
 <span class="kn">from</span> <span class="nn">astropy</span> <span class="k">import</span> <span class="n">units</span>
 <span class="kn">from</span> <span class="nn">astropy.cosmology.core</span> <span class="k">import</span> <span class="n">CosmologyError</span>
-<span class="kn">from</span> <span class="nn">pycbc.conversions</span> <span class="k">import</span> <span class="n">ensurearray</span><span class="p">,</span> <span class="n">formatreturn</span>
+<span class="kn">import</span> <span class="nn">pycbc.conversions</span>
 
 <span class="n">DEFAULT_COSMOLOGY</span> <span class="o">=</span> <span class="s1">&#39;Planck15&#39;</span>
 
@@ -334,7 +334,7 @@
 <span class="sd">    float</span>
 <span class="sd">        The redshift at the requested values.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">fval</span><span class="p">,</span> <span class="n">input_is_array</span> <span class="o">=</span> <span class="n">ensurearray</span><span class="p">(</span><span class="n">fval</span><span class="p">)</span>
+    <span class="n">fval</span><span class="p">,</span> <span class="n">input_is_array</span> <span class="o">=</span> <span class="n">pycbc</span><span class="o">.</span><span class="n">conversions</span><span class="o">.</span><span class="n">ensurearray</span><span class="p">(</span><span class="n">fval</span><span class="p">)</span>
     <span class="c1"># make sure fval is atleast 1D</span>
     <span class="k">if</span> <span class="n">fval</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">fval</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">fval</span> <span class="o">=</span> <span class="n">fval</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
@@ -374,7 +374,7 @@
                                 <span class="s2">&quot;have been set to inf. If you would like &quot;</span>
                                 <span class="s2">&quot;better precision, call God.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">zmax</span><span class="p">))</span>
                 <span class="k">break</span>
-    <span class="k">return</span> <span class="n">formatreturn</span><span class="p">(</span><span class="n">zs</span><span class="p">,</span> <span class="n">input_is_array</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pycbc</span><span class="o">.</span><span class="n">conversions</span><span class="o">.</span><span class="n">formatreturn</span><span class="p">(</span><span class="n">zs</span><span class="p">,</span> <span class="n">input_is_array</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">_redshift</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -458,7 +458,7 @@
     <span class="k">def</span> <span class="nf">get_redshift</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dist</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the redshift for the given distance.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">dist</span><span class="p">,</span> <span class="n">input_is_array</span> <span class="o">=</span> <span class="n">ensurearray</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+        <span class="n">dist</span><span class="p">,</span> <span class="n">input_is_array</span> <span class="o">=</span> <span class="n">pycbc</span><span class="o">.</span><span class="n">conversions</span><span class="o">.</span><span class="n">ensurearray</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">zs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nearby_d2z</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
@@ -479,7 +479,7 @@
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;distance must be finite and &gt; 0&quot;</span><span class="p">)</span>
             <span class="n">zs</span><span class="p">[</span><span class="n">replacemask</span><span class="p">]</span> <span class="o">=</span> <span class="n">_redshift</span><span class="p">(</span><span class="n">dist</span><span class="p">[</span><span class="n">replacemask</span><span class="p">],</span>
                                         <span class="n">cosmology</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cosmology</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">formatreturn</span><span class="p">(</span><span class="n">zs</span><span class="p">,</span> <span class="n">input_is_array</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pycbc</span><span class="o">.</span><span class="n">conversions</span><span class="o">.</span><span class="n">formatreturn</span><span class="p">(</span><span class="n">zs</span><span class="p">,</span> <span class="n">input_is_array</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dist</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_redshift</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
@@ -614,7 +614,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on May 07, 2019.
+        Last updated on May 08, 2019.
       </span>
 
     </p>
