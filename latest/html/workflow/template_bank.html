@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>The workflow template bank generation module &mdash; PyCBC ee90d2 documentation</title>
+  <title>The workflow template bank generation module &mdash; PyCBC 2341a3 documentation</title>
   
 
   
@@ -509,6 +509,7 @@ usage: pycbc_geom_nonspinbank [-h] [--version] [-V]
                               [--channel-name CHANNEL_NAME]
                               [--frame-cache FRAME_CACHE [FRAME_CACHE ...]]
                               [--frame-files FRAME_FILES [FRAME_FILES ...]]
+                              [--hdf-store HDF_STORE]
                               [--frame-type FRAME_TYPE]
                               [--frame-sieve FRAME_SIEVE]
                               [--fake-strain {AdVBNSOptimizedSensitivityP1200087,AdVDesignSensitivityP1200087,AdVEarlyHighSensitivityP1200087,AdVEarlyLowSensitivityP1200087,AdVLateHighSensitivityP1200087,AdVLateLowSensitivityP1200087,AdVMidHighSensitivityP1200087,AdVMidLowSensitivityP1200087,AdvVirgo,CosmicExplorerP1600143,CosmicExplorerPessimisticP1600143,CosmicExplorerWidebandP1600143,EinsteinTelescopeP1600143,GEO,GEOHF,KAGRA,KAGRADesignSensitivityT1600593,KAGRAEarlySensitivityT1600593,KAGRALateSensitivityT1600593,KAGRAMidSensitivityT1600593,KAGRAOpeningSensitivityT1600593,TAMA,Virgo,aLIGOAPlusDesignSensitivityT1800042,aLIGOAdVO3LowT1800545,aLIGOAdVO4IntermediateT1800545,aLIGOAdVO4T1800545,aLIGOBHBH20Deg,aLIGOBHBH20DegGWINC,aLIGOBNSOptimizedSensitivityP1200087,aLIGODesignSensitivityP1200087,aLIGOEarlyHighSensitivityP1200087,aLIGOEarlyLowSensitivityP1200087,aLIGOHighFrequency,aLIGOHighFrequencyGWINC,aLIGOKAGRA128MpcT1800545,aLIGOKAGRA25MpcT1800545,aLIGOKAGRA80MpcT1800545,aLIGOLateHighSensitivityP1200087,aLIGOLateLowSensitivityP1200087,aLIGOMidHighSensitivityP1200087,aLIGOMidLowSensitivityP1200087,aLIGONSNSOpt,aLIGONSNSOptGWINC,aLIGONoSRMHighPower,aLIGONoSRMLowPower,aLIGONoSRMLowPowerGWINC,aLIGOQuantumBHBH20Deg,aLIGOQuantumHighFrequency,aLIGOQuantumNSNSOpt,aLIGOQuantumNoSRMHighPower,aLIGOQuantumNoSRMLowPower,aLIGOQuantumZeroDetHighPower,aLIGOQuantumZeroDetLowPower,aLIGOThermal,aLIGOZeroDetHighPower,aLIGOZeroDetHighPowerGWINC,aLIGOZeroDetLowPower,aLIGOZeroDetLowPowerGWINC,aLIGOaLIGO140MpcT1800545,aLIGOaLIGO175MpcT1800545,aLIGOaLIGODesignSensitivityT1800044,aLIGOaLIGOO3LowT1800545,eLIGOModel,eLIGOShot,iLIGOModel,iLIGOSRD,iLIGOSeismic,iLIGOShot,iLIGOThermal,zeroNoise}]
@@ -720,7 +721,7 @@ Options for obtaining h(t):
   --strain-high-pass STRAIN_HIGH_PASS
                         High pass frequency (default: None)
   --pad-data PAD_DATA   Extra padding to remove highpass corruption (integer
-                        seconds) (default: None)
+                        seconds) (default: 8)
   --taper-data TAPER_DATA
                         Taper ends of data to zero using the supplied length
                         as a window (integer seconds) (default: 0)
@@ -735,6 +736,9 @@ Options for obtaining h(t):
                         None)
   --frame-files FRAME_FILES [FRAME_FILES ...]
                         list of frame files (default: None)
+  --hdf-store HDF_STORE
+                        Store of time series data in hdf format (default:
+                        None)
   --frame-type FRAME_TYPE
                         (optional), replaces frame-files. Use datafind to get
                         the needed frame file(s) of this type. (default: None)

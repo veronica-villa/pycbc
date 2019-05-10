@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.frame package &mdash; PyCBC ee90d2 documentation</title>
+  <title>pycbc.frame package &mdash; PyCBC 2341a3 documentation</title>
   
 
   
@@ -497,6 +497,36 @@ requested times.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="pycbc.types.html#pycbc.types.timeseries.TimeSeries" title="pycbc.types.timeseries.TimeSeries">TimeSeries</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pycbc.frame.store">
+<span id="pycbc-frame-store-module"></span><h2>pycbc.frame.store module<a class="headerlink" href="#module-pycbc.frame.store" title="Permalink to this headline">¶</a></h2>
+<p>This modules contains functions for reading in data from hdf stores</p>
+<dl class="function">
+<dt id="pycbc.frame.store.read_store">
+<code class="descclassname">pycbc.frame.store.</code><code class="descname">read_store</code><span class="sig-paren">(</span><em>fname</em>, <em>channel</em>, <em>start_time</em>, <em>end_time</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/frame/store.html#read_store"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.frame.store.read_store" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read time series data from hdf store</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fname</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Name of hdf store file</li>
+<li><strong>channel</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Channel name to read</li>
+<li><strong>start_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – GPS time to start reading from</li>
+<li><strong>end_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – GPS time to end time series</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>ts</strong> – Time series containing the requested data</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pycbc.types.TimeSeries</p>
 </td>
 </tr>
 </tbody>

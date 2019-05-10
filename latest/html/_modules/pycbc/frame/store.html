@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.results.color &mdash; PyCBC 2341a3 documentation</title>
+  <title>pycbc.frame.store &mdash; PyCBC 2341a3 documentation</title>
   
 
   
@@ -186,7 +186,9 @@
         
           <li><a href="../../pycbc.html">pycbc</a> &raquo;</li>
         
-      <li>pycbc.results.color</li>
+          <li><a href="../frame.html">pycbc.frame</a> &raquo;</li>
+        
+      <li>pycbc.frame.store</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -201,22 +203,76 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for pycbc.results.color</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot; Utilities for managing matplotlib colors and mapping ifos to color</span>
+  <h1>Source code for pycbc.frame.store</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (C) 2019 Alex Nitz</span>
+<span class="c1">#</span>
+<span class="c1"># This program is free software; you can redistribute it and/or modify it</span>
+<span class="c1"># under the terms of the GNU General Public License as published by the</span>
+<span class="c1"># Free Software Foundation; either version 3 of the License, or (at your</span>
+<span class="c1"># option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful, but</span>
+<span class="c1"># WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Generals</span>
+<span class="c1"># Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License along</span>
+<span class="c1"># with this program; if not, write to the Free Software Foundation, Inc.,</span>
+<span class="c1"># 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-
-<span class="n">_ifo_color_map</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;G1&#39;</span><span class="p">:</span> <span class="s1">&#39;#222222&#39;</span><span class="p">,</span>  <span class="c1"># dark gray</span>
-    <span class="s1">&#39;K1&#39;</span><span class="p">:</span> <span class="s1">&#39;#ffb200&#39;</span><span class="p">,</span>  <span class="c1"># yellow/orange</span>
-    <span class="s1">&#39;H1&#39;</span><span class="p">:</span> <span class="s1">&#39;#ee0000&#39;</span><span class="p">,</span>  <span class="c1"># red</span>
-    <span class="s1">&#39;I1&#39;</span><span class="p">:</span> <span class="s1">&#39;#b0dd8b&#39;</span><span class="p">,</span>  <span class="c1"># light green</span>
-    <span class="s1">&#39;L1&#39;</span><span class="p">:</span> <span class="s1">&#39;#4ba6ff&#39;</span><span class="p">,</span>  <span class="c1"># blue</span>
-    <span class="s1">&#39;V1&#39;</span><span class="p">:</span> <span class="s1">&#39;#9b59b6&#39;</span><span class="p">,</span>  <span class="c1"># magenta/purple</span>
-<span class="p">}</span>
+<span class="sd">This modules contains functions for reading in data from hdf stores</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">h5py</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">from</span> <span class="nn">pycbc.types</span> <span class="k">import</span> <span class="n">TimeSeries</span>
 
 
-<div class="viewcode-block" id="ifo_color"><a class="viewcode-back" href="../../../pycbc.results.html#pycbc.results.color.ifo_color">[docs]</a><span class="k">def</span> <span class="nf">ifo_color</span><span class="p">(</span><span class="n">ifo</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">_ifo_color_map</span><span class="p">[</span><span class="n">ifo</span><span class="p">]</span></div>
+<div class="viewcode-block" id="read_store"><a class="viewcode-back" href="../../../pycbc.frame.html#pycbc.frame.store.read_store">[docs]</a><span class="k">def</span> <span class="nf">read_store</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Read time series data from hdf store</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fname: str</span>
+<span class="sd">        Name of hdf store file</span>
+<span class="sd">    channel: str</span>
+<span class="sd">        Channel name to read</span>
+<span class="sd">    start_time: int</span>
+<span class="sd">        GPS time to start reading from</span>
+<span class="sd">    end_time: int</span>
+<span class="sd">        GPS time to end time series</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ts: pycbc.types.TimeSeries</span>
+<span class="sd">        Time series containing the requested data</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fhandle</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">channel</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fhandle</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Could not find channel name </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">))</span>
+
+    <span class="c1"># Determine which segment data lies in (can only read contiguous data now)</span>
+    <span class="n">starts</span> <span class="o">=</span> <span class="n">fhandle</span><span class="p">[</span><span class="n">channel</span><span class="p">][</span><span class="s1">&#39;segments&#39;</span><span class="p">][</span><span class="s1">&#39;start&#39;</span><span class="p">][:]</span>
+    <span class="n">ends</span> <span class="o">=</span> <span class="n">fhandle</span><span class="p">[</span><span class="n">channel</span><span class="p">][</span><span class="s1">&#39;segments&#39;</span><span class="p">][</span><span class="s1">&#39;end&#39;</span><span class="p">][:]</span>
+
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">start_time</span> <span class="o">-</span> <span class="n">starts</span>
+    <span class="n">loc</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">diff</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">sidx</span> <span class="o">=</span> <span class="n">loc</span><span class="p">[</span><span class="n">diff</span><span class="p">[</span><span class="n">loc</span><span class="p">]</span><span class="o">.</span><span class="n">argmin</span><span class="p">()]</span>
+
+    <span class="n">stime</span> <span class="o">=</span> <span class="n">starts</span><span class="p">[</span><span class="n">sidx</span><span class="p">]</span>
+    <span class="n">etime</span> <span class="o">=</span> <span class="n">ends</span><span class="p">[</span><span class="n">sidx</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">etime</span> <span class="o">&lt;</span> <span class="n">end_time</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot read data segment past </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">etime</span><span class="p">))</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">fhandle</span><span class="p">[</span><span class="n">channel</span><span class="p">][</span><span class="nb">str</span><span class="p">(</span><span class="n">sidx</span><span class="p">)]</span>
+    <span class="n">sample_rate</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">etime</span> <span class="o">-</span> <span class="n">stime</span><span class="p">)</span>
+
+    <span class="n">start</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">start_time</span> <span class="o">-</span> <span class="n">stime</span><span class="p">)</span> <span class="o">*</span> <span class="n">sample_rate</span><span class="p">)</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">stime</span><span class="p">)</span> <span class="o">*</span> <span class="n">sample_rate</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">],</span> <span class="n">delta_t</span><span class="o">=</span><span class="mf">1.0</span><span class="o">/</span><span class="n">sample_rate</span><span class="p">,</span>
+                      <span class="n">epoch</span><span class="o">=</span><span class="n">start_time</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

@@ -20,6 +20,14 @@ pycbc.frame.losc module
     :undoc-members:
     :show-inheritance:
 
+pycbc.frame.store module
+------------------------
+
+.. automodule:: pycbc.frame.store
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------
