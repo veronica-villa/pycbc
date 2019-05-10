@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.distributions &mdash; PyCBC 3b9259 documentation</title>
+  <title>pycbc.distributions &mdash; PyCBC 895b94 documentation</title>
   
 
   
@@ -336,6 +336,13 @@
     <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">missing_prior</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;You are missing a priors section in the config file &quot;</span>
                        <span class="s2">&quot;for parameter(s): </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">missing_prior</span><span class="p">)))</span>
+    <span class="c1"># sanity check that each parameter with a priors section is in</span>
+    <span class="c1"># [variable_args]</span>
+    <span class="n">missing_variable</span> <span class="o">=</span> <span class="n">tags</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">variable_args</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">missing_variable</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;Prior section found for parameter(s) </span><span class="si">{}</span><span class="s2"> but not &quot;</span>
+                       <span class="s2">&quot;listed as variable parameter(s).&quot;</span>
+                       <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">missing_variable</span><span class="p">)))</span>
     <span class="c1"># get static args</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">static_args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">key</span><span class="p">,</span> <span class="n">cp</span><span class="o">.</span><span class="n">get_opt_tags</span><span class="p">(</span><span class="n">sargs_section</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="p">[]))</span>
