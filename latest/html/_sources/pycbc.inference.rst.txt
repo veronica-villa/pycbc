@@ -29,6 +29,14 @@ pycbc.inference.entropy module
     :undoc-members:
     :show-inheritance:
 
+pycbc.inference.evidence module
+-------------------------------
+
+.. automodule:: pycbc.inference.evidence
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 pycbc.inference.gelman\_rubin module
 ------------------------------------
 

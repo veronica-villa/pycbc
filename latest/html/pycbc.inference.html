@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference package &mdash; PyCBC 895b94 documentation</title>
+  <title>pycbc.inference package &mdash; PyCBC 5ea94d documentation</title>
   
 
   
@@ -488,6 +488,120 @@ from a set of samples of the distribution.</li>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.float64</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pycbc.inference.evidence">
+<span id="pycbc-inference-evidence-module"></span><h2>pycbc.inference.evidence module<a class="headerlink" href="#module-pycbc.inference.evidence" title="Permalink to this headline">¶</a></h2>
+<p>This modules provides functions for estimating the marginal
+likelihood or evidence of a model.</p>
+<dl class="function">
+<dt id="pycbc.inference.evidence.arithmetic_mean_estimator">
+<code class="descclassname">pycbc.inference.evidence.</code><code class="descname">arithmetic_mean_estimator</code><span class="sig-paren">(</span><em>log_likelihood</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/evidence.html#arithmetic_mean_estimator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.evidence.arithmetic_mean_estimator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the log evidence via the prior arithmetic mean estimator (AME).</p>
+<p>The logarithm form of AME is used. This is the most basic
+evidence estimator, and often requires O(billions) of samples
+from the prior.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>log_likelihood</strong> (<em>1d array of floats</em>) – The log likelihood of the data sampled from the prior
+distribution.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Estimation of the log of the evidence.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pycbc.inference.evidence.harmonic_mean_estimator">
+<code class="descclassname">pycbc.inference.evidence.</code><code class="descname">harmonic_mean_estimator</code><span class="sig-paren">(</span><em>log_likelihood</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/evidence.html#harmonic_mean_estimator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.evidence.harmonic_mean_estimator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the log evidence via posterior harmonic mean estimator (HME).</p>
+<p>The logarithm form of HME is used. This method is not
+recommended for general use. It is very slow to converge,
+formally, has infinite variance, and very error prone.</p>
+<p>Not recommended for general use.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>log_likelihood</strong> (<em>1d array of floats</em>) – The log likelihood of the data sampled from the posterior
+distribution.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Estimation of the log of the evidence.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pycbc.inference.evidence.stepping_stone_algorithm">
+<code class="descclassname">pycbc.inference.evidence.</code><code class="descname">stepping_stone_algorithm</code><span class="sig-paren">(</span><em>log_likelihood</em>, <em>betas</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/evidence.html#stepping_stone_algorithm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.evidence.stepping_stone_algorithm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the log evidence of the model via stepping stone algorithm.
+Also returns an estimated standard deviation for the log evidence.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>log_likelihood</strong> (<em>3d array of shape</em><em> (</em><em>betas</em><em>, </em><em>walker</em><em>, </em><em>iteration</em><em>)</em>) – The log likelihood for each temperature separated by
+temperature, walker, and iteration.</li>
+<li><strong>betas</strong> (<em>1d array</em>) – The inverse temperatures used in the MCMC.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>log_evidence</strong> (<em>float</em>) – Estimation of the log of the evidence.</li>
+<li><strong>mcmc_std</strong> (<em>float</em>) – The standard deviation of the log evidence estimate from
+Monte-Carlo spread.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pycbc.inference.evidence.thermodynamic_integration">
+<code class="descclassname">pycbc.inference.evidence.</code><code class="descname">thermodynamic_integration</code><span class="sig-paren">(</span><em>log_likelihood</em>, <em>betas</em>, <em>method='simpsons'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/evidence.html#thermodynamic_integration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.evidence.thermodynamic_integration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the log evidence of the model via thermodynamic integration.
+Also returns an estimated standard deviation for the log evidence.</p>
+<p>Current options are integration through the trapezoid rule, a
+first-order corrected trapezoid rule, and Simpson’s rule.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>log_likelihood</strong> (<em>3d array of shape</em><em> (</em><em>betas</em><em>, </em><em>walker</em><em>, </em><em>iteration</em><em>)</em>) – The log likelihood for each temperature separated by
+temperature, walker, and iteration.</li>
+<li><strong>betas</strong> (<em>1d array</em>) – The inverse temperatures used in the MCMC.</li>
+<li><strong>method</strong> (<em>{&quot;trapzoid&quot;</em><em>, </em><em>&quot;trapezoid_corrected&quot;</em><em>, </em><em>&quot;simpsons&quot;}</em><em>,</em>) – optional.
+The numerical integration method to use for the
+thermodynamic integration. Choices include: “trapezoid”,
+“trapezoid_corrected”, “simpsons”, for the trapezoid rule,
+the first-order correction to the trapezoid rule, and
+Simpson’s rule. [Default = “simpsons”]</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>log_evidence</strong> (<em>float</em>) – Estimation of the log of the evidence.</li>
+<li><strong>mcmc_std</strong> (<em>float</em>) – The standard deviation of the log evidence estimate from
+Monte-Carlo spread.</li>
+</ul>
+</p>
 </td>
 </tr>
 </tbody>
