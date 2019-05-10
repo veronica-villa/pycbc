@@ -44,6 +44,14 @@ pycbc.inference.io.emcee\_pt module
     :undoc-members:
     :show-inheritance:
 
+pycbc.inference.io.multinest module
+-----------------------------------
+
+.. automodule:: pycbc.inference.io.multinest
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 pycbc.inference.io.posterior module
 -----------------------------------
 

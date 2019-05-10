@@ -44,6 +44,14 @@ pycbc.inference.sampler.emcee\_pt module
     :undoc-members:
     :show-inheritance:
 
+pycbc.inference.sampler.multinest module
+----------------------------------------
+
+.. automodule:: pycbc.inference.sampler.multinest
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

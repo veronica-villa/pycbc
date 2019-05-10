@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.distributions.uniform_log &mdash; PyCBC 1b610b documentation</title>
+  <title>pycbc.distributions.uniform_log &mdash; PyCBC 6b89a9 documentation</title>
   
 
   
@@ -249,6 +249,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_norm</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">prod</span><span class="p">([</span><span class="n">numpy</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">bnd</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">-</span> <span class="n">numpy</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">bnd</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
                                    <span class="k">for</span> <span class="n">bnd</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bounds</span><span class="o">.</span><span class="n">values</span><span class="p">()])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lognorm</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_norm</span><span class="p">)</span>
+
+<div class="viewcode-block" id="UniformLog10.cdfinv"><a class="viewcode-back" href="../../../pycbc.distributions.html#pycbc.distributions.uniform_log.UniformLog10.cdfinv">[docs]</a>    <span class="k">def</span> <span class="nf">cdfinv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the inverse cdf to map the unit interval to parameter bounds.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">lower_bound</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bounds</span><span class="p">[</span><span class="n">param</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">upper_bound</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bounds</span><span class="p">[</span><span class="n">param</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">new_value</span> <span class="o">=</span> <span class="mf">10.</span> <span class="o">**</span> <span class="p">((</span><span class="n">upper_bound</span> <span class="o">-</span> <span class="n">lower_bound</span><span class="p">)</span> <span class="o">*</span> <span class="n">value</span> <span class="o">+</span> <span class="n">lower_bound</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_value</span></div>
 
 <div class="viewcode-block" id="UniformLog10.rvs"><a class="viewcode-back" href="../../../pycbc.distributions.html#pycbc.distributions.uniform_log.UniformLog10.rvs">[docs]</a>    <span class="k">def</span> <span class="nf">rvs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">param</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Gives a set of random values drawn from this distribution.</span>

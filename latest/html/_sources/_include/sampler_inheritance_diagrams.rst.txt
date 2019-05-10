@@ -18,3 +18,13 @@
 |
 
 
+.. _inheritance-multinest:
+
+* ``multinest``:
+
+.. inheritance-diagram:: pycbc.inference.sampler.multinest.MultinestSampler
+   :parts: 3
+
+|
+
+

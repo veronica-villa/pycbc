@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.sampler package &mdash; PyCBC 1b610b documentation</title>
+  <title>pycbc.inference.sampler package &mdash; PyCBC 6b89a9 documentation</title>
   
 
   
@@ -1430,6 +1430,181 @@ in memory.</p>
 <dl class="method">
 <dt id="pycbc.inference.sampler.emcee_pt.EmceePTSampler.write_results">
 <code class="descname">write_results</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/sampler/emcee_pt.html#EmceePTSampler.write_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.sampler.emcee_pt.EmceePTSampler.write_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes samples, model stats, acceptance fraction, and random state
+to the given file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The file to write to. The file is opened using the <code class="docutils literal notranslate"><span class="pre">io</span></code> class
+in an an append state.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pycbc.inference.sampler.multinest">
+<span id="pycbc-inference-sampler-multinest-module"></span><h2>pycbc.inference.sampler.multinest module<a class="headerlink" href="#module-pycbc.inference.sampler.multinest" title="Permalink to this headline">¶</a></h2>
+<p>This modules provides classes and functions for using the Multinest sampler
+packages for parameter estimation.</p>
+<dl class="class">
+<dt id="pycbc.inference.sampler.multinest.MultinestSampler">
+<em class="property">class </em><code class="descclassname">pycbc.inference.sampler.multinest.</code><code class="descname">MultinestSampler</code><span class="sig-paren">(</span><em>model</em>, <em>nlivepoints</em>, <em>checkpoint_interval=1000</em>, <em>importance_nested_sampling=False</em>, <em>evidence_tolerance=0.1</em>, <em>sampling_efficiency=0.01</em>, <em>constraints=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/sampler/multinest.html#MultinestSampler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.sampler.multinest.MultinestSampler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycbc.inference.sampler.base.BaseSampler" title="pycbc.inference.sampler.base.BaseSampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.sampler.base.BaseSampler</span></code></a></p>
+<p>This class is used to construct a nested sampler from
+the Multinest package.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<em>model</em>) – A model from <code class="docutils literal notranslate"><span class="pre">pycbc.inference.models</span></code>.</li>
+<li><strong>nlivepoints</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of live points to use in sampler.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pycbc.inference.sampler.multinest.MultinestSampler.check_if_finished">
+<code class="descname">check_if_finished</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/sampler/multinest.html#MultinestSampler.check_if_finished"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.sampler.multinest.MultinestSampler.check_if_finished" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate remaining evidence to see if desired evidence-tolerance
+stopping criterion has been reached.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.sampler.multinest.MultinestSampler.checkpoint">
+<code class="descname">checkpoint</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/sampler/multinest.html#MultinestSampler.checkpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.sampler.multinest.MultinestSampler.checkpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dumps current samples to the checkpoint file.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.sampler.multinest.MultinestSampler.checkpoint_interval">
+<code class="descname">checkpoint_interval</code><a class="headerlink" href="#pycbc.inference.sampler.multinest.MultinestSampler.checkpoint_interval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of iterations between checkpoints.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.sampler.multinest.MultinestSampler.dlogz">
+<code class="descname">dlogz</code><a class="headerlink" href="#pycbc.inference.sampler.multinest.MultinestSampler.dlogz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current error estimate of the log evidence.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.sampler.multinest.MultinestSampler.finalize">
+<code class="descname">finalize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/sampler/multinest.html#MultinestSampler.finalize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.sampler.multinest.MultinestSampler.finalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>All data is written by the last checkpoint in the run method, so
+this just passes.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pycbc.inference.sampler.multinest.MultinestSampler.from_config">
+<em class="property">classmethod </em><code class="descname">from_config</code><span class="sig-paren">(</span><em>cp</em>, <em>model</em>, <em>nprocesses=1</em>, <em>use_mpi=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/sampler/multinest.html#MultinestSampler.from_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.sampler.multinest.MultinestSampler.from_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the sampler from the given config file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.sampler.multinest.MultinestSampler.get_posterior_samples">
+<code class="descname">get_posterior_samples</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/sampler/multinest.html#MultinestSampler.get_posterior_samples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.sampler.multinest.MultinestSampler.get_posterior_samples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read posterior samples from ASCII output file created by
+multinest.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.sampler.multinest.MultinestSampler.importance_dlogz">
+<code class="descname">importance_dlogz</code><a class="headerlink" href="#pycbc.inference.sampler.multinest.MultinestSampler.importance_dlogz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current error estimate of the importance
+weighted log evidence.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.sampler.multinest.MultinestSampler.importance_logz">
+<code class="descname">importance_logz</code><a class="headerlink" href="#pycbc.inference.sampler.multinest.MultinestSampler.importance_logz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current importance weighted estimate of the log
+evidence.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.sampler.multinest.MultinestSampler.io">
+<code class="descname">io</code><a class="headerlink" href="#pycbc.inference.sampler.multinest.MultinestSampler.io" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.sampler.multinest.MultinestSampler.loglikelihood">
+<code class="descname">loglikelihood</code><span class="sig-paren">(</span><em>cube</em>, <em>*extra_args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/sampler/multinest.html#MultinestSampler.loglikelihood"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.sampler.multinest.MultinestSampler.loglikelihood" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log likelihood evaluator that gets passed to multinest.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.sampler.multinest.MultinestSampler.logz">
+<code class="descname">logz</code><a class="headerlink" href="#pycbc.inference.sampler.multinest.MultinestSampler.logz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current estimate of the log evidence.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.sampler.multinest.MultinestSampler.model_stats">
+<code class="descname">model_stats</code><a class="headerlink" href="#pycbc.inference.sampler.multinest.MultinestSampler.model_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dict mapping the model’s <code class="docutils literal notranslate"><span class="pre">default_stats</span></code> to arrays of values.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.sampler.multinest.MultinestSampler.name">
+<code class="descname">name</code><em class="property"> = 'multinest'</em><a class="headerlink" href="#pycbc.inference.sampler.multinest.MultinestSampler.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.sampler.multinest.MultinestSampler.niterations">
+<code class="descname">niterations</code><a class="headerlink" href="#pycbc.inference.sampler.multinest.MultinestSampler.niterations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current number of iterations.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.sampler.multinest.MultinestSampler.nlivepoints">
+<code class="descname">nlivepoints</code><a class="headerlink" href="#pycbc.inference.sampler.multinest.MultinestSampler.nlivepoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of live points used in sampling.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.sampler.multinest.MultinestSampler.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/sampler/multinest.html#MultinestSampler.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.sampler.multinest.MultinestSampler.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the sampler until the specified evidence tolerance
+is reached.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.sampler.multinest.MultinestSampler.samples">
+<code class="descname">samples</code><a class="headerlink" href="#pycbc.inference.sampler.multinest.MultinestSampler.samples" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dict mapping <code class="docutils literal notranslate"><span class="pre">variable_params</span></code> to arrays of samples currently
+in memory.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.sampler.multinest.MultinestSampler.set_initial_conditions">
+<code class="descname">set_initial_conditions</code><span class="sig-paren">(</span><em>initial_distribution=None</em>, <em>samples_file=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/sampler/multinest.html#MultinestSampler.set_initial_conditions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.sampler.multinest.MultinestSampler.set_initial_conditions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the initial starting point for the sampler.</p>
+<p>If a starting samples file is provided, will also load the random
+state from it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.sampler.multinest.MultinestSampler.set_state_from_file">
+<code class="descname">set_state_from_file</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/sampler/multinest.html#MultinestSampler.set_state_from_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.sampler.multinest.MultinestSampler.set_state_from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the state of the sampler back to the instance saved in a file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.sampler.multinest.MultinestSampler.transform_prior">
+<code class="descname">transform_prior</code><span class="sig-paren">(</span><em>cube</em>, <em>*extra_args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/sampler/multinest.html#MultinestSampler.transform_prior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.sampler.multinest.MultinestSampler.transform_prior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms the unit hypercube that multinest makes its draws
+from, into the prior space defined in the config file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.sampler.multinest.MultinestSampler.write_results">
+<code class="descname">write_results</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/sampler/multinest.html#MultinestSampler.write_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.sampler.multinest.MultinestSampler.write_results" title="Permalink to this definition">¶</a></dt>
 <dd><p>Writes samples, model stats, acceptance fraction, and random state
 to the given file.</p>
 <table class="docutils field-list" frame="void" rules="none">

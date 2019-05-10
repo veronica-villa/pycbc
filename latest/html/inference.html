@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>PyCBC inference documentation (pycbc.inference) &mdash; PyCBC 1b610b documentation</title>
+  <title>PyCBC inference documentation (pycbc.inference) &mdash; PyCBC 6b89a9 documentation</title>
   
 
   
@@ -361,8 +361,8 @@ with the <code class="docutils literal notranslate"><span class="pre">[model]</s
 sampler to use. The currently available samplers are:</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="18%" />
-<col width="82%" />
+<col width="19%" />
+<col width="81%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
@@ -375,6 +375,9 @@ sampler to use. The currently available samplers are:</p>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">'emcee_pt'</span></code></td>
 <td><a class="reference internal" href="pycbc.inference.sampler.html#pycbc.inference.sampler.emcee_pt.EmceePTSampler" title="pycbc.inference.sampler.emcee_pt.EmceePTSampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.sampler.emcee_pt.EmceePTSampler</span></code></a></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">'multinest'</span></code></td>
+<td><a class="reference internal" href="pycbc.inference.sampler.html#pycbc.inference.sampler.multinest.MultinestSampler" title="pycbc.inference.sampler.multinest.MultinestSampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.sampler.multinest.MultinestSampler</span></code></a></td>
 </tr>
 </tbody>
 </table>
@@ -1094,7 +1097,8 @@ pycbc_create_injections --verbose <span class="se">\</span>
 it <code class="docutils literal notranslate"><span class="pre">inference.ini</span></code>:</p>
 <div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[model]</span>
 <span class="na">name</span> <span class="o">=</span> <span class="s">gaussian_noise</span>
-<span class="na">low-frequency-cutoff</span> <span class="o">=</span> <span class="s">20</span>
+<span class="na">h1-low-frequency-cutoff</span> <span class="o">=</span> <span class="s">20</span>
+<span class="na">l1-low-frequency-cutoff</span> <span class="o">=</span> <span class="s">20</span>
 
 <span class="k">[sampler]</span>
 <span class="na">name</span> <span class="o">=</span> <span class="s">emcee_pt</span>
@@ -1256,7 +1260,7 @@ pycbc_inference --verbose <span class="se">\</span>
     --fake-strain-seed <span class="m">44</span> <span class="se">\</span>
     --strain-high-pass <span class="si">${</span><span class="nv">F_MIN</span><span class="si">}</span> <span class="se">\</span>
     --sample-rate <span class="si">${</span><span class="nv">SAMPLE_RATE</span><span class="si">}</span> <span class="se">\</span>
-    --low-frequency-cutoff <span class="si">${</span><span class="nv">F_MIN</span><span class="si">}</span> <span class="se">\</span>
+    --data-conditioning-low-freq <span class="si">${</span><span class="nv">F_MIN</span><span class="si">}</span> <span class="se">\</span>
     --channel-name H1:FOOBAR L1:FOOBAR <span class="se">\</span>
     --injection-file injection.hdf <span class="se">\</span>
     --config-file <span class="si">${</span><span class="nv">CONFIG_PATH</span><span class="si">}</span> <span class="se">\</span>
@@ -1392,7 +1396,7 @@ pycbc_inference --verbose <span class="se">\</span>
     --psd-segment-stride <span class="si">${</span><span class="nv">PSD_STRIDE</span><span class="si">}</span> <span class="se">\</span>
     --psd-inverse-length <span class="si">${</span><span class="nv">PSD_INVLEN</span><span class="si">}</span> <span class="se">\</span>
     --sample-rate <span class="si">${</span><span class="nv">SAMPLE_RATE</span><span class="si">}</span> <span class="se">\</span>
-    --low-frequency-cutoff <span class="si">${</span><span class="nv">F_MIN</span><span class="si">}</span> <span class="se">\</span>
+    --data-conditioning-low-freq <span class="si">${</span><span class="nv">F_MIN</span><span class="si">}</span> <span class="se">\</span>
     --config-file <span class="si">${</span><span class="nv">CONFIG_PATH</span><span class="si">}</span> <span class="se">\</span>
     --output-file <span class="si">${</span><span class="nv">OUTPUT_PATH</span><span class="si">}</span> <span class="se">\</span>
     --processing-scheme <span class="si">${</span><span class="nv">PROCESSING_SCHEME</span><span class="si">}</span> <span class="se">\</span>

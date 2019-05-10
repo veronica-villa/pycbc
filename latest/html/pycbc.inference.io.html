@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.io package &mdash; PyCBC 1b610b documentation</title>
+  <title>pycbc.inference.io package &mdash; PyCBC 6b89a9 documentation</title>
   
 
   
@@ -1393,6 +1393,114 @@ ntemps x nwalkers.</td>
 <dt id="pycbc.inference.io.emcee_pt.EmceePTFile.write_sampler_metadata">
 <code class="descname">write_sampler_metadata</code><span class="sig-paren">(</span><em>sampler</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/emcee_pt.html#EmceePTFile.write_sampler_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.emcee_pt.EmceePTFile.write_sampler_metadata" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds writing betas to MultiTemperedMCMCIO.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pycbc.inference.io.multinest">
+<span id="pycbc-inference-io-multinest-module"></span><h2>pycbc.inference.io.multinest module<a class="headerlink" href="#module-pycbc.inference.io.multinest" title="Permalink to this headline">¶</a></h2>
+<p>Provides I/O support for multinest.</p>
+<dl class="class">
+<dt id="pycbc.inference.io.multinest.MultinestFile">
+<em class="property">class </em><code class="descclassname">pycbc.inference.io.multinest.</code><code class="descname">MultinestFile</code><span class="sig-paren">(</span><em>path</em>, <em>mode=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/multinest.html#MultinestFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.multinest.MultinestFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycbc.inference.io.base_hdf.BaseInferenceFile" title="pycbc.inference.io.base_hdf.BaseInferenceFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.io.base_hdf.BaseInferenceFile</span></code></a></p>
+<p>Class to handle file IO for the <code class="docutils literal notranslate"><span class="pre">multinest</span></code> sampler.</p>
+<dl class="attribute">
+<dt id="pycbc.inference.io.multinest.MultinestFile.name">
+<code class="descname">name</code><em class="property"> = 'multinest_file'</em><a class="headerlink" href="#pycbc.inference.io.multinest.MultinestFile.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.io.multinest.MultinestFile.niterations">
+<code class="descname">niterations</code><a class="headerlink" href="#pycbc.inference.io.multinest.MultinestFile.niterations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of iterations the sampler was run for.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.io.multinest.MultinestFile.read_raw_samples">
+<code class="descname">read_raw_samples</code><span class="sig-paren">(</span><em>fields</em>, <em>iteration=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/multinest.html#MultinestFile.read_raw_samples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.multinest.MultinestFile.read_raw_samples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Low level function for reading datasets in the samples group.</p>
+<p>This should return a dictionary of numpy arrays.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.io.multinest.MultinestFile.write_logevidence">
+<code class="descname">write_logevidence</code><span class="sig-paren">(</span><em>lnz</em>, <em>dlnz</em>, <em>importance_lnz</em>, <em>importance_dlnz</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/multinest.html#MultinestFile.write_logevidence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.multinest.MultinestFile.write_logevidence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes the given log evidence and its error.</p>
+<p>Results are saved to file’s ‘log_evidence’ and ‘dlog_evidence’
+attributes, as well as the importance-weighted versions of these
+stats if they exist.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>lnz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – The log of the evidence.</li>
+<li><strong>dlnz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – The error in the estimate of the log evidence.</li>
+<li><strong>importance_lnz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>optional</em>) – The importance-weighted log of the evidence.</li>
+<li><strong>importance_dlnz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>optional</em>) – The error in the importance-weighted estimate of the log evidence.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.io.multinest.MultinestFile.write_niterations">
+<code class="descname">write_niterations</code><span class="sig-paren">(</span><em>niterations</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/multinest.html#MultinestFile.write_niterations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.multinest.MultinestFile.write_niterations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes the given number of iterations to the sampler group.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.io.multinest.MultinestFile.write_posterior">
+<code class="descname">write_posterior</code><span class="sig-paren">(</span><em>filename</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/multinest.html#MultinestFile.write_posterior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.multinest.MultinestFile.write_posterior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write posterior only file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Name of output file to store posterior</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.io.multinest.MultinestFile.write_resume_point">
+<code class="descname">write_resume_point</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/multinest.html#MultinestFile.write_resume_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.multinest.MultinestFile.write_resume_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keeps a list of the number of iterations that were in a file when a
+run was resumed from a checkpoint.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.io.multinest.MultinestFile.write_sampler_metadata">
+<code class="descname">write_sampler_metadata</code><span class="sig-paren">(</span><em>sampler</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/multinest.html#MultinestFile.write_sampler_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.multinest.MultinestFile.write_sampler_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes the sampler’s metadata.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.io.multinest.MultinestFile.write_samples">
+<code class="descname">write_samples</code><span class="sig-paren">(</span><em>samples</em>, <em>parameters=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/multinest.html#MultinestFile.write_samples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.multinest.MultinestFile.write_samples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes samples to the given file.</p>
+<p>Results are written to <code class="docutils literal notranslate"><span class="pre">samples_group/{vararg}</span></code>, where <code class="docutils literal notranslate"><span class="pre">{vararg}</span></code>
+is the name of a model params. The samples are written as an
+array of length <code class="docutils literal notranslate"><span class="pre">niterations</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – The samples to write. Each array in the dictionary should have
+length niterations.</li>
+<li><strong>parameters</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>, </em><em>optional</em>) – Only write the specified parameters to the file. If None, will
+write all of the keys in the <code class="docutils literal notranslate"><span class="pre">samples</span></code> dict.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>

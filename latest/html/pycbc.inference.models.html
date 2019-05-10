@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.models package &mdash; PyCBC 1b610b documentation</title>
+  <title>pycbc.inference.models package &mdash; PyCBC 6b89a9 documentation</title>
   
 
   
@@ -1117,13 +1117,16 @@ normalization using the <code class="docutils literal notranslate"><span class="
 values are the data (assumed to be unwhitened). The list of keys must
 match the waveform generator’s detectors keys, and the epoch of every
 data set must be the same as the waveform generator’s epoch.</li>
-<li><strong>low_frequency_cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – The starting frequency to use for computing inner products.
-Must be specified in the config file under section [model].</li>
+<li><strong>low_frequency_cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – A dictionary of starting frequencies, in which the keys are the
+detector names and the values are the starting frequencies for the
+respective detectors to be used for computing inner products.</li>
 <li><strong>psds</strong> (<em>{None</em><em>, </em><em>dict}</em>) – A dictionary of FrequencySeries keyed by the detector names. The
 dictionary must have a psd for each detector specified in the data
 dictionary. If provided, the inner products in each detector will be
 weighted by 1/psd of that detector.</li>
-<li><strong>high_frequency_cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>optional</em>) – The ending frequency to use for computing inner products. If not
+<li><strong>high_frequency_cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a><em>, </em><em>optional</em>) – A dictionary of ending frequencies, in which the keys are the
+detector names and the values are the ending frequencies for the
+respective detectors to be used for computing inner products. If not
 provided, the minimum of the largest frequency stored in the data
 and a given waveform will be used.</li>
 <li><strong>norm</strong> (<em>{None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em> or </em><em>array}</em>) – An extra normalization weight to apply to the inner products. Can be
@@ -1159,11 +1162,12 @@ will be used.</li>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">signal</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">tc</span><span class="o">=</span><span class="n">tsig</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">psd</span> <span class="o">=</span> <span class="n">pypsd</span><span class="o">.</span><span class="n">aLIGOZeroDetHighPower</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="mf">1.</span><span class="o">/</span><span class="n">seglen</span><span class="p">,</span> <span class="mf">20.</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">psds</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;H1&#39;</span><span class="p">:</span> <span class="n">psd</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">:</span> <span class="n">psd</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">GaussianNoise</span><span class="p">(</span><span class="n">variable_params</span><span class="p">,</span> <span class="n">signal</span><span class="p">,</span> <span class="n">fmin</span><span class="p">,</span> <span class="n">psds</span><span class="o">=</span><span class="n">psds</span><span class="p">,</span>
-<span class="gp">... </span>                      <span class="n">static_params</span><span class="o">=</span><span class="n">static_params</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">low_frequency_cutoff</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;H1&#39;</span><span class="p">:</span> <span class="n">fmin</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">:</span> <span class="n">fmin</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">GaussianNoise</span><span class="p">(</span><span class="n">variable_params</span><span class="p">,</span> <span class="n">signal</span><span class="p">,</span> <span class="n">low_frequency_cutoff</span><span class="p">,</span>
+<span class="go">                          psds=psds, static_params=static_params)</span>
+<span class="go">Set the current position to the coalescence time of the signal:</span>
 </pre></div>
 </div>
-<p>Set the current position to the coalescence time of the signal:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">tc</span><span class="o">=</span><span class="n">tsig</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1221,7 +1225,7 @@ in time and check that the max is at tsig:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">uniform_prior</span> <span class="o">=</span> <span class="n">distributions</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="n">tc</span><span class="o">=</span><span class="p">(</span><span class="n">tsig</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span><span class="n">tsig</span><span class="o">+</span><span class="mf">0.2</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">prior</span> <span class="o">=</span> <span class="n">distributions</span><span class="o">.</span><span class="n">JointDistribution</span><span class="p">(</span><span class="n">variable_params</span><span class="p">,</span> <span class="n">uniform_prior</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">pycbc</span><span class="o">.</span><span class="n">inference</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">GaussianNoise</span><span class="p">(</span><span class="n">variable_params</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">signal</span><span class="p">,</span> <span class="n">generator</span><span class="p">,</span> <span class="mf">20.</span><span class="p">,</span> <span class="n">psds</span><span class="o">=</span><span class="n">psds</span><span class="p">,</span> <span class="n">prior</span><span class="o">=</span><span class="n">prior</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">signal</span><span class="p">,</span> <span class="n">generator</span><span class="p">,</span> <span class="n">low_frequency_cutoff</span><span class="p">,</span> <span class="n">psds</span><span class="o">=</span><span class="n">psds</span><span class="p">,</span> <span class="n">prior</span><span class="o">=</span><span class="n">prior</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">tc</span><span class="o">=</span><span class="n">tsig</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">logplr</span><span class="p">))</span>
 <span class="go">283.21</span>
@@ -1384,18 +1388,22 @@ sort of thing returned by <code class="xref py py-func docutils literal notransl
 <dl class="function">
 <dt id="pycbc.inference.models.gaussian_noise.high_frequency_cutoff_from_config">
 <code class="descclassname">pycbc.inference.models.gaussian_noise.</code><code class="descname">high_frequency_cutoff_from_config</code><span class="sig-paren">(</span><em>cp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/gaussian_noise.html#high_frequency_cutoff_from_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.gaussian_noise.high_frequency_cutoff_from_config" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the high frequency cutoff from the given config file.</p>
-<p>This looks for <code class="docutils literal notranslate"><span class="pre">high-frequency-cutoff</span></code> in the <code class="docutils literal notranslate"><span class="pre">[model]</span></code> section and
-casts it to float. If none is found, will just return <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<dd><p>Gets the high frequency cutoff, if one is provided for a detector from
+the given config file for likelihood computation.</p>
+<p>This looks for options <code class="docutils literal notranslate"><span class="pre">IFO-high-frequency-cutoff</span></code> in the <code class="docutils literal notranslate"><span class="pre">[model]</span></code>
+section, where IFO is the name of the detector, and casts it to float.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cp</strong> (<a class="reference internal" href="pycbc.workflow.html#pycbc.workflow.configuration.WorkflowConfigParser" title="pycbc.workflow.configuration.WorkflowConfigParser"><em>WorkflowConfigParser</em></a>) – Config file parser to read.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The high frequency cutoff.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Dictionary with the IFO names as the keys and the respective high
+frequency cutoffs to be used in the likelihood calculation as the
+values. If high frequency cutoffs for no detectors are provided,
+returns an empty dictionary.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)">None</a></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)">None</a></td>
 </tr>
 </tbody>
 </table>
@@ -1404,19 +1412,23 @@ casts it to float. If none is found, will just return <code class="docutils lite
 <dl class="function">
 <dt id="pycbc.inference.models.gaussian_noise.low_frequency_cutoff_from_config">
 <code class="descclassname">pycbc.inference.models.gaussian_noise.</code><code class="descname">low_frequency_cutoff_from_config</code><span class="sig-paren">(</span><em>cp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/gaussian_noise.html#low_frequency_cutoff_from_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.gaussian_noise.low_frequency_cutoff_from_config" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the low frequency cutoff from the given config file.</p>
-<p>This looks for <code class="docutils literal notranslate"><span class="pre">low-frequency-cutoff</span></code> in the <code class="docutils literal notranslate"><span class="pre">[model]</span></code> section and
-casts it to float. If none is found, or the casting to float fails, an
-error is raised.</p>
+<dd><p>Gets the low frequency cutoff for all detectors to be used from the
+given config file.</p>
+<p>The low-frequency-cutoff for each detector should be provided using an
+option <code class="docutils literal notranslate"><span class="pre">IFO-low-frequency-cutoff</span></code> in the <code class="docutils literal notranslate"><span class="pre">[model]</span></code> section, where IFO
+is the name of the detector. The low frequency cutoff value is then casted
+to float. If the casting to float fails, an error is raised.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cp</strong> (<a class="reference internal" href="pycbc.workflow.html#pycbc.workflow.configuration.WorkflowConfigParser" title="pycbc.workflow.configuration.WorkflowConfigParser"><em>WorkflowConfigParser</em></a>) – Config file parser to read.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The low frequency cutoff.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Dictionary with the IFO names as the keys and the respective low
+frequency cutoffs to be used in the likelihood calculation as the
+values.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></td>
 </tr>
 </tbody>
 </table>

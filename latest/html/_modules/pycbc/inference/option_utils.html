@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.option_utils &mdash; PyCBC 1b610b documentation</title>
+  <title>pycbc.inference.option_utils &mdash; PyCBC 6b89a9 documentation</title>
   
 
   
@@ -228,6 +228,7 @@
 <span class="kn">from</span> <span class="nn">pycbc.strain</span> <span class="k">import</span> <span class="n">from_cli_multi_ifos</span> <span class="k">as</span> <span class="n">strain_from_cli_multi_ifos</span>
 <span class="kn">from</span> <span class="nn">pycbc.strain</span> <span class="k">import</span> <span class="p">(</span><span class="n">gates_from_cli</span><span class="p">,</span> <span class="n">psd_gates_from_cli</span><span class="p">,</span>
                           <span class="n">apply_gates_to_td</span><span class="p">,</span> <span class="n">apply_gates_to_fd</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pycbc.types</span> <span class="k">import</span> <span class="n">MultiDetOptionAction</span>
 <span class="kn">from</span> <span class="nn">pycbc</span> <span class="k">import</span> <span class="n">waveform</span>
 <span class="kn">from</span> <span class="nn">pycbc</span> <span class="k">import</span> <span class="n">distributions</span>
 
@@ -241,27 +242,11 @@
 
 <div class="viewcode-block" id="add_low_frequency_cutoff_opt"><a class="viewcode-back" href="../../../pycbc.inference.html#pycbc.inference.option_utils.add_low_frequency_cutoff_opt">[docs]</a><span class="k">def</span> <span class="nf">add_low_frequency_cutoff_opt</span><span class="p">(</span><span class="n">parser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Adds the low-frequency-cutoff option to the given parser.&quot;&quot;&quot;</span>
-    <span class="c1"># FIXME: this just uses the same frequency cutoff for every instrument for</span>
-    <span class="c1"># now. We should allow for different frequency cutoffs to be used; that</span>
-    <span class="c1"># will require (minor) changes to the Likelihood class</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--low-frequency-cutoff&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Low frequency cutoff to use for each IFO&#39;s PSD &quot;</span>
-                             <span class="s2">&quot;estimate.&quot;</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="low_frequency_cutoff_from_cli"><a class="viewcode-back" href="../../../pycbc.inference.html#pycbc.inference.option_utils.low_frequency_cutoff_from_cli">[docs]</a><span class="k">def</span> <span class="nf">low_frequency_cutoff_from_cli</span><span class="p">(</span><span class="n">opts</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Parses the low frequency cutoff from the given options.</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    dict</span>
-<span class="sd">        Dictionary of instruments -&gt; low frequency cutoff.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># FIXME: this just uses the same frequency cutoff for every instrument for</span>
-    <span class="c1"># now. We should allow for different frequency cutoffs to be used; that</span>
-    <span class="c1"># will require (minor) changes to the Likelihood class</span>
-    <span class="n">instruments</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">instruments</span> <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">instruments</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[]</span>
-    <span class="k">return</span> <span class="p">{</span><span class="n">ifo</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">low_frequency_cutoff</span> <span class="k">for</span> <span class="n">ifo</span> <span class="ow">in</span> <span class="n">instruments</span><span class="p">}</span></div>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--data-conditioning-low-freq&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+                        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="n">MultiDetOptionAction</span><span class="p">,</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;IFO:FLOW&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;low_frequency_cutoff&quot;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Low frequency cutoff of the data. Needed for &quot;</span>
+                             <span class="s2">&quot;PSD estimation and when creating fake strain.&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="data_from_cli"><a class="viewcode-back" href="../../../pycbc.inference.html#pycbc.inference.option_utils.data_from_cli">[docs]</a><span class="k">def</span> <span class="nf">data_from_cli</span><span class="p">(</span><span class="n">opts</span><span class="p">):</span>
@@ -320,7 +305,6 @@
     <span class="n">stilde_dict</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">length_dict</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">delta_f_dict</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">low_frequency_cutoff_dict</span> <span class="o">=</span> <span class="n">low_frequency_cutoff_from_cli</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">ifo</span> <span class="ow">in</span> <span class="n">instruments</span><span class="p">:</span>
         <span class="n">stilde_dict</span><span class="p">[</span><span class="n">ifo</span><span class="p">]</span> <span class="o">=</span> <span class="n">strain_dict</span><span class="p">[</span><span class="n">ifo</span><span class="p">]</span><span class="o">.</span><span class="n">to_frequencyseries</span><span class="p">()</span>
         <span class="n">length_dict</span><span class="p">[</span><span class="n">ifo</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">stilde_dict</span><span class="p">[</span><span class="n">ifo</span><span class="p">])</span>
@@ -328,7 +312,7 @@
 
     <span class="c1"># get PSD as frequency series</span>
     <span class="n">psd_dict</span> <span class="o">=</span> <span class="n">psd_from_cli_multi_ifos</span><span class="p">(</span>
-        <span class="n">opts</span><span class="p">,</span> <span class="n">length_dict</span><span class="p">,</span> <span class="n">delta_f_dict</span><span class="p">,</span> <span class="n">low_frequency_cutoff_dict</span><span class="p">,</span>
+        <span class="n">opts</span><span class="p">,</span> <span class="n">length_dict</span><span class="p">,</span> <span class="n">delta_f_dict</span><span class="p">,</span> <span class="n">opts</span><span class="o">.</span><span class="n">low_frequency_cutoff</span><span class="p">,</span>
         <span class="n">instruments</span><span class="p">,</span> <span class="n">strain_dict</span><span class="o">=</span><span class="n">psd_strain_dict</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="s2">&quot;double&quot;</span><span class="p">)</span>
 
     <span class="c1"># apply any gates to overwhitened data, if desired</span>

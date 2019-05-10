@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.distributions.angular &mdash; PyCBC 1b610b documentation</title>
+  <title>pycbc.distributions.angular &mdash; PyCBC 6b89a9 documentation</title>
   
 
   
@@ -431,6 +431,15 @@
             <span class="k">for</span> <span class="n">bnd</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bounds</span><span class="o">.</span><span class="n">values</span><span class="p">()])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_norm</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lognorm</span><span class="p">)</span>
 
+<div class="viewcode-block" id="SinAngle.cdfinv"><a class="viewcode-back" href="../../../pycbc.distributions.html#pycbc.distributions.angular.SinAngle.cdfinv">[docs]</a>    <span class="k">def</span> <span class="nf">cdfinv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return inverse of cdf for mapping unit interval to parameter bounds.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bounds</span><span class="p">[</span><span class="n">arg</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+                 <span class="o">-</span> <span class="n">numpy</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bounds</span><span class="p">[</span><span class="n">arg</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">+</span> <span class="n">numpy</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bounds</span><span class="p">[</span><span class="n">arg</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">scale</span>
+        <span class="n">new_value</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="o">-</span><span class="n">scale</span> <span class="o">*</span> <span class="p">(</span><span class="n">value</span> <span class="o">-</span> <span class="n">offset</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">new_value</span></div>
+
     <span class="k">def</span> <span class="nf">_pdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the pdf at the given values. The keyword arguments must</span>
 <span class="sd">        contain all of parameters in self&#39;s params. Unrecognized arguments are</span>
@@ -513,7 +522,15 @@
     <span class="n">_func</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sin</span>
     <span class="n">_dfunc</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">cos</span>
     <span class="n">_arcfunc</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arcsin</span>
-    <span class="n">_domainbounds</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">numpy</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span></div>
+    <span class="n">_domainbounds</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">numpy</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CosAngle.cdfinv"><a class="viewcode-back" href="../../../pycbc.distributions.html#pycbc.distributions.angular.CosAngle.cdfinv">[docs]</a>    <span class="k">def</span> <span class="nf">cdfinv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bounds</span><span class="p">[</span><span class="n">param</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bounds</span><span class="p">[</span><span class="n">param</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">-</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">-</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">-</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+        <span class="n">new_value</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arcsin</span><span class="p">((</span><span class="n">value</span> <span class="o">-</span> <span class="n">offset</span><span class="p">)</span> <span class="o">*</span> <span class="n">scale</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_value</span></div></div>
 
 
 <div class="viewcode-block" id="UniformSolidAngle"><a class="viewcode-back" href="../../../pycbc.distributions.html#pycbc.distributions.angular.UniformSolidAngle">[docs]</a><span class="k">class</span> <span class="nc">UniformSolidAngle</span><span class="p">(</span><span class="n">bounded</span><span class="o">.</span><span class="n">BoundedDist</span><span class="p">):</span>
@@ -594,6 +611,11 @@
     <span class="k">def</span> <span class="nf">azimuthal_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_azimuthal_angle</span>
 
+<div class="viewcode-block" id="UniformSolidAngle.cdfinv"><a class="viewcode-back" href="../../../pycbc.distributions.html#pycbc.distributions.angular.UniformSolidAngle.cdfinv">[docs]</a>    <span class="k">def</span> <span class="nf">cdfinv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">param</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">polar_angle</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_polardist</span><span class="o">.</span><span class="n">cdfinv</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">param</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">azimuthal_angle</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_azimuthaldist</span><span class="o">.</span><span class="n">cdfinv</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="UniformSolidAngle.apply_boundary_conditions"><a class="viewcode-back" href="../../../pycbc.distributions.html#pycbc.distributions.angular.UniformSolidAngle.apply_boundary_conditions">[docs]</a>    <span class="k">def</span> <span class="nf">apply_boundary_conditions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Maps the given values to be within the domain of the azimuthal and</span>

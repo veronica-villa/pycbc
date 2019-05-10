@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.distributions.masses &mdash; PyCBC 1b610b documentation</title>
+  <title>pycbc.distributions.masses &mdash; PyCBC 6b89a9 documentation</title>
   
 
   
@@ -280,6 +280,10 @@
         <span class="k">if</span> <span class="n">mass2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;must provide limits for mass2&quot;</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">UniformComponentMasses</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">mass1</span><span class="o">=</span><span class="n">mass2</span><span class="p">,</span> <span class="n">mass2</span><span class="o">=</span><span class="n">mass2</span><span class="p">)</span>
+
+<div class="viewcode-block" id="UniformComponentMasses.cdfinv"><a class="viewcode-back" href="../../../pycbc.distributions.html#pycbc.distributions.masses.UniformComponentMasses.cdfinv">[docs]</a>    <span class="k">def</span> <span class="nf">cdfinv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;An inverse CDF function has not been &quot;</span>
+                                  <span class="s2">&quot;implemented for this distribution.&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="UniformComponentMasses.rvs"><a class="viewcode-back" href="../../../pycbc.distributions.html#pycbc.distributions.masses.UniformComponentMasses.rvs">[docs]</a>    <span class="k">def</span> <span class="nf">rvs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">param</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Gives a set of random values drawn from this distribution.</span>

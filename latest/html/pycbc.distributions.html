@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.distributions package &mdash; PyCBC 1b610b documentation</title>
+  <title>pycbc.distributions package &mdash; PyCBC 6b89a9 documentation</title>
   
 
   
@@ -499,6 +499,12 @@ be passed; in that case, the domain bounds will be used.</td>
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="pycbc.distributions.angular.SinAngle.cdfinv">
+<code class="descname">cdfinv</code><span class="sig-paren">(</span><em>arg</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/distributions/angular.html#SinAngle.cdfinv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.distributions.angular.SinAngle.cdfinv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return inverse of cdf for mapping unit interval to parameter bounds.</p>
+</dd></dl>
+
 <dl class="attribute">
 <dt>
 <code class="descname">name</code><em class="property"> = 'sin_angle'</em></dt>
@@ -593,6 +599,12 @@ None may also be passed; in that case, the domain bounds will be used.</td>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.distributions.angular.CosAngle.cdfinv">
+<code class="descname">cdfinv</code><span class="sig-paren">(</span><em>param</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/distributions/angular.html#CosAngle.cdfinv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.distributions.angular.CosAngle.cdfinv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return inverse of cdf for mapping unit interval to parameter bounds.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -732,6 +744,11 @@ the keyword args must be <cite>theta={val1}, phi={val2}</cite>.</td>
 <dl class="attribute">
 <dt>
 <code class="descname">azimuthal_angle</code></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pycbc.distributions.angular.UniformSolidAngle.cdfinv">
+<code class="descname">cdfinv</code><span class="sig-paren">(</span><em>param</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/distributions/angular.html#UniformSolidAngle.cdfinv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.distributions.angular.UniformSolidAngle.cdfinv" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="classmethod">
@@ -1483,6 +1500,12 @@ and a variance of 2:
 <p>Create a bounded Gaussian distribution with the same parameters, but with
 cyclic boundary conditions:
 &gt;&gt;&gt; dist = distributions.Gaussian(mass1=Bounds(1,10, cyclic=True), mass1_mean=3, mass1_var=2)</p>
+<dl class="method">
+<dt id="pycbc.distributions.gaussian.Gaussian.cdfinv">
+<code class="descname">cdfinv</code><span class="sig-paren">(</span><em>param</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/distributions/gaussian.html#Gaussian.cdfinv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.distributions.gaussian.Gaussian.cdfinv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return inverse of cdf to map unit interval to parameter bounds.</p>
+</dd></dl>
+
 <dl class="classmethod">
 <dt id="pycbc.distributions.gaussian.Gaussian.from_config">
 <em class="property">classmethod </em><code class="descname">from_config</code><span class="sig-paren">(</span><em>cp</em>, <em>section</em>, <em>variable_args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/distributions/gaussian.html#Gaussian.from_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.distributions.gaussian.Gaussian.from_config" title="Permalink to this definition">¶</a></dt>
@@ -1747,6 +1770,12 @@ for all values:</p>
 <span class="go">0.00020408163265306107</span>
 </pre></div>
 </div>
+<dl class="method">
+<dt id="pycbc.distributions.masses.UniformComponentMasses.cdfinv">
+<code class="descname">cdfinv</code><span class="sig-paren">(</span><em>param</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/distributions/masses.html#UniformComponentMasses.cdfinv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.distributions.masses.UniformComponentMasses.cdfinv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the inverse cdf to map the unit interval to parameter bounds.</p>
+</dd></dl>
+
 <dl class="attribute">
 <dt id="pycbc.distributions.masses.UniformComponentMasses.name">
 <code class="descname">name</code><em class="property"> = 'uniform_component_masses'</em><a class="headerlink" href="#pycbc.distributions.masses.UniformComponentMasses.name" title="Permalink to this definition">¶</a></dt>
@@ -1922,6 +1951,12 @@ is <span class="math notranslate nohighlight">\(n+1\)</span>. For a 3-dimensiona
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.distributions.power_law.UniformPowerLaw.cdfinv">
+<code class="descname">cdfinv</code><span class="sig-paren">(</span><em>param</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/distributions/power_law.html#UniformPowerLaw.cdfinv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.distributions.power_law.UniformPowerLaw.cdfinv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return inverse of cdf to map unit interval to parameter bounds.</p>
 </dd></dl>
 
 <dl class="classmethod">
@@ -2423,6 +2458,12 @@ cyclic, the following would return 0:</p>
 <span class="go">    0.025</span>
 </pre></div>
 </div>
+<dl class="method">
+<dt id="pycbc.distributions.uniform.Uniform.cdfinv">
+<code class="descname">cdfinv</code><span class="sig-paren">(</span><em>param</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/distributions/uniform.html#Uniform.cdfinv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.distributions.uniform.Uniform.cdfinv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the inverse cdf to map the unit interval to parameter bounds.</p>
+</dd></dl>
+
 <dl class="classmethod">
 <dt id="pycbc.distributions.uniform.Uniform.from_config">
 <em class="property">classmethod </em><code class="descname">from_config</code><span class="sig-paren">(</span><em>cp</em>, <em>section</em>, <em>variable_args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/distributions/uniform.html#Uniform.from_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.distributions.uniform.Uniform.from_config" title="Permalink to this definition">¶</a></dt>
@@ -2532,6 +2573,12 @@ instance.</td>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.distributions.uniform_log.UniformLog10.cdfinv">
+<code class="descname">cdfinv</code><span class="sig-paren">(</span><em>param</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/distributions/uniform_log.html#UniformLog10.cdfinv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.distributions.uniform_log.UniformLog10.cdfinv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the inverse cdf to map the unit interval to parameter bounds.</p>
 </dd></dl>
 
 <dl class="attribute">
