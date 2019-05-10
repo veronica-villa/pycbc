@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.io package &mdash; PyCBC 6b89a9 documentation</title>
+  <title>pycbc.inference.io package &mdash; PyCBC 6fa96a documentation</title>
   
 
   
@@ -1248,6 +1248,43 @@ saving to the namespace.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="module-pycbc.inference.io.cpnest">
+<span id="pycbc-inference-io-cpnest-module"></span><h2>pycbc.inference.io.cpnest module<a class="headerlink" href="#module-pycbc.inference.io.cpnest" title="Permalink to this headline">¶</a></h2>
+<p>Provides IO for the emcee sampler.</p>
+<dl class="class">
+<dt id="pycbc.inference.io.cpnest.CPNestFile">
+<em class="property">class </em><code class="descclassname">pycbc.inference.io.cpnest.</code><code class="descname">CPNestFile</code><span class="sig-paren">(</span><em>path</em>, <em>mode=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/cpnest.html#CPNestFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.cpnest.CPNestFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycbc.inference.io.posterior.PosteriorFile" title="pycbc.inference.io.posterior.PosteriorFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.io.posterior.PosteriorFile</span></code></a></p>
+<p>Class to handle file IO for the <code class="docutils literal notranslate"><span class="pre">cpnest</span></code> sampler.</p>
+<dl class="attribute">
+<dt id="pycbc.inference.io.cpnest.CPNestFile.name">
+<code class="descname">name</code><em class="property"> = 'cpnest_file'</em><a class="headerlink" href="#pycbc.inference.io.cpnest.CPNestFile.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.io.cpnest.CPNestFile.write_niterations">
+<code class="descname">write_niterations</code><span class="sig-paren">(</span><em>niterations</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/cpnest.html#CPNestFile.write_niterations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.cpnest.CPNestFile.write_niterations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes the given number of iterations to the sampler group.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.io.cpnest.CPNestFile.write_resume_point">
+<code class="descname">write_resume_point</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/cpnest.html#CPNestFile.write_resume_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.cpnest.CPNestFile.write_resume_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should write the point that a sampler starts up.</p>
+<p>How the resume point is indexed is up to the sampler. For example,
+MCMC samplers use the number of iterations that are stored in the
+checkpoint file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.io.cpnest.CPNestFile.write_sampler_metadata">
+<code class="descname">write_sampler_metadata</code><span class="sig-paren">(</span><em>sampler</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/cpnest.html#CPNestFile.write_sampler_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.cpnest.CPNestFile.write_sampler_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds writing betas to MultiTemperedMCMCIO.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-pycbc.inference.io.emcee">
 <span id="pycbc-inference-io-emcee-module"></span><h2>pycbc.inference.io.emcee module<a class="headerlink" href="#module-pycbc.inference.io.emcee" title="Permalink to this headline">¶</a></h2>
 <p>Provides IO for the emcee sampler.</p>
@@ -1550,7 +1587,7 @@ checkpoint file.</p>
 
 <dl class="method">
 <dt id="pycbc.inference.io.posterior.PosteriorFile.write_samples">
-<code class="descname">write_samples</code><span class="sig-paren">(</span><em>samples</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/posterior.html#PosteriorFile.write_samples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.posterior.PosteriorFile.write_samples" title="Permalink to this definition">¶</a></dt>
+<code class="descname">write_samples</code><span class="sig-paren">(</span><em>samples</em>, <em>parameters=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/posterior.html#PosteriorFile.write_samples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.posterior.PosteriorFile.write_samples" title="Permalink to this definition">¶</a></dt>
 <dd><p>This should write all of the provided samples.</p>
 <p>This function should be used to write both samples and model stats.</p>
 <table class="docutils field-list" frame="void" rules="none">

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.sampler &mdash; PyCBC 6b89a9 documentation</title>
+  <title>pycbc.inference.sampler &mdash; PyCBC 6fa96a documentation</title>
   
 
   
@@ -226,12 +226,14 @@
 <span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="p">(</span><span class="n">initial_dist_from_config</span><span class="p">,</span> <span class="n">create_new_output_file</span><span class="p">)</span>  
 <span class="kn">from</span> <span class="nn">.emcee</span> <span class="k">import</span> <span class="n">EmceeEnsembleSampler</span>
 <span class="kn">from</span> <span class="nn">.emcee_pt</span> <span class="k">import</span> <span class="n">EmceePTSampler</span>
+<span class="kn">from</span> <span class="nn">.cpnest</span> <span class="k">import</span> <span class="n">CPNestSampler</span>
 <span class="kn">from</span> <span class="nn">.multinest</span> <span class="k">import</span> <span class="n">MultinestSampler</span>
 
 <span class="c1"># list of available samplers</span>
 <span class="n">samplers</span> <span class="o">=</span> <span class="p">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="bp">cls</span> <span class="k">for</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="p">(</span>
     <span class="n">EmceeEnsembleSampler</span><span class="p">,</span>
     <span class="n">EmceePTSampler</span><span class="p">,</span>
+    <span class="n">CPNestSampler</span><span class="p">,</span>
     <span class="n">MultinestSampler</span>
 <span class="p">)}</span>
 

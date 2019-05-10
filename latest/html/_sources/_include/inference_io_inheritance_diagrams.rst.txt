@@ -1,3 +1,14 @@
+.. _inheritance-io-cpnest_file:
+
+* ``cpnest_file``:
+
+.. inheritance-diagram:: pycbc.inference.io.cpnest.CPNestFile
+   :parts: 3
+   :top-classes: pycbc.inference.io.base_hdf.BaseInferenceFile
+
+|
+
+
 .. _inheritance-io-emcee_file:
 
 * ``emcee_file``:

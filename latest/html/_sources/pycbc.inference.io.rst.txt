@@ -28,6 +28,14 @@ pycbc.inference.io.base\_multitemper module
     :undoc-members:
     :show-inheritance:
 
+pycbc.inference.io.cpnest module
+--------------------------------
+
+.. automodule:: pycbc.inference.io.cpnest
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 pycbc.inference.io.emcee module
 -------------------------------
 

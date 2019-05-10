@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.io &mdash; PyCBC 6b89a9 documentation</title>
+  <title>pycbc.inference.io &mdash; PyCBC 6fa96a documentation</title>
   
 
   
@@ -238,6 +238,7 @@
 <span class="kn">from</span> <span class="nn">pycbc.inference.option_utils</span> <span class="k">import</span> <span class="p">(</span><span class="n">ParseLabelArg</span><span class="p">,</span> <span class="n">ParseParametersArg</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">.emcee</span> <span class="k">import</span> <span class="n">EmceeFile</span>
 <span class="kn">from</span> <span class="nn">.emcee_pt</span> <span class="k">import</span> <span class="n">EmceePTFile</span>
+<span class="kn">from</span> <span class="nn">.cpnest</span> <span class="k">import</span> <span class="n">CPNestFile</span>
 <span class="kn">from</span> <span class="nn">.multinest</span> <span class="k">import</span> <span class="n">MultinestFile</span>
 <span class="kn">from</span> <span class="nn">.posterior</span> <span class="k">import</span> <span class="n">PosteriorFile</span>
 <span class="kn">from</span> <span class="nn">.txt</span> <span class="k">import</span> <span class="n">InferenceTXTFile</span>
@@ -245,6 +246,7 @@
 <span class="n">filetypes</span> <span class="o">=</span> <span class="p">{</span>
     <span class="n">EmceeFile</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">EmceeFile</span><span class="p">,</span>
     <span class="n">EmceePTFile</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">EmceePTFile</span><span class="p">,</span>
+    <span class="n">CPNestFile</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">CPNestFile</span><span class="p">,</span>
     <span class="n">MultinestFile</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">MultinestFile</span><span class="p">,</span>
     <span class="n">PosteriorFile</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">PosteriorFile</span>
 <span class="p">}</span>

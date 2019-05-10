@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.io.posterior &mdash; PyCBC 6b89a9 documentation</title>
+  <title>pycbc.inference.io.posterior &mdash; PyCBC 6fa96a documentation</title>
   
 
   
@@ -252,8 +252,29 @@
 <div class="viewcode-block" id="PosteriorFile.write_sampler_metadata"><a class="viewcode-back" href="../../../../pycbc.inference.io.html#pycbc.inference.io.posterior.PosteriorFile.write_sampler_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">write_sampler_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sampler</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
-<div class="viewcode-block" id="PosteriorFile.write_samples"><a class="viewcode-back" href="../../../../pycbc.inference.io.html#pycbc.inference.io.posterior.PosteriorFile.write_samples">[docs]</a>    <span class="k">def</span> <span class="nf">write_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
+<div class="viewcode-block" id="PosteriorFile.write_samples"><a class="viewcode-back" href="../../../../pycbc.inference.io.html#pycbc.inference.io.posterior.PosteriorFile.write_samples">[docs]</a>    <span class="k">def</span> <span class="nf">write_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">niterations</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">values</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="n">niterations</span>
+                   <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">samples</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="p">(</span>
+                                        <span class="s2">&quot;all samples must have the same shape&quot;</span><span class="p">)</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples_group</span> <span class="o">+</span> <span class="s1">&#39;/</span><span class="si">{name}</span><span class="s1">&#39;</span>
+        <span class="k">if</span> <span class="n">parameters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">parameters</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="c1"># loop over number of dimensions</span>
+        <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
+            <span class="n">dataset_name</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">param</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">fp_niterations</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">dataset_name</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">niterations</span> <span class="o">!=</span> <span class="n">fp_niterations</span><span class="p">:</span>
+                    <span class="c1"># resize the dataset</span>
+                    <span class="bp">self</span><span class="p">[</span><span class="n">dataset_name</span><span class="p">]</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">niterations</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="c1"># dataset doesn&#39;t exist yet</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">,</span> <span class="p">(</span><span class="n">niterations</span><span class="p">,),</span>
+                                    <span class="n">maxshape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,),</span>
+                                    <span class="n">dtype</span><span class="o">=</span><span class="n">samples</span><span class="p">[</span><span class="n">param</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+                                    <span class="n">fletcher32</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="p">[</span><span class="n">dataset_name</span><span class="p">][:]</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="n">param</span><span class="p">]</span></div></div>
 </pre></div>
 
            </div>
