@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.workflow.inference_followups &mdash; PyCBC 158e8f documentation</title>
+  <title>pycbc.workflow.inference_followups &mdash; PyCBC 762de5 documentation</title>
   
 
   
@@ -382,7 +382,7 @@
     <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="n">output_files</span></div>
 
 <div class="viewcode-block" id="make_inference_summary_table"><a class="viewcode-back" href="../../../pycbc.workflow.html#pycbc.workflow.inference_followups.make_inference_summary_table">[docs]</a><span class="k">def</span> <span class="nf">make_inference_summary_table</span><span class="p">(</span><span class="n">workflow</span><span class="p">,</span> <span class="n">inference_file</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span>
-                    <span class="n">variable_args</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;inference_table&quot;</span><span class="p">,</span>
+                    <span class="n">variable_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;inference_table&quot;</span><span class="p">,</span>
                     <span class="n">analysis_seg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Sets up the corner plot of the posteriors in the workflow.</span>
 
@@ -394,8 +394,8 @@
 <span class="sd">        The file with posterior samples.</span>
 <span class="sd">    output_dir: str</span>
 <span class="sd">        The directory to store result plots and files.</span>
-<span class="sd">    variable_args : list</span>
-<span class="sd">        A list of parameters to use instead of [variable_args].</span>
+<span class="sd">    variable_params : list</span>
+<span class="sd">        A list of parameters to use instead of [variable_params].</span>
 <span class="sd">    name: str</span>
 <span class="sd">        The name in the [executables] section of the configuration file</span>
 <span class="sd">        to use.</span>
@@ -426,7 +426,7 @@
     <span class="c1"># add command line options</span>
     <span class="n">node</span><span class="o">.</span><span class="n">add_input_opt</span><span class="p">(</span><span class="s2">&quot;--input-file&quot;</span><span class="p">,</span> <span class="n">inference_file</span><span class="p">)</span>
     <span class="n">node</span><span class="o">.</span><span class="n">new_output_file_opt</span><span class="p">(</span><span class="n">analysis_seg</span><span class="p">,</span> <span class="s2">&quot;.html&quot;</span><span class="p">,</span> <span class="s2">&quot;--output-file&quot;</span><span class="p">)</span>
-    <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s2">&quot;--parameters&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">variable_args</span><span class="p">))</span>
+    <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s2">&quot;--parameters&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">variable_params</span><span class="p">))</span>
 
     <span class="c1"># add node to workflow</span>
     <span class="n">workflow</span> <span class="o">+=</span> <span class="n">node</span>

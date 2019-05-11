@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.workflow package &mdash; PyCBC 158e8f documentation</title>
+  <title>pycbc.workflow package &mdash; PyCBC 762de5 documentation</title>
   
 
   
@@ -2967,7 +2967,7 @@ time from the workflow.</li>
 
 <dl class="function">
 <dt id="pycbc.workflow.inference_followups.make_inference_summary_table">
-<code class="descclassname">pycbc.workflow.inference_followups.</code><code class="descname">make_inference_summary_table</code><span class="sig-paren">(</span><em>workflow</em>, <em>inference_file</em>, <em>output_dir</em>, <em>variable_args=None</em>, <em>name='inference_table'</em>, <em>analysis_seg=None</em>, <em>tags=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/workflow/inference_followups.html#make_inference_summary_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.workflow.inference_followups.make_inference_summary_table" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pycbc.workflow.inference_followups.</code><code class="descname">make_inference_summary_table</code><span class="sig-paren">(</span><em>workflow</em>, <em>inference_file</em>, <em>output_dir</em>, <em>variable_params=None</em>, <em>name='inference_table'</em>, <em>analysis_seg=None</em>, <em>tags=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/workflow/inference_followups.html#make_inference_summary_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.workflow.inference_followups.make_inference_summary_table" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets up the corner plot of the posteriors in the workflow.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2977,7 +2977,7 @@ time from the workflow.</li>
 <li><strong>workflow</strong> (<em>pycbc.workflow.Workflow</em>) – The core workflow instance we are populating</li>
 <li><strong>inference_file</strong> (<em>pycbc.workflow.File</em>) – The file with posterior samples.</li>
 <li><strong>output_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The directory to store result plots and files.</li>
-<li><strong>variable_args</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – A list of parameters to use instead of [variable_args].</li>
+<li><strong>variable_params</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – A list of parameters to use instead of [variable_params].</li>
 <li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The name in the [executables] section of the configuration file
 to use.</li>
 <li><strong>analysis_segs</strong> (<em>{None</em><em>, </em><em>ligo.segments.Segment}</em>) – The segment this job encompasses. If None then use the total analysis
