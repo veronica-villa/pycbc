@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.io.posterior &mdash; PyCBC 762de5 documentation</title>
+  <title>pycbc.inference.io.posterior &mdash; PyCBC d0813f documentation</title>
   
 
   
@@ -234,7 +234,7 @@
 
 
 <div class="viewcode-block" id="PosteriorFile"><a class="viewcode-back" href="../../../../pycbc.inference.io.html#pycbc.inference.io.posterior.PosteriorFile">[docs]</a><span class="k">class</span> <span class="nc">PosteriorFile</span><span class="p">(</span><span class="n">BaseInferenceFile</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Class to handle file IO for the simplified Posterior file&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Class to handle file IO for the simplified Posterior file.&quot;&quot;&quot;</span>
 
     <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;posterior_file&#39;</span>
 
@@ -242,21 +242,30 @@
         <span class="n">samples</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">samples_group</span><span class="p">]</span>
         <span class="k">return</span> <span class="p">{</span><span class="n">field</span><span class="p">:</span> <span class="n">samples</span><span class="p">[</span><span class="n">field</span><span class="p">][:]</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">}</span></div>
 
-<div class="viewcode-block" id="PosteriorFile.write_posterior"><a class="viewcode-back" href="../../../../pycbc.inference.io.html#pycbc.inference.io.posterior.PosteriorFile.write_posterior">[docs]</a>    <span class="k">def</span> <span class="nf">write_posterior</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Write me.&quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
-
-<div class="viewcode-block" id="PosteriorFile.write_resume_point"><a class="viewcode-back" href="../../../../pycbc.inference.io.html#pycbc.inference.io.posterior.PosteriorFile.write_resume_point">[docs]</a>    <span class="k">def</span> <span class="nf">write_resume_point</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
-
-<div class="viewcode-block" id="PosteriorFile.write_sampler_metadata"><a class="viewcode-back" href="../../../../pycbc.inference.io.html#pycbc.inference.io.posterior.PosteriorFile.write_sampler_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">write_sampler_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sampler</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
-
 <div class="viewcode-block" id="PosteriorFile.write_samples"><a class="viewcode-back" href="../../../../pycbc.inference.io.html#pycbc.inference.io.posterior.PosteriorFile.write_samples">[docs]</a>    <span class="k">def</span> <span class="nf">write_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">niterations</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">values</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="sd">&quot;&quot;&quot;Writes samples to the given file.</span>
+
+<span class="sd">        Results are written to ``samples_group/{vararg}``, where ``{vararg}``</span>
+<span class="sd">        is the name of a model params. The samples are written as an</span>
+<span class="sd">        array of length ``niterations``.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        -----------</span>
+<span class="sd">        samples : dict</span>
+<span class="sd">            The samples to write. Each array in the dictionary should have</span>
+<span class="sd">            length niterations.</span>
+<span class="sd">        parameters : list, optional</span>
+<span class="sd">            Only write the specified parameters to the file. If None, will</span>
+<span class="sd">            write all of the keys in the ``samples`` dict.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># check data dimensions; we&#39;ll just use the first array in samples</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">arr</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;samples must be 1D arrays&quot;</span><span class="p">)</span>
+        <span class="n">niterations</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.</span><span class="n">size</span>
         <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="n">niterations</span>
                    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">samples</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="p">(</span>
-                                        <span class="s2">&quot;all samples must have the same shape&quot;</span><span class="p">)</span>
+            <span class="s2">&quot;all samples must have the same shape&quot;</span><span class="p">)</span>
         <span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples_group</span> <span class="o">+</span> <span class="s1">&#39;/</span><span class="si">{name}</span><span class="s1">&#39;</span>
         <span class="k">if</span> <span class="n">parameters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">parameters</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
@@ -289,7 +298,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on May 11, 2019.
+        Last updated on May 12, 2019.
       </span>
 
     </p>

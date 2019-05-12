@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.io package &mdash; PyCBC 762de5 documentation</title>
+  <title>pycbc.inference.io package &mdash; PyCBC d0813f documentation</title>
   
 
   
@@ -574,7 +574,6 @@ of the returned <code class="docutils literal notranslate"><span class="pre">Fie
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>fp</strong> (<em>InferenceFile</em>) – An open file handler to read the samples from.</li>
 <li><strong>parameters</strong> (<em>(</em><em>list of</em><em>) </em><em>strings</em>) – The parameter(s) to retrieve.</li>
 <li><strong>array_class</strong> (<em>FieldArray-like class</em><em>, </em><em>optional</em>) – The type of array to return. The class must have <code class="docutils literal notranslate"><span class="pre">from_kwargs</span></code>
 and <code class="docutils literal notranslate"><span class="pre">parse_parameters</span></code> methods. If None, will return a
@@ -735,25 +734,6 @@ attributes.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pycbc.inference.io.base_hdf.BaseInferenceFile.write_posterior">
-<code class="descname">write_posterior</code><span class="sig-paren">(</span><em>filename</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/base_hdf.html#BaseInferenceFile.write_posterior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.base_hdf.BaseInferenceFile.write_posterior" title="Permalink to this definition">¶</a></dt>
-<dd><p>This should write a posterior plus any other metadata to the given
-file.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>posterior_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Name of the file to write to.</li>
-<li><strong>**kwargs</strong> – Any other keyword args the sampler needs to write the posterior.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
 <dt id="pycbc.inference.io.base_hdf.BaseInferenceFile.write_psd">
 <code class="descname">write_psd</code><span class="sig-paren">(</span><em>psds</em>, <em>group=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/base_hdf.html#BaseInferenceFile.write_psd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.base_hdf.BaseInferenceFile.write_psd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Writes PSD for each IFO to file.</p>
@@ -792,22 +772,6 @@ file.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pycbc.inference.io.base_hdf.BaseInferenceFile.write_resume_point">
-<code class="descname">write_resume_point</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/base_hdf.html#BaseInferenceFile.write_resume_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.base_hdf.BaseInferenceFile.write_resume_point" title="Permalink to this definition">¶</a></dt>
-<dd><p>Should write the point that a sampler starts up.</p>
-<p>How the resume point is indexed is up to the sampler. For example,
-MCMC samplers use the number of iterations that are stored in the
-checkpoint file.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pycbc.inference.io.base_hdf.BaseInferenceFile.write_sampler_metadata">
-<code class="descname">write_sampler_metadata</code><span class="sig-paren">(</span><em>sampler</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/base_hdf.html#BaseInferenceFile.write_sampler_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.base_hdf.BaseInferenceFile.write_sampler_metadata" title="Permalink to this definition">¶</a></dt>
-<dd><p>This should write the given sampler’s metadata to the file.</p>
-<p>This should also include the model’s metadata.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="pycbc.inference.io.base_hdf.BaseInferenceFile.write_samples">
 <code class="descname">write_samples</code><span class="sig-paren">(</span><em>samples</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/base_hdf.html#BaseInferenceFile.write_samples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.base_hdf.BaseInferenceFile.write_samples" title="Permalink to this definition">¶</a></dt>
 <dd><p>This should write all of the provided samples.</p>
@@ -817,7 +781,6 @@ checkpoint file.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>fp</strong> (<em>open hdf file</em>) – The file to write to.</li>
 <li><strong>samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – Samples should be provided as a dictionary of numpy arrays.</li>
 <li><strong>**kwargs</strong> – Any other keyword args the sampler needs to write data.</li>
 </ul>
@@ -1248,13 +1211,42 @@ saving to the namespace.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="module-pycbc.inference.io.base_sampler">
+<span id="pycbc-inference-io-base-sampler-module"></span><h2>pycbc.inference.io.base_sampler module<a class="headerlink" href="#module-pycbc.inference.io.base_sampler" title="Permalink to this headline">¶</a></h2>
+<p>Provides abstract base class for all samplers.</p>
+<dl class="class">
+<dt id="pycbc.inference.io.base_sampler.BaseSamplerFile">
+<em class="property">class </em><code class="descclassname">pycbc.inference.io.base_sampler.</code><code class="descname">BaseSamplerFile</code><span class="sig-paren">(</span><em>path</em>, <em>mode=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/base_sampler.html#BaseSamplerFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.base_sampler.BaseSamplerFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycbc.inference.io.base_hdf.BaseInferenceFile" title="pycbc.inference.io.base_hdf.BaseInferenceFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.io.base_hdf.BaseInferenceFile</span></code></a></p>
+<p>Base HDF class for all samplers.</p>
+<p>This adds abstract methods <code class="docutils literal notranslate"><span class="pre">write_resume_point</span></code> and
+<code class="docutils literal notranslate"><span class="pre">write_sampler_metadata</span></code> to <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseInferenceFile</span></code>.</p>
+<dl class="method">
+<dt id="pycbc.inference.io.base_sampler.BaseSamplerFile.write_resume_point">
+<code class="descname">write_resume_point</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/base_sampler.html#BaseSamplerFile.write_resume_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.base_sampler.BaseSamplerFile.write_resume_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should write the point that a sampler starts up.</p>
+<p>How the resume point is indexed is up to the sampler. For example,
+MCMC samplers use the number of iterations that are stored in the
+checkpoint file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.io.base_sampler.BaseSamplerFile.write_sampler_metadata">
+<code class="descname">write_sampler_metadata</code><span class="sig-paren">(</span><em>sampler</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/base_sampler.html#BaseSamplerFile.write_sampler_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.base_sampler.BaseSamplerFile.write_sampler_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>This should write the given sampler’s metadata to the file.</p>
+<p>This should also include the model’s metadata.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-pycbc.inference.io.cpnest">
 <span id="pycbc-inference-io-cpnest-module"></span><h2>pycbc.inference.io.cpnest module<a class="headerlink" href="#module-pycbc.inference.io.cpnest" title="Permalink to this headline">¶</a></h2>
 <p>Provides IO for the emcee sampler.</p>
 <dl class="class">
 <dt id="pycbc.inference.io.cpnest.CPNestFile">
 <em class="property">class </em><code class="descclassname">pycbc.inference.io.cpnest.</code><code class="descname">CPNestFile</code><span class="sig-paren">(</span><em>path</em>, <em>mode=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/cpnest.html#CPNestFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.cpnest.CPNestFile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pycbc.inference.io.posterior.PosteriorFile" title="pycbc.inference.io.posterior.PosteriorFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.io.posterior.PosteriorFile</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pycbc.inference.io.base_sampler.BaseSamplerFile" title="pycbc.inference.io.base_sampler.BaseSamplerFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.io.base_sampler.BaseSamplerFile</span></code></a></p>
 <p>Class to handle file IO for the <code class="docutils literal notranslate"><span class="pre">cpnest</span></code> sampler.</p>
 <dl class="attribute">
 <dt id="pycbc.inference.io.cpnest.CPNestFile.name">
@@ -1282,6 +1274,29 @@ checkpoint file.</p>
 <dd><p>Adds writing betas to MultiTemperedMCMCIO.</p>
 </dd></dl>
 
+<dl class="method">
+<dt id="pycbc.inference.io.cpnest.CPNestFile.write_samples">
+<code class="descname">write_samples</code><span class="sig-paren">(</span><em>samples</em>, <em>parameters=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/cpnest.html#CPNestFile.write_samples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.cpnest.CPNestFile.write_samples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes samples to the given file.</p>
+<p>Results are written to <code class="docutils literal notranslate"><span class="pre">samples_group/{vararg}</span></code>, where <code class="docutils literal notranslate"><span class="pre">{vararg}</span></code>
+is the name of a model params. The samples are written as an
+array of length <code class="docutils literal notranslate"><span class="pre">niterations</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – The samples to write. Each array in the dictionary should have
+length niterations.</li>
+<li><strong>parameters</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>, </em><em>optional</em>) – Only write the specified parameters to the file. If None, will
+write all of the keys in the <code class="docutils literal notranslate"><span class="pre">samples</span></code> dict.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -1291,7 +1306,7 @@ checkpoint file.</p>
 <dl class="class">
 <dt id="pycbc.inference.io.emcee.EmceeFile">
 <em class="property">class </em><code class="descclassname">pycbc.inference.io.emcee.</code><code class="descname">EmceeFile</code><span class="sig-paren">(</span><em>path</em>, <em>mode=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/emcee.html#EmceeFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.emcee.EmceeFile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pycbc.inference.io.base_mcmc.SingleTempMCMCIO" title="pycbc.inference.io.base_mcmc.SingleTempMCMCIO"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.io.base_mcmc.SingleTempMCMCIO</span></code></a>, <a class="reference internal" href="#pycbc.inference.io.base_mcmc.MCMCMetadataIO" title="pycbc.inference.io.base_mcmc.MCMCMetadataIO"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.io.base_mcmc.MCMCMetadataIO</span></code></a>, <a class="reference internal" href="#pycbc.inference.io.base_hdf.BaseInferenceFile" title="pycbc.inference.io.base_hdf.BaseInferenceFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.io.base_hdf.BaseInferenceFile</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pycbc.inference.io.base_mcmc.SingleTempMCMCIO" title="pycbc.inference.io.base_mcmc.SingleTempMCMCIO"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.io.base_mcmc.SingleTempMCMCIO</span></code></a>, <a class="reference internal" href="#pycbc.inference.io.base_mcmc.MCMCMetadataIO" title="pycbc.inference.io.base_mcmc.MCMCMetadataIO"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.io.base_mcmc.MCMCMetadataIO</span></code></a>, <a class="reference internal" href="#pycbc.inference.io.base_sampler.BaseSamplerFile" title="pycbc.inference.io.base_sampler.BaseSamplerFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.io.base_sampler.BaseSamplerFile</span></code></a></p>
 <p>Class to handle file IO for the <code class="docutils literal notranslate"><span class="pre">emcee</span></code> sampler.</p>
 <dl class="attribute">
 <dt id="pycbc.inference.io.emcee.EmceeFile.name">
@@ -1332,20 +1347,6 @@ the <code class="docutils literal notranslate"><span class="pre">[sampler_group]
 </table>
 </dd></dl>
 
-<dl class="method">
-<dt id="pycbc.inference.io.emcee.EmceeFile.write_posterior">
-<code class="descname">write_posterior</code><span class="sig-paren">(</span><em>filename</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/emcee.html#EmceeFile.write_posterior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.emcee.EmceeFile.write_posterior" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write posterior only file</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Name of output file to store posterior</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 </dd></dl>
 
 </div>
@@ -1355,7 +1356,7 @@ the <code class="docutils literal notranslate"><span class="pre">[sampler_group]
 <dl class="class">
 <dt id="pycbc.inference.io.emcee_pt.EmceePTFile">
 <em class="property">class </em><code class="descclassname">pycbc.inference.io.emcee_pt.</code><code class="descname">EmceePTFile</code><span class="sig-paren">(</span><em>path</em>, <em>mode=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/emcee_pt.html#EmceePTFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.emcee_pt.EmceePTFile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pycbc.inference.io.base_multitemper.MultiTemperedMCMCIO" title="pycbc.inference.io.base_multitemper.MultiTemperedMCMCIO"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.io.base_multitemper.MultiTemperedMCMCIO</span></code></a>, <a class="reference internal" href="#pycbc.inference.io.base_multitemper.MultiTemperedMetadataIO" title="pycbc.inference.io.base_multitemper.MultiTemperedMetadataIO"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.io.base_multitemper.MultiTemperedMetadataIO</span></code></a>, <a class="reference internal" href="#pycbc.inference.io.base_hdf.BaseInferenceFile" title="pycbc.inference.io.base_hdf.BaseInferenceFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.io.base_hdf.BaseInferenceFile</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pycbc.inference.io.base_multitemper.MultiTemperedMCMCIO" title="pycbc.inference.io.base_multitemper.MultiTemperedMCMCIO"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.io.base_multitemper.MultiTemperedMCMCIO</span></code></a>, <a class="reference internal" href="#pycbc.inference.io.base_multitemper.MultiTemperedMetadataIO" title="pycbc.inference.io.base_multitemper.MultiTemperedMetadataIO"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.io.base_multitemper.MultiTemperedMetadataIO</span></code></a>, <a class="reference internal" href="#pycbc.inference.io.base_sampler.BaseSamplerFile" title="pycbc.inference.io.base_sampler.BaseSamplerFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.io.base_sampler.BaseSamplerFile</span></code></a></p>
 <p>Class to handle file IO for the <code class="docutils literal notranslate"><span class="pre">emcee</span></code> sampler.</p>
 <dl class="attribute">
 <dt id="pycbc.inference.io.emcee_pt.EmceePTFile.betas">
@@ -1413,20 +1414,6 @@ ntemps x nwalkers.</td>
 </dd></dl>
 
 <dl class="method">
-<dt id="pycbc.inference.io.emcee_pt.EmceePTFile.write_posterior">
-<code class="descname">write_posterior</code><span class="sig-paren">(</span><em>filename</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/emcee_pt.html#EmceePTFile.write_posterior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.emcee_pt.EmceePTFile.write_posterior" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write posterior only file</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Name of output file to store posterior</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
 <dt id="pycbc.inference.io.emcee_pt.EmceePTFile.write_sampler_metadata">
 <code class="descname">write_sampler_metadata</code><span class="sig-paren">(</span><em>sampler</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/emcee_pt.html#EmceePTFile.write_sampler_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.emcee_pt.EmceePTFile.write_sampler_metadata" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds writing betas to MultiTemperedMCMCIO.</p>
@@ -1441,7 +1428,7 @@ ntemps x nwalkers.</td>
 <dl class="class">
 <dt id="pycbc.inference.io.multinest.MultinestFile">
 <em class="property">class </em><code class="descclassname">pycbc.inference.io.multinest.</code><code class="descname">MultinestFile</code><span class="sig-paren">(</span><em>path</em>, <em>mode=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/multinest.html#MultinestFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.multinest.MultinestFile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pycbc.inference.io.base_hdf.BaseInferenceFile" title="pycbc.inference.io.base_hdf.BaseInferenceFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.io.base_hdf.BaseInferenceFile</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pycbc.inference.io.base_sampler.BaseSamplerFile" title="pycbc.inference.io.base_sampler.BaseSamplerFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.io.base_sampler.BaseSamplerFile</span></code></a></p>
 <p>Class to handle file IO for the <code class="docutils literal notranslate"><span class="pre">multinest</span></code> sampler.</p>
 <dl class="attribute">
 <dt id="pycbc.inference.io.multinest.MultinestFile.name">
@@ -1491,20 +1478,6 @@ stats if they exist.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pycbc.inference.io.multinest.MultinestFile.write_posterior">
-<code class="descname">write_posterior</code><span class="sig-paren">(</span><em>filename</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/multinest.html#MultinestFile.write_posterior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.multinest.MultinestFile.write_posterior" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write posterior only file</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Name of output file to store posterior</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
 <dt id="pycbc.inference.io.multinest.MultinestFile.write_resume_point">
 <code class="descname">write_resume_point</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/multinest.html#MultinestFile.write_resume_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.multinest.MultinestFile.write_resume_point" title="Permalink to this definition">¶</a></dt>
 <dd><p>Keeps a list of the number of iterations that were in a file when a
@@ -1550,7 +1523,7 @@ write all of the keys in the <code class="docutils literal notranslate"><span cl
 <dt id="pycbc.inference.io.posterior.PosteriorFile">
 <em class="property">class </em><code class="descclassname">pycbc.inference.io.posterior.</code><code class="descname">PosteriorFile</code><span class="sig-paren">(</span><em>path</em>, <em>mode=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/posterior.html#PosteriorFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.posterior.PosteriorFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pycbc.inference.io.base_hdf.BaseInferenceFile" title="pycbc.inference.io.base_hdf.BaseInferenceFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.io.base_hdf.BaseInferenceFile</span></code></a></p>
-<p>Class to handle file IO for the simplified Posterior file</p>
+<p>Class to handle file IO for the simplified Posterior file.</p>
 <dl class="attribute">
 <dt id="pycbc.inference.io.posterior.PosteriorFile.name">
 <code class="descname">name</code><em class="property"> = 'posterior_file'</em><a class="headerlink" href="#pycbc.inference.io.posterior.PosteriorFile.name" title="Permalink to this definition">¶</a></dt>
@@ -1564,40 +1537,21 @@ write all of the keys in the <code class="docutils literal notranslate"><span cl
 </dd></dl>
 
 <dl class="method">
-<dt id="pycbc.inference.io.posterior.PosteriorFile.write_posterior">
-<code class="descname">write_posterior</code><span class="sig-paren">(</span><em>filename</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/posterior.html#PosteriorFile.write_posterior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.posterior.PosteriorFile.write_posterior" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write me.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pycbc.inference.io.posterior.PosteriorFile.write_resume_point">
-<code class="descname">write_resume_point</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/posterior.html#PosteriorFile.write_resume_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.posterior.PosteriorFile.write_resume_point" title="Permalink to this definition">¶</a></dt>
-<dd><p>Should write the point that a sampler starts up.</p>
-<p>How the resume point is indexed is up to the sampler. For example,
-MCMC samplers use the number of iterations that are stored in the
-checkpoint file.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pycbc.inference.io.posterior.PosteriorFile.write_sampler_metadata">
-<code class="descname">write_sampler_metadata</code><span class="sig-paren">(</span><em>sampler</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/posterior.html#PosteriorFile.write_sampler_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.posterior.PosteriorFile.write_sampler_metadata" title="Permalink to this definition">¶</a></dt>
-<dd><p>This should write the given sampler’s metadata to the file.</p>
-<p>This should also include the model’s metadata.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="pycbc.inference.io.posterior.PosteriorFile.write_samples">
 <code class="descname">write_samples</code><span class="sig-paren">(</span><em>samples</em>, <em>parameters=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io/posterior.html#PosteriorFile.write_samples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.posterior.PosteriorFile.write_samples" title="Permalink to this definition">¶</a></dt>
-<dd><p>This should write all of the provided samples.</p>
-<p>This function should be used to write both samples and model stats.</p>
+<dd><p>Writes samples to the given file.</p>
+<p>Results are written to <code class="docutils literal notranslate"><span class="pre">samples_group/{vararg}</span></code>, where <code class="docutils literal notranslate"><span class="pre">{vararg}</span></code>
+is the name of a model params. The samples are written as an
+array of length <code class="docutils literal notranslate"><span class="pre">niterations</span></code>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>fp</strong> (<em>open hdf file</em>) – The file to write to.</li>
-<li><strong>samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – Samples should be provided as a dictionary of numpy arrays.</li>
-<li><strong>**kwargs</strong> – Any other keyword args the sampler needs to write data.</li>
+<li><strong>samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – The samples to write. Each array in the dictionary should have
+length niterations.</li>
+<li><strong>parameters</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>, </em><em>optional</em>) – Only write the specified parameters to the file. If None, will
+write all of the keys in the <code class="docutils literal notranslate"><span class="pre">samples</span></code> dict.</li>
 </ul>
 </td>
 </tr>
@@ -1696,7 +1650,7 @@ this action is called. Otherwise, a <code class="docutils literal notranslate"><
 
 <dl class="class">
 <dt id="pycbc.inference.io.ResultsArgumentParser">
-<em class="property">class </em><code class="descclassname">pycbc.inference.io.</code><code class="descname">ResultsArgumentParser</code><span class="sig-paren">(</span><em>skip_args=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io.html#ResultsArgumentParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.ResultsArgumentParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pycbc.inference.io.</code><code class="descname">ResultsArgumentParser</code><span class="sig-paren">(</span><em>skip_args=None</em>, <em>defaultparams=None</em>, <em>autoparamlabels=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io.html#ResultsArgumentParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.ResultsArgumentParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.ArgumentParser</span></code></a></p>
 <p>Wraps argument parser, and preloads arguments needed for loading samples
 from a file.</p>
@@ -1730,6 +1684,11 @@ specified as the option string minus the leading ‘–’; e.g.,
 to not be included. May also specify sampler-specific arguments. Note
 that <code class="docutils literal notranslate"><span class="pre">input-file</span></code>, <code class="docutils literal notranslate"><span class="pre">file-help</span></code>, and <code class="docutils literal notranslate"><span class="pre">parameters</span></code> are always
 added.</li>
+<li><strong>defaultparams</strong> (<em>{'variable_params'</em><em>, </em><em>'all'}</em><em>, </em><em>optional</em>) – If no <code class="docutils literal notranslate"><span class="pre">--parameters</span></code> provided, which collection of parameters to
+load. If ‘all’ will load all parameters in the file’s
+<code class="docutils literal notranslate"><span class="pre">samples_group</span></code>. If ‘variable_params’ or None (the default) will load
+the variable parameters.</li>
+<li><strong>autoparamlabels</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>optional</em>) – Passed to <code class="docutils literal notranslate"><span class="pre">add_results_option_group</span></code>; see that function for details.</li>
 <li><strong>**kwargs</strong> – All other keyword arguments are passed to <code class="docutils literal notranslate"><span class="pre">argparse.ArgumentParser</span></code>.</li>
 </ul>
 </td>
@@ -1745,13 +1704,24 @@ added.</li>
 
 <dl class="method">
 <dt id="pycbc.inference.io.ResultsArgumentParser.add_results_option_group">
-<code class="descname">add_results_option_group</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io.html#ResultsArgumentParser.add_results_option_group"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.ResultsArgumentParser.add_results_option_group" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_results_option_group</code><span class="sig-paren">(</span><em>autoparamlabels=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/io.html#ResultsArgumentParser.add_results_option_group"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.io.ResultsArgumentParser.add_results_option_group" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds the options used to call pycbc.inference.io.results_from_cli
 function to the parser.</p>
 <p>These are options releated to loading the results from a run of
 pycbc_inference, for purposes of plotting and/or creating tables.</p>
 <p>Any argument strings included in the <code class="docutils literal notranslate"><span class="pre">skip_args</span></code> attribute will not
 be added.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>autoparamlabels</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, the <code class="docutils literal notranslate"><span class="pre">--parameters</span></code> option will use labels from
+<code class="docutils literal notranslate"><span class="pre">waveform.parameters</span></code> if a parameter name is the same as a
+parameter there. Otherwise, will just use whatever label is
+provided. Default is True.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -1988,7 +1958,7 @@ samples.</p>
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on May 11, 2019.
+        Last updated on May 12, 2019.
       </span>
 
     </p>

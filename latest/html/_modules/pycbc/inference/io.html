@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.io &mdash; PyCBC 762de5 documentation</title>
+  <title>pycbc.inference.io &mdash; PyCBC d0813f documentation</title>
   
 
   
@@ -627,10 +627,18 @@
 <span class="sd">        to not be included. May also specify sampler-specific arguments. Note</span>
 <span class="sd">        that ``input-file``, ``file-help``, and ``parameters`` are always</span>
 <span class="sd">        added.</span>
+<span class="sd">    defaultparams : {&#39;variable_params&#39;, &#39;all&#39;}, optional</span>
+<span class="sd">        If no ``--parameters`` provided, which collection of parameters to</span>
+<span class="sd">        load. If &#39;all&#39; will load all parameters in the file&#39;s</span>
+<span class="sd">        ``samples_group``. If &#39;variable_params&#39; or None (the default) will load</span>
+<span class="sd">        the variable parameters.</span>
+<span class="sd">    autoparamlabels : bool, optional</span>
+<span class="sd">        Passed to ``add_results_option_group``; see that function for details.</span>
 <span class="sd">    \**kwargs :</span>
 <span class="sd">        All other keyword arguments are passed to ``argparse.ArgumentParser``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">skip_args</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">skip_args</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">defaultparams</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">autoparamlabels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ResultsArgumentParser</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="c1"># add attribute to communicate to arguments what to do when there is</span>
         <span class="c1"># no input files</span>
@@ -638,8 +646,11 @@
         <span class="k">if</span> <span class="n">skip_args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">skip_args</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">skip_args</span> <span class="o">=</span> <span class="n">skip_args</span>
+        <span class="k">if</span> <span class="n">defaultparams</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">defaultparams</span> <span class="o">=</span> <span class="s1">&#39;variable_params&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">defaultparams</span> <span class="o">=</span> <span class="n">defaultparams</span>
         <span class="c1"># add the results option grup</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">add_results_option_group</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_results_option_group</span><span class="p">(</span><span class="n">autoparamlabels</span><span class="o">=</span><span class="n">autoparamlabels</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">actions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -679,7 +690,7 @@
         <span class="c1"># populate the parameters option if it wasn&#39;t specified</span>
         <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">parameters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">parameters</span> <span class="o">=</span> <span class="n">get_common_parameters</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">input_file</span><span class="p">,</span>
-                                               <span class="n">collection</span><span class="o">=</span><span class="s1">&#39;variable_params&#39;</span><span class="p">)</span>
+                                               <span class="n">collection</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">defaultparams</span><span class="p">)</span>
             <span class="c1"># now call parse parameters action to populate the namespace</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="p">[</span><span class="s1">&#39;parameters&#39;</span><span class="p">](</span><span class="bp">self</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
         <span class="c1"># parse the sampler-specific options and check for any unknowns</span>
@@ -697,7 +708,7 @@
             <span class="n">unknown</span> <span class="o">=</span> <span class="nb">set</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="o">*</span><span class="n">unknown</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">opts</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">unknown</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ResultsArgumentParser.add_results_option_group"><a class="viewcode-back" href="../../../pycbc.inference.io.html#pycbc.inference.io.ResultsArgumentParser.add_results_option_group">[docs]</a>    <span class="k">def</span> <span class="nf">add_results_option_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ResultsArgumentParser.add_results_option_group"><a class="viewcode-back" href="../../../pycbc.inference.io.html#pycbc.inference.io.ResultsArgumentParser.add_results_option_group">[docs]</a>    <span class="k">def</span> <span class="nf">add_results_option_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">autoparamlabels</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Adds the options used to call pycbc.inference.io.results_from_cli</span>
 <span class="sd">        function to the parser.</span>
 
@@ -706,6 +717,14 @@
 
 <span class="sd">        Any argument strings included in the ``skip_args`` attribute will not</span>
 <span class="sd">        be added.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        autoparamlabels : bool, optional</span>
+<span class="sd">            If True, the ``--parameters`` option will use labels from</span>
+<span class="sd">            ``waveform.parameters`` if a parameter name is the same as a</span>
+<span class="sd">            parameter there. Otherwise, will just use whatever label is</span>
+<span class="sd">            provided. Default is True.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">results_reading_group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span>
             <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Arguments for loading results&quot;</span><span class="p">,</span>
@@ -728,9 +747,20 @@
                  <span class="s2">&quot;arguments that may be passed. This option is like an &quot;</span>
                  <span class="s2">&quot;advanced --help: if run, the program will just print the &quot;</span>
                  <span class="s2">&quot;information to screen, then exit.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">autoparamlabels</span><span class="p">:</span>
+            <span class="n">paramparser</span> <span class="o">=</span> <span class="n">ParseParametersArg</span>
+            <span class="n">lblhelp</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;If LABEL is the same as a parameter in &quot;</span>
+                <span class="s2">&quot;pycbc.waveform.parameters, the label &quot;</span>
+                <span class="s2">&quot;property of that parameter will be used (e.g., if LABEL &quot;</span>
+                <span class="s2">&quot;were &#39;mchirp&#39; then </span><span class="si">{}</span><span class="s2"> would be used). &quot;</span>
+                <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">_waveform</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">mchirp</span><span class="o">.</span><span class="n">label</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">paramparser</span> <span class="o">=</span> <span class="n">ParseLabelArg</span>
+            <span class="n">lblhelp</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         <span class="n">results_reading_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
             <span class="s2">&quot;--parameters&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;PARAM[:LABEL]&quot;</span><span class="p">,</span>
-            <span class="n">action</span><span class="o">=</span><span class="n">ParseParametersArg</span><span class="p">,</span>
+            <span class="n">action</span><span class="o">=</span><span class="n">paramparser</span><span class="p">,</span>
             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Name of parameters to load. If none provided will load all &quot;</span>
                  <span class="s2">&quot;of the model params in the input-file. If provided, the &quot;</span>
                  <span class="s2">&quot;parameters can be any of the model params or posterior &quot;</span>
@@ -740,14 +770,11 @@
                  <span class="s2">&quot;files may be used. Syntax for functions is python; any math &quot;</span>
                  <span class="s2">&quot;functions in the numpy libary may be used. Can optionally &quot;</span>
                  <span class="s2">&quot;also specify a LABEL for each parameter. If no LABEL is &quot;</span>
-                 <span class="s2">&quot;provided, PARAM will used as the LABEL. If LABEL is the &quot;</span>
-                 <span class="s2">&quot;same as a parameter in pycbc.waveform.parameters, the label &quot;</span>
-                 <span class="s2">&quot;property of that parameter will be used (e.g., if LABEL &quot;</span>
-                 <span class="s2">&quot;were &#39;mchirp&#39; then </span><span class="si">{}</span><span class="s2"> would be used). To see all possible &quot;</span>
-                 <span class="s2">&quot;parameters that may be used with the given input file(s), &quot;</span>
-                 <span class="s2">&quot;as well as all avaiable functions, run --file-help, along &quot;</span>
-                 <span class="s2">&quot;with one or more input files.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="n">_waveform</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">mchirp</span><span class="o">.</span><span class="n">label</span><span class="p">))</span>
+                 <span class="s2">&quot;provided, PARAM will used as the LABEL. </span><span class="si">{}</span><span class="s2">&quot;</span>
+                 <span class="s2">&quot;To see all possible parameters that may be used with the &quot;</span>
+                 <span class="s2">&quot;given input file(s), as well as all avaiable functions, &quot;</span>
+                 <span class="s2">&quot;run --file-help, along with one or more input files.&quot;</span>
+                 <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lblhelp</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">results_reading_group</span></div></div>
 
 
@@ -868,7 +895,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on May 11, 2019.
+        Last updated on May 12, 2019.
       </span>
 
     </p>

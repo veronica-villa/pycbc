@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.io.emcee &mdash; PyCBC 762de5 documentation</title>
+  <title>pycbc.inference.io.emcee &mdash; PyCBC d0813f documentation</title>
   
 
   
@@ -229,12 +229,13 @@
 <span class="c1">#</span>
 <span class="sd">&quot;&quot;&quot;Provides IO for the emcee sampler.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">h5py</span><span class="o">,</span> <span class="nn">numpy</span>
-<span class="kn">from</span> <span class="nn">.base_hdf</span> <span class="k">import</span> <span class="n">BaseInferenceFile</span>
-<span class="kn">from</span> <span class="nn">.base_mcmc</span> <span class="k">import</span> <span class="p">(</span><span class="n">MCMCMetadataIO</span><span class="p">,</span> <span class="n">SingleTempMCMCIO</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">.posterior</span> <span class="k">import</span> <span class="n">PosteriorFile</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
 
-<div class="viewcode-block" id="EmceeFile"><a class="viewcode-back" href="../../../../pycbc.inference.io.html#pycbc.inference.io.emcee.EmceeFile">[docs]</a><span class="k">class</span> <span class="nc">EmceeFile</span><span class="p">(</span><span class="n">SingleTempMCMCIO</span><span class="p">,</span> <span class="n">MCMCMetadataIO</span><span class="p">,</span> <span class="n">BaseInferenceFile</span><span class="p">):</span>
+<span class="kn">from</span> <span class="nn">.base_sampler</span> <span class="k">import</span> <span class="n">BaseSamplerFile</span>
+<span class="kn">from</span> <span class="nn">.base_mcmc</span> <span class="k">import</span> <span class="p">(</span><span class="n">MCMCMetadataIO</span><span class="p">,</span> <span class="n">SingleTempMCMCIO</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="EmceeFile"><a class="viewcode-back" href="../../../../pycbc.inference.io.html#pycbc.inference.io.emcee.EmceeFile">[docs]</a><span class="k">class</span> <span class="nc">EmceeFile</span><span class="p">(</span><span class="n">SingleTempMCMCIO</span><span class="p">,</span> <span class="n">MCMCMetadataIO</span><span class="p">,</span> <span class="n">BaseSamplerFile</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class to handle file IO for the ``emcee`` sampler.&quot;&quot;&quot;</span>
 
     <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;emcee_file&#39;</span>
@@ -275,31 +276,7 @@
             <span class="bp">self</span><span class="p">[</span><span class="n">group</span><span class="p">][:]</span> <span class="o">=</span> <span class="n">acceptance_fraction</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="c1"># dataset doesn&#39;t exist yet, create it</span>
-            <span class="bp">self</span><span class="p">[</span><span class="n">group</span><span class="p">]</span> <span class="o">=</span> <span class="n">acceptance_fraction</span></div>
-
-<div class="viewcode-block" id="EmceeFile.write_posterior"><a class="viewcode-back" href="../../../../pycbc.inference.io.html#pycbc.inference.io.emcee.EmceeFile.write_posterior">[docs]</a>    <span class="k">def</span> <span class="nf">write_posterior</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Write posterior only file</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        filename : str</span>
-<span class="sd">            Name of output file to store posterior</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
-
-        <span class="c1"># Preserve top-level metadata</span>
-        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-
-        <span class="n">f</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;filetype&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">PosteriorFile</span><span class="o">.</span><span class="n">name</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="s1">&#39;samples&#39;</span><span class="p">)</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">samples_group</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-
-        <span class="c1"># Copy and squash fields into one dimensional arrays</span>
-        <span class="k">for</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
-            <span class="n">fvalue</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">samples_group</span><span class="p">][</span><span class="n">field_name</span><span class="p">][:]</span>
-            <span class="n">thin</span> <span class="o">=</span> <span class="n">fvalue</span><span class="p">[:,</span><span class="bp">self</span><span class="o">.</span><span class="n">thin_start</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">thin_end</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">thin_interval</span><span class="p">]</span>
-            <span class="n">s</span><span class="p">[</span><span class="n">field_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">thin</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span></div></div>
+            <span class="bp">self</span><span class="p">[</span><span class="n">group</span><span class="p">]</span> <span class="o">=</span> <span class="n">acceptance_fraction</span></div></div>
 </pre></div>
 
            </div>
@@ -314,7 +291,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on May 11, 2019.
+        Last updated on May 12, 2019.
       </span>
 
     </p>

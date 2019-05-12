@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.io.base_hdf &mdash; PyCBC 762de5 documentation</title>
+  <title>pycbc.inference.io.base_hdf &mdash; PyCBC d0813f documentation</title>
   
 
   
@@ -299,20 +299,10 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        fp : open hdf file</span>
-<span class="sd">            The file to write to.</span>
 <span class="sd">        samples : dict</span>
 <span class="sd">            Samples should be provided as a dictionary of numpy arrays.</span>
 <span class="sd">        \**kwargs :</span>
 <span class="sd">            Any other keyword args the sampler needs to write data.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span></div>
-
-<div class="viewcode-block" id="BaseInferenceFile.write_sampler_metadata"><a class="viewcode-back" href="../../../../pycbc.inference.io.html#pycbc.inference.io.base_hdf.BaseInferenceFile.write_sampler_metadata">[docs]</a>    <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">write_sampler_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sampler</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;This should write the given sampler&#39;s metadata to the file.</span>
-
-<span class="sd">        This should also include the model&#39;s metadata.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
@@ -361,8 +351,6 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        -----------</span>
-<span class="sd">        fp : InferenceFile</span>
-<span class="sd">            An open file handler to read the samples from.</span>
 <span class="sd">        parameters : (list of) strings</span>
 <span class="sd">            The parameter(s) to retrieve.</span>
 <span class="sd">        array_class : FieldArray-like class, optional</span>
@@ -398,20 +386,6 @@
         <span class="sd">&quot;&quot;&quot;Low level function for reading datasets in the samples group.</span>
 
 <span class="sd">        This should return a dictionary of numpy arrays.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span></div>
-
-<div class="viewcode-block" id="BaseInferenceFile.write_posterior"><a class="viewcode-back" href="../../../../pycbc.inference.io.html#pycbc.inference.io.base_hdf.BaseInferenceFile.write_posterior">[docs]</a>    <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">write_posterior</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;This should write a posterior plus any other metadata to the given</span>
-<span class="sd">        file.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        posterior_file : str</span>
-<span class="sd">            Name of the file to write to.</span>
-<span class="sd">        \**kwargs :</span>
-<span class="sd">            Any other keyword args the sampler needs to write the posterior.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
@@ -807,16 +781,6 @@
             <span class="n">previous</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;cmd&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmd</span> <span class="o">+</span> <span class="n">previous</span></div>
 
-<div class="viewcode-block" id="BaseInferenceFile.write_resume_point"><a class="viewcode-back" href="../../../../pycbc.inference.io.html#pycbc.inference.io.base_hdf.BaseInferenceFile.write_resume_point">[docs]</a>    <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">write_resume_point</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Should write the point that a sampler starts up.</span>
-
-<span class="sd">        How the resume point is indexed is up to the sampler. For example,</span>
-<span class="sd">        MCMC samplers use the number of iterations that are stored in the</span>
-<span class="sd">        checkpoint file.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span></div>
-
 <div class="viewcode-block" id="BaseInferenceFile.get_slice"><a class="viewcode-back" href="../../../../pycbc.inference.io.html#pycbc.inference.io.base_hdf.BaseInferenceFile.get_slice">[docs]</a>    <span class="k">def</span> <span class="nf">get_slice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">thin_start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">thin_interval</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">thin_end</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Formats a slice using the given arguments that can be used to</span>
 <span class="sd">        retrieve a thinned array from an InferenceFile.</span>
@@ -1027,7 +991,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on May 11, 2019.
+        Last updated on May 12, 2019.
       </span>
 
     </p>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.io.cpnest &mdash; PyCBC 762de5 documentation</title>
+  <title>pycbc.inference.io.cpnest &mdash; PyCBC d0813f documentation</title>
   
 
   
@@ -229,10 +229,11 @@
 <span class="c1">#</span>
 <span class="sd">&quot;&quot;&quot;Provides IO for the emcee sampler.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">.base_sampler</span> <span class="k">import</span> <span class="n">BaseSamplerFile</span>
 <span class="kn">from</span> <span class="nn">.posterior</span> <span class="k">import</span> <span class="n">PosteriorFile</span>
 
 
-<div class="viewcode-block" id="CPNestFile"><a class="viewcode-back" href="../../../../pycbc.inference.io.html#pycbc.inference.io.cpnest.CPNestFile">[docs]</a><span class="k">class</span> <span class="nc">CPNestFile</span><span class="p">(</span><span class="n">PosteriorFile</span><span class="p">):</span>
+<div class="viewcode-block" id="CPNestFile"><a class="viewcode-back" href="../../../../pycbc.inference.io.html#pycbc.inference.io.cpnest.CPNestFile">[docs]</a><span class="k">class</span> <span class="nc">CPNestFile</span><span class="p">(</span><span class="n">BaseSamplerFile</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class to handle file IO for the ``cpnest`` sampler.&quot;&quot;&quot;</span>
 
     <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;cpnest_file&#39;</span>
@@ -254,9 +255,29 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sampler_group</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="c1"># create the sampler group</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sampler_group</span><span class="p">)</span>
-        <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sampler_group</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;nwalkers&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">nlive</span>
+        <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sampler_group</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;nlivepoints&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">nlive</span>
         <span class="c1"># write the model&#39;s metadata</span>
-        <span class="n">sampler</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">write_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div></div>
+        <span class="n">sampler</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">write_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CPNestFile.write_samples"><a class="viewcode-back" href="../../../../pycbc.inference.io.html#pycbc.inference.io.cpnest.CPNestFile.write_samples">[docs]</a>    <span class="k">def</span> <span class="nf">write_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Writes samples to the given file.</span>
+
+<span class="sd">        Results are written to ``samples_group/{vararg}``, where ``{vararg}``</span>
+<span class="sd">        is the name of a model params. The samples are written as an</span>
+<span class="sd">        array of length ``niterations``.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        -----------</span>
+<span class="sd">        samples : dict</span>
+<span class="sd">            The samples to write. Each array in the dictionary should have</span>
+<span class="sd">            length niterations.</span>
+<span class="sd">        parameters : list, optional</span>
+<span class="sd">            Only write the specified parameters to the file. If None, will</span>
+<span class="sd">            write all of the keys in the ``samples`` dict.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># since we&#39;re just writing a posterior use</span>
+        <span class="c1"># PosteriorFile&#39;s write_samples</span>
+        <span class="n">PosteriorFile</span><span class="o">.</span><span class="n">write_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>
@@ -271,7 +292,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on May 11, 2019.
+        Last updated on May 12, 2019.
       </span>
 
     </p>
