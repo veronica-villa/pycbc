@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.waveform.waveform &mdash; PyCBC bce573 documentation</title>
+  <title>pycbc.waveform.waveform &mdash; PyCBC da598c documentation</title>
   
 
   
@@ -499,25 +499,25 @@
     <span class="sd">&quot;&quot;&quot;Return a list containing the available time domain approximants for</span>
 <span class="sd">       the given processing scheme.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">td_wav</span><span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">scheme</span><span class="p">)]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">td_wav</span><span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">scheme</span><span class="p">)]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="fd_approximants"><a class="viewcode-back" href="../../../pycbc.waveform.html#pycbc.waveform.waveform.fd_approximants">[docs]</a><span class="k">def</span> <span class="nf">fd_approximants</span><span class="p">(</span><span class="n">scheme</span><span class="o">=</span><span class="n">_scheme</span><span class="o">.</span><span class="n">mgr</span><span class="o">.</span><span class="n">state</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Return a list containing the available fourier domain approximants for</span>
 <span class="sd">       the given processing scheme.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">fd_wav</span><span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">scheme</span><span class="p">)]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">fd_wav</span><span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">scheme</span><span class="p">)]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="sgburst_approximants"><a class="viewcode-back" href="../../../pycbc.waveform.html#pycbc.waveform.waveform.sgburst_approximants">[docs]</a><span class="k">def</span> <span class="nf">sgburst_approximants</span><span class="p">(</span><span class="n">scheme</span><span class="o">=</span><span class="n">_scheme</span><span class="o">.</span><span class="n">mgr</span><span class="o">.</span><span class="n">state</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Return a list containing the available time domain sgbursts for</span>
 <span class="sd">       the given processing scheme.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">sgburst_wav</span><span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">scheme</span><span class="p">)]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">sgburst_wav</span><span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">scheme</span><span class="p">)]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="filter_approximants"><a class="viewcode-back" href="../../../pycbc.waveform.html#pycbc.waveform.waveform.filter_approximants">[docs]</a><span class="k">def</span> <span class="nf">filter_approximants</span><span class="p">(</span><span class="n">scheme</span><span class="o">=</span><span class="n">_scheme</span><span class="o">.</span><span class="n">mgr</span><span class="o">.</span><span class="n">state</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Return a list of fourier domain approximants including those</span>
 <span class="sd">       written specifically as templates.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">filter_wav</span><span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">scheme</span><span class="p">)]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">filter_wav</span><span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">scheme</span><span class="p">)]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
 
 <span class="c1"># Input parameter handling ###################################################</span>
 
