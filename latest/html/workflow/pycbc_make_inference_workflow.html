@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc_make_inference_workflow: A parameter estimation workflow generator &mdash; PyCBC 6649a8 documentation</title>
+  <title>pycbc_make_inference_workflow: A parameter estimation workflow generator &mdash; PyCBC eaa1ea documentation</title>
   
 
   
@@ -287,7 +287,7 @@
 <span class="na">psd-segment-stride</span> <span class="o">=</span> <span class="s">8</span>
 <span class="na">psd-inverse-length</span> <span class="o">=</span> <span class="s">16</span>
 <span class="na">processing-scheme</span> <span class="o">=</span> <span class="s">mkl</span>
-<span class="na">save-psd</span> <span class="o">=</span>
+<span class="na">data-conditioning-low-freq</span> <span class="o">=</span> <span class="s">25</span>
 
 <span class="k">[pegasus_profile-inference]</span>
 <span class="c1">; pegasus profile for inference nodes</span>
@@ -328,7 +328,8 @@
 <p>You will also need a configuration file with sections that tells <code class="docutils literal notranslate"><span class="pre">pycbc_inference</span></code> how to construct the priors. A sample inference configuration file is:</p>
 <div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[model]</span>
 <span class="na">name</span> <span class="o">=</span> <span class="s">marginalized_phase</span>
-<span class="na">low-frequency-cutoff</span> <span class="o">=</span> <span class="s">20</span>
+<span class="na">h1-low-frequency-cutoff</span> <span class="o">=</span> <span class="s">20</span>
+<span class="na">l1-low-frequency-cutoff</span> <span class="o">=</span> <span class="s">20</span>
 
 <span class="k">[sampler]</span>
 <span class="na">name</span> <span class="o">=</span> <span class="s">emcee_pt</span>
