@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.sampler.base_mcmc &mdash; PyCBC 3e994e documentation</title>
+  <title>pycbc.inference.sampler.base_mcmc &mdash; PyCBC 952e26 documentation</title>
   
 
   
@@ -240,6 +240,8 @@
 <span class="kn">from</span> <span class="nn">pycbc.filter</span> <span class="k">import</span> <span class="n">autocorrelation</span>
 
 <span class="kn">from</span> <span class="nn">pycbc.inference.io</span> <span class="k">import</span> <span class="n">validate_checkpoint_files</span>
+
+<span class="kn">from</span> <span class="nn">six</span> <span class="k">import</span> <span class="n">string_types</span>
 
 <span class="c1">#</span>
 <span class="c1"># =============================================================================</span>
@@ -1006,7 +1008,7 @@
         <span class="k">with</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_io</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">parameters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">parameters</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">variable_params</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">unicode</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
                 <span class="n">parameters</span> <span class="o">=</span> <span class="p">[</span><span class="n">parameters</span><span class="p">]</span>
             <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">per_walker</span><span class="p">:</span>

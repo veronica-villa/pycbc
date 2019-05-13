@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.models.base &mdash; PyCBC 3e994e documentation</title>
+  <title>pycbc.inference.models.base &mdash; PyCBC 952e26 documentation</title>
   
 
   
@@ -235,6 +235,7 @@
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">abc</span> <span class="k">import</span> <span class="p">(</span><span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">six.moves.configparser</span> <span class="k">import</span> <span class="n">NoSectionError</span>
+<span class="kn">from</span> <span class="nn">six</span> <span class="k">import</span> <span class="n">string_types</span>
 <span class="kn">from</span> <span class="nn">pycbc</span> <span class="k">import</span> <span class="p">(</span><span class="n">transforms</span><span class="p">,</span> <span class="n">distributions</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">pycbc.io</span> <span class="k">import</span> <span class="n">FieldArray</span>
 
@@ -568,7 +569,7 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable_params</span><span class="p">,</span> <span class="n">static_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">prior</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">sampling_transforms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">waveform_transforms</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="c1"># store variable and static args</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">variable_params</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">variable_params</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="n">variable_params</span> <span class="o">=</span> <span class="p">(</span><span class="n">variable_params</span><span class="p">,)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">variable_params</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
             <span class="n">variable_params</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">variable_params</span><span class="p">)</span>

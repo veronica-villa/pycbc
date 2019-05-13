@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.io.multinest &mdash; PyCBC 3e994e documentation</title>
+  <title>pycbc.inference.io.multinest &mdash; PyCBC 952e26 documentation</title>
   
 
   
@@ -225,6 +225,8 @@
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
 
+<span class="kn">from</span> <span class="nn">six</span> <span class="k">import</span> <span class="n">string_types</span>
+
 <span class="kn">from</span> <span class="nn">.base_sampler</span> <span class="k">import</span> <span class="n">BaseSamplerFile</span>
 
 
@@ -296,7 +298,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;importance_dlog_evidence&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">importance_dlnz</span></div>
 
 <div class="viewcode-block" id="MultinestFile.read_raw_samples"><a class="viewcode-back" href="../../../../pycbc.inference.io.html#pycbc.inference.io.multinest.MultinestFile.read_raw_samples">[docs]</a>    <span class="k">def</span> <span class="nf">read_raw_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">iteration</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fields</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">unicode</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fields</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="n">fields</span><span class="p">]</span>
         <span class="c1"># load</span>
         <span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples_group</span> <span class="o">+</span> <span class="s1">&#39;/</span><span class="si">{name}</span><span class="s1">&#39;</span>

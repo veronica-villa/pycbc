@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.io.base_multitemper &mdash; PyCBC 3e994e documentation</title>
+  <title>pycbc.inference.io.base_multitemper &mdash; PyCBC 952e26 documentation</title>
   
 
   
@@ -232,6 +232,7 @@
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">from</span> <span class="nn">six</span> <span class="k">import</span> <span class="n">string_types</span>
 <span class="kn">from</span> <span class="nn">.base_mcmc</span> <span class="k">import</span> <span class="p">(</span><span class="n">MCMCMetadataIO</span><span class="p">,</span> <span class="n">thin_samples_for_writing</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
 
@@ -249,7 +250,7 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">ParseTempsArg</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">type</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">,</span> <span class="n">namespace</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">option_string</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">singlearg</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">unicode</span><span class="p">))</span>
+        <span class="n">singlearg</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">string_types</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">singlearg</span><span class="p">:</span>
             <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">values</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;all&#39;</span><span class="p">:</span>
@@ -404,7 +405,7 @@
 <span class="sd">            An instance of the given array class populated with values</span>
 <span class="sd">            retrieved from the fields.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fields</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">unicode</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fields</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="n">fields</span><span class="p">]</span>
         <span class="c1"># walkers to load</span>
         <span class="k">if</span> <span class="n">walkers</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>

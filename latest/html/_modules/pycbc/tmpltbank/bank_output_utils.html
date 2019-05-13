@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.tmpltbank.bank_output_utils &mdash; PyCBC 3e994e documentation</title>
+  <title>pycbc.tmpltbank.bank_output_utils &mdash; PyCBC 952e26 documentation</title>
   
 
   
@@ -407,7 +407,7 @@
     <span class="c1"># frequency for which moments were calculated</span>
     <span class="n">fMax_theor</span> <span class="o">=</span> <span class="n">pnutils</span><span class="o">.</span><span class="n">frequency_cutoff_from_name</span><span class="p">(</span>
         <span class="n">ethincaParams</span><span class="o">.</span><span class="n">cutoff</span><span class="p">,</span> <span class="n">mass1</span><span class="p">,</span> <span class="n">mass2</span><span class="p">,</span> <span class="n">spin1z</span><span class="p">,</span> <span class="n">spin2z</span><span class="p">)</span>
-    <span class="n">fMaxes</span> <span class="o">=</span> <span class="n">metricParams</span><span class="o">.</span><span class="n">moments</span><span class="p">[</span><span class="s1">&#39;J4&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+    <span class="n">fMaxes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">metricParams</span><span class="o">.</span><span class="n">moments</span><span class="p">[</span><span class="s1">&#39;J4&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
     <span class="n">fMaxIdx</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fMaxes</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="o">-</span> <span class="n">fMax_theor</span><span class="p">)</span><span class="o">.</span><span class="n">argmin</span><span class="p">()</span>
     <span class="n">fMax</span> <span class="o">=</span> <span class="n">fMaxes</span><span class="p">[</span><span class="n">fMaxIdx</span><span class="p">]</span>
 
