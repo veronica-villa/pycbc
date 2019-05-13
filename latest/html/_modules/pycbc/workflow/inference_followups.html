@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.workflow.inference_followups &mdash; PyCBC e08806 documentation</title>
+  <title>pycbc.workflow.inference_followups &mdash; PyCBC 7e6135 documentation</title>
   
 
   
@@ -328,8 +328,8 @@
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Leaving inference module&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="make_inference_prior_plot"><a class="viewcode-back" href="../../../pycbc.workflow.html#pycbc.workflow.inference_followups.make_inference_prior_plot">[docs]</a><span class="k">def</span> <span class="nf">make_inference_prior_plot</span><span class="p">(</span><span class="n">workflow</span><span class="p">,</span> <span class="n">config_file</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span>
-                    <span class="n">sections</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;inference_prior&quot;</span><span class="p">,</span>
-                    <span class="n">analysis_seg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                              <span class="n">sections</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;inference_prior&quot;</span><span class="p">,</span>
+                              <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">analysis_seg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Sets up the corner plot of the priors in the workflow.</span>
 
 <span class="sd">    Parameters</span>
@@ -375,6 +375,8 @@
     <span class="n">node</span><span class="o">.</span><span class="n">new_output_file_opt</span><span class="p">(</span><span class="n">analysis_seg</span><span class="p">,</span> <span class="s2">&quot;.png&quot;</span><span class="p">,</span> <span class="s2">&quot;--output-file&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">sections</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s2">&quot;--sections&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sections</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">parameters</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s2">&quot;--parameters&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parameters</span><span class="p">))</span>
 
     <span class="c1"># add node to workflow</span>
     <span class="n">workflow</span> <span class="o">+=</span> <span class="n">node</span>
@@ -640,7 +642,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on May 12, 2019.
+        Last updated on May 13, 2019.
       </span>
 
     </p>
