@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.events package &mdash; PyCBC 952e26 documentation</title>
+  <title>pycbc.events package &mdash; PyCBC 00cb44 documentation</title>
   
 
   
@@ -529,7 +529,7 @@ that are louder than it.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>bstat</strong> (<em>numpy.ndarray</em>) – Array of the background statistic values</li>
-<li><strong>fstat</strong> (<em>numpy.ndarray</em>) – Array of the foreground statitsic values</li>
+<li><strong>fstat</strong> (<em>numpy.ndarray</em><em> or </em><em>scalar</em>) – Array of the foreground statistic values or single value</li>
 <li><strong>dec</strong> (<em>numpy.ndarray</em>) – Array of the decimation factors for the background statistics</li>
 <li><strong>skip_background</strong> (<em>optional</em><em>, </em><em>{boolean</em><em>, </em><em>False}</em>) – Skip calculating cumulative numbers for background triggers</li>
 </ul>
@@ -665,15 +665,15 @@ greater than zero</li>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>t1</strong> (<em>numpy.ndarray</em>) – Array of trigger times from the first detector</li>
 <li><strong>t2</strong> (<em>numpy.ndarray</em>) – Array of trigger times from the second detector</li>
-<li><strong>window</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – The coincidence window in seconds</li>
-<li><strong>slide_step</strong> (<em>optional</em><em>, </em><em>{None</em><em>, </em><em>float}</em>) – If calculating background coincidences, the interval between background
-slides in seconds.</li>
+<li><strong>window</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Coincidence window maximum time difference, arbitrary units (usually s)</li>
+<li><strong>slide_step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em> (</em><em>default 0</em><em>)</em>) – If calculating background coincidences, the interval between background
+slides, arbitrary units (usually s)</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
-<li><strong>idx1</strong> (<em>numpy.ndarray</em>) – Array of indices into the t1 array.</li>
-<li><strong>idx2</strong> (<em>numpy.ndarray</em>) – Array of indices into the t2 array.</li>
+<li><strong>idx1</strong> (<em>numpy.ndarray</em>) – Array of indices into the t1 array for coincident triggers</li>
+<li><strong>idx2</strong> (<em>numpy.ndarray</em>) – Array of indices into the t2 array</li>
 <li><strong>slide</strong> (<em>numpy.ndarray</em>) – Array of slide ids</li>
 </ul>
 </p>
@@ -686,20 +686,30 @@ slides in seconds.</li>
 <dl class="function">
 <dt id="pycbc.events.coinc.time_multi_coincidence">
 <code class="descclassname">pycbc.events.coinc.</code><code class="descname">time_multi_coincidence</code><span class="sig-paren">(</span><em>times</em>, <em>slide_step=0</em>, <em>slop=0.003</em>, <em>pivot='H1'</em>, <em>fixed='L1'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/coinc.html#time_multi_coincidence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.coinc.time_multi_coincidence" title="Permalink to this definition">¶</a></dt>
-<dd><p>Find multi detector concidences.</p>
+<dd><p>Find multi detector coincidences.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>times</strong> (<em>dict of numpy.ndarrays</em>) – Dictionary keyed by ifo of the times of each single detector trigger.</li>
-<li><strong>slide_step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – The interval between time slides</li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>times</strong> (<em>dict of numpy.ndarrays</em>) – Dictionary keyed by ifo of single ifo trigger times</li>
+<li><strong>slide_step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Interval between time slides</li>
 <li><strong>slop</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – The amount of time to add to the TOF between detectors for coincidence</li>
-<li><strong>pivot</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – ifo used to test coincidence against in first stage</li>
-<li><strong>fixed</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – the other ifo used in the first stage coincidence which we’ll use
-as a fixed time reference for coincident triggers. All other detectors
-are time slid by being fixed to this detector.</li>
+<li><strong>pivot</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The ifo to which time shifts are applied in first stage coincidence</li>
+<li><strong>fixed</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The other ifo used in first stage coincidence, subsequently used as a
+time reference for additional ifos. All other ifos are not time shifted
+relative to this ifo</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>ids</strong> (<em>dict of arrays of int</em>) – Dictionary keyed by ifo with ids of trigger times forming coincidences.
+Coincidence is tested for every pair of ifos that can be formed from
+the input dict: only those tuples of times passing all tests are
+recorded</li>
+<li><strong>slide</strong> (<em>array of int</em>) – Slide ids of coincident triggers in pivot ifo</li>
+</ul>
+</p>
 </td>
 </tr>
 </tbody>
