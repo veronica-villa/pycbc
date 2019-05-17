@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inject.inject &mdash; PyCBC 23b974 documentation</title>
+  <title>pycbc.inject.inject &mdash; PyCBC 786b52 documentation</title>
   
 
   
@@ -549,7 +549,7 @@
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">numinj</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">numinj</span> <span class="o">=</span> <span class="n">injvals</span><span class="o">.</span><span class="n">values</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span>
+            <span class="n">numinj</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">injvals</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span>
         <span class="c1"># add any static args in the file</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">static_args</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;static_args&#39;</span><span class="p">]</span>
@@ -1163,7 +1163,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on May 14, 2019.
+        Last updated on May 17, 2019.
       </span>
 
     </p>

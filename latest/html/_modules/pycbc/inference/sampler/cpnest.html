@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.sampler.cpnest &mdash; PyCBC 23b974 documentation</title>
+  <title>pycbc.inference.sampler.cpnest &mdash; PyCBC 786b52 documentation</title>
   
 
   
@@ -301,7 +301,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">niterations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">values</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">])</span>
 
 <div class="viewcode-block" id="CPNestSampler.from_config"><a class="viewcode-back" href="../../../../pycbc.inference.sampler.html#pycbc.inference.sampler.cpnest.CPNestSampler.from_config">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_config</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">cp</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">nprocesses</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">use_mpi</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -435,7 +435,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on May 14, 2019.
+        Last updated on May 17, 2019.
       </span>
 
     </p>

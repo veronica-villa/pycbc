@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.models.marginalized_gaussian_noise &mdash; PyCBC 23b974 documentation</title>
+  <title>pycbc.inference.models.marginalized_gaussian_noise &mdash; PyCBC 786b52 documentation</title>
   
 
   
@@ -671,7 +671,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;no approximant provided in the static args&quot;</span><span class="p">)</span>
         <span class="n">generator_function</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">select_waveform_generator</span><span class="p">(</span><span class="n">approximant</span><span class="p">)</span>
         <span class="n">waveform_generator</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">FDomainDetFrameGenerator</span><span class="p">(</span>
-            <span class="n">generator_function</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">start_time</span><span class="p">,</span>
+            <span class="n">generator_function</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">start_time</span><span class="p">,</span>
             <span class="n">variable_args</span><span class="o">=</span><span class="n">variable_params</span><span class="p">,</span> <span class="n">detectors</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
             <span class="n">delta_f</span><span class="o">=</span><span class="n">delta_f</span><span class="p">,</span> <span class="n">delta_t</span><span class="o">=</span><span class="n">delta_t</span><span class="p">,</span>
             <span class="n">recalib</span><span class="o">=</span><span class="n">recalibration</span><span class="p">,</span> <span class="n">gates</span><span class="o">=</span><span class="n">gates</span><span class="p">,</span>
@@ -856,7 +856,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on May 14, 2019.
+        Last updated on May 17, 2019.
       </span>
 
     </p>

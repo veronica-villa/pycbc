@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.tmpltbank.option_utils &mdash; PyCBC 23b974 documentation</title>
+  <title>pycbc.tmpltbank.option_utils &mdash; PyCBC 786b52 documentation</title>
   
 
   
@@ -1292,7 +1292,7 @@
                 <span class="n">cutoff</span> <span class="ow">in</span> <span class="n">pnutils</span><span class="o">.</span><span class="n">named_frequency_cutoffs</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Need a valid cutoff formula to calculate &quot;</span>
                              <span class="s2">&quot;ethinca! Possible values are &quot;</span><span class="o">+</span>
-                             <span class="nb">str</span><span class="p">(</span><span class="n">pnutils</span><span class="o">.</span><span class="n">named_frequency_cutoffs</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+                             <span class="nb">str</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">pnutils</span><span class="o">.</span><span class="n">named_frequency_cutoffs</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">doEthinca</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">freqStep</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Need to specify a cutoff frequency step to &quot;</span>
                              <span class="s2">&quot;calculate ethinca! (ethincaFreqStep)&quot;</span><span class="p">)</span>
@@ -1343,7 +1343,7 @@
                     <span class="s2">&quot;order will be used as for the bank metric.&quot;</span><span class="p">)</span>
     <span class="n">ethincaGroup</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--filter-cutoff&quot;</span><span class="p">,</span>
                     <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
-                    <span class="n">choices</span><span class="o">=</span><span class="n">pnutils</span><span class="o">.</span><span class="n">named_frequency_cutoffs</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+                    <span class="n">choices</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">pnutils</span><span class="o">.</span><span class="n">named_frequency_cutoffs</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span>
                     <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Specify an upper frequency cutoff formula for the &quot;</span>
                     <span class="s2">&quot;ethinca metric calculation, and for the values of f_final&quot;</span>
                     <span class="s2">&quot; assigned to the templates.  REQUIRED if the &quot;</span>
@@ -1375,7 +1375,7 @@
               <span class="n">pnutils</span><span class="o">.</span><span class="n">named_frequency_cutoffs</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Need a valid cutoff formula to calculate ethinca or &quot;</span>
                      <span class="s2">&quot;assign filter f_final values! Possible values are &quot;</span>
-                     <span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">pnutils</span><span class="o">.</span><span class="n">named_frequency_cutoffs</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+                     <span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">pnutils</span><span class="o">.</span><span class="n">named_frequency_cutoffs</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">calculate_ethinca_metric</span> <span class="ow">or</span> <span class="n">opts</span><span class="o">.</span><span class="n">calculate_time_metric_components</span><span class="p">)</span>\
                                            <span class="ow">and</span> <span class="ow">not</span> <span class="n">opts</span><span class="o">.</span><span class="n">ethinca_frequency_step</span><span class="p">:</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Need to specify a cutoff frequency step to calculate &quot;</span>
@@ -1422,7 +1422,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on May 14, 2019.
+        Last updated on May 17, 2019.
       </span>
 
     </p>

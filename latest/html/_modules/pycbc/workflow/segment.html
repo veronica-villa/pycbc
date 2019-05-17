@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.workflow.segment &mdash; PyCBC 23b974 documentation</title>
+  <title>pycbc.workflow.segment &mdash; PyCBC 786b52 documentation</title>
   
 
   
@@ -1256,7 +1256,7 @@
 
     <span class="c1"># Check available data segments meet criteria specified in arguments</span>
     <span class="n">commonsegs</span> <span class="o">=</span> <span class="n">sciencesegs</span><span class="o">.</span><span class="n">extract_common</span><span class="p">(</span><span class="n">sciencesegs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-    <span class="n">offsrclist</span> <span class="o">=</span> <span class="n">commonsegs</span><span class="p">[</span><span class="n">commonsegs</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="n">offsrclist</span> <span class="o">=</span> <span class="n">commonsegs</span><span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">commonsegs</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]]</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">offsrclist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Removing network segments that do not contain trigger &quot;</span>
                      <span class="s2">&quot;time&quot;</span><span class="p">)</span>
@@ -1416,7 +1416,7 @@
                 <span class="n">best_comb</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">seg_lens</span><span class="o">.</span><span class="n">iterkeys</span><span class="p">(),</span>
                                 <span class="n">key</span><span class="o">=</span><span class="p">(</span><span class="k">lambda</span> <span class="n">key</span><span class="p">:</span> <span class="n">seg_lens</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">best_comb</span> <span class="o">=</span> <span class="n">offsource</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">best_comb</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">offsource</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;No combination of </span><span class="si">%d</span><span class="s2"> IFOs with suitable science &quot;</span>
                          <span class="s2">&quot;segment.&quot;</span><span class="p">,</span> <span class="n">num_ifos</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -1659,7 +1659,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on May 14, 2019.
+        Last updated on May 17, 2019.
       </span>
 
     </p>
