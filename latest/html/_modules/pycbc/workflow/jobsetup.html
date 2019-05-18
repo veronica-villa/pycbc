@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.workflow.jobsetup &mdash; PyCBC 786b52 documentation</title>
+  <title>pycbc.workflow.jobsetup &mdash; PyCBC 616034 documentation</title>
   
 
   
@@ -2052,11 +2052,11 @@
 
         <span class="c1"># get multi-IFO opts</span>
         <span class="n">channel_names_opt</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
-                                      <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">channel_names</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()])</span>
+                                      <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">channel_names</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
         <span class="k">if</span> <span class="n">fake_strain_seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">fake_strain_seed_opt</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
                                     <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
-                                    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">fake_strain_seed</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()])</span>
+                                    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">fake_strain_seed</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
 
         <span class="c1"># make node for running executable</span>
         <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -2097,7 +2097,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on May 17, 2019.
+        Last updated on May 18, 2019.
       </span>
 
     </p>
