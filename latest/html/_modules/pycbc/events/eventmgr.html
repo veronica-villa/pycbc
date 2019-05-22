@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.events.eventmgr &mdash; PyCBC 7ef879 documentation</title>
+  <title>pycbc.events.eventmgr &mdash; PyCBC 35bfaa documentation</title>
   
 
   
@@ -1011,9 +1011,11 @@
                   <span class="n">existing_events_mask</span><span class="p">[</span><span class="n">ifo</span><span class="p">]][</span><span class="s1">&#39;event_id&#39;</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">event_index</span><span class="p">[</span><span class="n">ifo</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_index</span><span class="p">[</span><span class="n">ifo</span><span class="p">]</span> <span class="o">+</span> <span class="n">num_events</span>
 
+        <span class="c1"># Add the network event ids for the events with this template.</span>
         <span class="n">num_events</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">template_event_dict</span><span class="p">[</span><span class="s1">&#39;network&#39;</span><span class="p">])</span>
         <span class="n">new_event_ids</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">event_index</span><span class="p">[</span><span class="s1">&#39;network&#39;</span><span class="p">],</span>
                                      <span class="bp">self</span><span class="o">.</span><span class="n">event_index</span><span class="p">[</span><span class="s1">&#39;network&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">num_events</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_index</span><span class="p">[</span><span class="s1">&#39;network&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_index</span><span class="p">[</span><span class="s1">&#39;network&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">num_events</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">template_event_dict</span><span class="p">[</span><span class="s1">&#39;network&#39;</span><span class="p">][</span><span class="s1">&#39;event_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_event_ids</span>
         <span class="c1"># Move template events for each ifo to the events list</span>
         <span class="k">for</span> <span class="n">ifo</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ifos</span><span class="p">:</span>
@@ -1245,7 +1247,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on May 19, 2019.
+        Last updated on May 22, 2019.
       </span>
 
     </p>
