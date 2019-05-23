@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.strain.strain &mdash; PyCBC 35bfaa documentation</title>
+  <title>pycbc.strain.strain &mdash; PyCBC 7352b0 documentation</title>
   
 
   
@@ -628,20 +628,24 @@
 
     <span class="k">return</span> <span class="n">strain</span></div>
 
-<div class="viewcode-block" id="from_cli_single_ifo"><a class="viewcode-back" href="../../../pycbc.strain.html#pycbc.strain.strain.from_cli_single_ifo">[docs]</a><span class="k">def</span> <span class="nf">from_cli_single_ifo</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">ifo</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="from_cli_single_ifo"><a class="viewcode-back" href="../../../pycbc.strain.html#pycbc.strain.strain.from_cli_single_ifo">[docs]</a><span class="k">def</span> <span class="nf">from_cli_single_ifo</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">ifo</span><span class="p">,</span> <span class="n">inj_filter_rejector</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get the strain for a single ifo when using the multi-detector CLI</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">single_det_opt</span> <span class="o">=</span> <span class="n">copy_opts_for_single_ifo</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">ifo</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">from_cli</span><span class="p">(</span><span class="n">single_det_opt</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">from_cli</span><span class="p">(</span><span class="n">single_det_opt</span><span class="p">,</span>
+        <span class="n">inj_filter_rejector</span><span class="o">=</span><span class="n">inj_filter_rejector</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="from_cli_multi_ifos"><a class="viewcode-back" href="../../../pycbc.strain.html#pycbc.strain.strain.from_cli_multi_ifos">[docs]</a><span class="k">def</span> <span class="nf">from_cli_multi_ifos</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">ifos</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="from_cli_multi_ifos"><a class="viewcode-back" href="../../../pycbc.strain.html#pycbc.strain.strain.from_cli_multi_ifos">[docs]</a><span class="k">def</span> <span class="nf">from_cli_multi_ifos</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">ifos</span><span class="p">,</span> <span class="n">inj_filter_rejector_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get the strain for all ifos when using the multi-detector CLI</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">strain</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">inj_filter_rejector_dict</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">inj_filter_rejector_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">ifo</span><span class="p">:</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">ifo</span> <span class="ow">in</span> <span class="n">ifos</span><span class="p">}</span>
     <span class="k">for</span> <span class="n">ifo</span> <span class="ow">in</span> <span class="n">ifos</span><span class="p">:</span>
-        <span class="n">strain</span><span class="p">[</span><span class="n">ifo</span><span class="p">]</span> <span class="o">=</span> <span class="n">from_cli_single_ifo</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">ifo</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">strain</span><span class="p">[</span><span class="n">ifo</span><span class="p">]</span> <span class="o">=</span> <span class="n">from_cli_single_ifo</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">ifo</span><span class="p">,</span>
+                          <span class="n">inj_filter_rejector_dict</span><span class="p">[</span><span class="n">ifo</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">strain</span></div>
 
 
@@ -1333,8 +1337,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">strain_segments</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">ifo</span> <span class="ow">in</span> <span class="n">ifos</span><span class="p">:</span>
-            <span class="n">strain_segments</span><span class="p">[</span><span class="n">ifo</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_cli_single_ifo</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span>
-                                                         <span class="n">strain_dict</span><span class="p">[</span><span class="n">ifo</span><span class="p">],</span> <span class="n">ifo</span><span class="p">)</span>
+            <span class="n">strain_segments</span><span class="p">[</span><span class="n">ifo</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_cli_single_ifo</span><span class="p">(</span>
+                <span class="n">opt</span><span class="p">,</span> <span class="n">strain_dict</span><span class="p">[</span><span class="n">ifo</span><span class="p">],</span> <span class="n">ifo</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">strain_segments</span></div>
 
 <div class="viewcode-block" id="StrainSegments.insert_segment_option_group_multi_ifo"><a class="viewcode-back" href="../../../pycbc.strain.html#pycbc.strain.strain.StrainSegments.insert_segment_option_group_multi_ifo">[docs]</a>    <span class="nd">@classmethod</span>
@@ -1876,7 +1880,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on May 22, 2019.
+        Last updated on May 23, 2019.
       </span>
 
     </p>
