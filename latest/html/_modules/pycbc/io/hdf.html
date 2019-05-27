@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.io.hdf &mdash; PyCBC 7352b0 documentation</title>
+  <title>pycbc.io.hdf &mdash; PyCBC bd7a25 documentation</title>
   
 
   
@@ -720,7 +720,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">template_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trigs</span><span class="p">[</span><span class="s1">&#39;template_id&#39;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_column</span><span class="p">(</span><span class="s1">&#39;template_id&#39;</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">mass1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -846,11 +846,21 @@
                                            <span class="bp">self</span><span class="o">.</span><span class="n">sgchisq</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">psd_var_val</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SingleDetTriggers.get_column"><a class="viewcode-back" href="../../../pycbc.io.html#pycbc.io.hdf.SingleDetTriggers.get_column">[docs]</a>    <span class="k">def</span> <span class="nf">get_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cname</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Fiducial value that seems to work, not extensively tuned.</span>
+        <span class="n">MFRAC</span> <span class="o">=</span> <span class="mf">0.3</span>
+
+        <span class="c1"># If the mask accesses few enough elements then directly use it</span>
+        <span class="c1"># This can be slower than reading in all the elements if most of them</span>
+        <span class="c1"># will be read.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">)</span> <span class="o">*</span> <span class="n">MFRAC</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trigs</span><span class="p">[</span><span class="n">cname</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">]</span>
+
+        <span class="c1"># We have a lot of elements to read so we resort to readin the entire</span>
+        <span class="c1"># array before masking.</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trigs</span><span class="p">[</span><span class="n">cname</span><span class="p">][:][</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trigs</span><span class="p">[</span><span class="n">cname</span><span class="p">][:]</span></div></div>
-
 
 <div class="viewcode-block" id="ForegroundTriggers"><a class="viewcode-back" href="../../../pycbc.io.html#pycbc.io.hdf.ForegroundTriggers">[docs]</a><span class="k">class</span> <span class="nc">ForegroundTriggers</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="c1"># FIXME: A lot of this is hardcoded to expect two ifos</span>
@@ -1182,7 +1192,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on May 23, 2019.
+        Last updated on May 27, 2019.
       </span>
 
     </p>
