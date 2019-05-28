@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.workflow.minifollowups &mdash; PyCBC ea463f documentation</title>
+  <title>pycbc.workflow.minifollowups &mdash; PyCBC c0c7da documentation</title>
   
 
   
@@ -752,7 +752,7 @@
     <span class="k">return</span> <span class="n">files</span></div>
 
 <div class="viewcode-block" id="make_sngl_ifo"><a class="viewcode-back" href="../../../pycbc.workflow.html#pycbc.workflow.minifollowups.make_sngl_ifo">[docs]</a><span class="k">def</span> <span class="nf">make_sngl_ifo</span><span class="p">(</span><span class="n">workflow</span><span class="p">,</span> <span class="n">sngl_file</span><span class="p">,</span> <span class="n">bank_file</span><span class="p">,</span> <span class="n">trigger_id</span><span class="p">,</span> <span class="n">out_dir</span><span class="p">,</span> <span class="n">ifo</span><span class="p">,</span>
-                  <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                  <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Setup a job to create sngl detector sngl ifo html summary snippet.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tags</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">tags</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">tags</span>
@@ -764,8 +764,6 @@
     <span class="n">node</span><span class="o">.</span><span class="n">add_input_opt</span><span class="p">(</span><span class="s1">&#39;--single-trigger-file&#39;</span><span class="p">,</span> <span class="n">sngl_file</span><span class="p">)</span>
     <span class="n">node</span><span class="o">.</span><span class="n">add_input_opt</span><span class="p">(</span><span class="s1">&#39;--bank-file&#39;</span><span class="p">,</span> <span class="n">bank_file</span><span class="p">)</span>
     <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s1">&#39;--trigger-id&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">trigger_id</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">rank</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s1">&#39;--n-loudest&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">rank</span><span class="p">))</span>
     <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s1">&#39;--instrument&#39;</span><span class="p">,</span> <span class="n">ifo</span><span class="p">)</span>
     <span class="n">node</span><span class="o">.</span><span class="n">new_output_file_opt</span><span class="p">(</span><span class="n">workflow</span><span class="o">.</span><span class="n">analysis_time</span><span class="p">,</span> <span class="s1">&#39;.html&#39;</span><span class="p">,</span> <span class="s1">&#39;--output-file&#39;</span><span class="p">)</span>
     <span class="n">workflow</span> <span class="o">+=</span> <span class="n">node</span>
@@ -1029,7 +1027,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on May 27, 2019.
+        Last updated on May 28, 2019.
       </span>
 
     </p>
