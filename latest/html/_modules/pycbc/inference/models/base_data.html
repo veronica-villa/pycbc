@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.models.base_data &mdash; PyCBC 0014aa documentation</title>
+  <title>pycbc.inference.models.base_data &mdash; PyCBC 018c5c documentation</title>
   
 
   
@@ -234,10 +234,13 @@
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">from</span> <span class="nn">abc</span> <span class="k">import</span> <span class="p">(</span><span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span><span class="p">)</span>
 
+<span class="kn">from</span> <span class="nn">six</span> <span class="k">import</span> <span class="n">add_metaclass</span>
+
 <span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">BaseModel</span>
 
 
-<div class="viewcode-block" id="BaseDataModel"><a class="viewcode-back" href="../../../../pycbc.inference.models.html#pycbc.inference.models.base_data.BaseDataModel">[docs]</a><span class="k">class</span> <span class="nc">BaseDataModel</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseDataModel"><a class="viewcode-back" href="../../../../pycbc.inference.models.html#pycbc.inference.models.base_data.BaseDataModel">[docs]</a><span class="nd">@add_metaclass</span><span class="p">(</span><span class="n">ABCMeta</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">BaseDataModel</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Base class for models that require data and a waveform generator.</span>
 
 <span class="sd">    This adds propeties for the log of the likelihood that the data contain</span>
@@ -277,8 +280,6 @@
 
 <span class="sd">    See ``BaseModel`` for additional attributes and properties.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
-
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable_params</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">recalibration</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="kc">None</span>

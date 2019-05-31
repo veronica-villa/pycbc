@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.io.base_sampler &mdash; PyCBC 0014aa documentation</title>
+  <title>pycbc.inference.io.base_sampler &mdash; PyCBC 018c5c documentation</title>
   
 
   
@@ -225,17 +225,18 @@
 
 <span class="kn">from</span> <span class="nn">abc</span> <span class="k">import</span> <span class="p">(</span><span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span><span class="p">)</span>
 
+<span class="kn">from</span> <span class="nn">six</span> <span class="k">import</span> <span class="n">add_metaclass</span>
+
 <span class="kn">from</span> <span class="nn">.base_hdf</span> <span class="k">import</span> <span class="n">BaseInferenceFile</span>
 
 
-<div class="viewcode-block" id="BaseSamplerFile"><a class="viewcode-back" href="../../../../pycbc.inference.io.html#pycbc.inference.io.base_sampler.BaseSamplerFile">[docs]</a><span class="k">class</span> <span class="nc">BaseSamplerFile</span><span class="p">(</span><span class="n">BaseInferenceFile</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseSamplerFile"><a class="viewcode-back" href="../../../../pycbc.inference.io.html#pycbc.inference.io.base_sampler.BaseSamplerFile">[docs]</a><span class="nd">@add_metaclass</span><span class="p">(</span><span class="n">ABCMeta</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">BaseSamplerFile</span><span class="p">(</span><span class="n">BaseInferenceFile</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Base HDF class for all samplers.</span>
 
 <span class="sd">    This adds abstract methods ``write_resume_point`` and</span>
 <span class="sd">    ``write_sampler_metadata`` to :py:class:`BaseInferenceFile`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
-
 <div class="viewcode-block" id="BaseSamplerFile.write_resume_point"><a class="viewcode-back" href="../../../../pycbc.inference.io.html#pycbc.inference.io.base_sampler.BaseSamplerFile.write_resume_point">[docs]</a>    <span class="nd">@abstractmethod</span>
     <span class="k">def</span> <span class="nf">write_resume_point</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Should write the point that a sampler starts up.</span>

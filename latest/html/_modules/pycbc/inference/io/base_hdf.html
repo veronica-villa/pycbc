@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.io.base_hdf &mdash; PyCBC 0014aa documentation</title>
+  <title>pycbc.inference.io.base_hdf &mdash; PyCBC 018c5c documentation</title>
   
 
   
@@ -236,7 +236,9 @@
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">abc</span> <span class="k">import</span> <span class="p">(</span><span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">six</span> <span class="k">import</span> <span class="n">string_types</span>
+
+<span class="kn">from</span> <span class="nn">six</span> <span class="k">import</span> <span class="p">(</span><span class="n">add_metaclass</span><span class="p">,</span> <span class="n">string_types</span><span class="p">)</span>
+
 <span class="kn">import</span> <span class="nn">numpy</span>
 
 <span class="kn">import</span> <span class="nn">h5py</span>
@@ -244,7 +246,9 @@
 <span class="kn">from</span> <span class="nn">pycbc.io</span> <span class="k">import</span> <span class="n">FieldArray</span>
 <span class="kn">from</span> <span class="nn">pycbc.inject</span> <span class="k">import</span> <span class="n">InjectionSet</span>
 
-<div class="viewcode-block" id="BaseInferenceFile"><a class="viewcode-back" href="../../../../pycbc.inference.io.html#pycbc.inference.io.base_hdf.BaseInferenceFile">[docs]</a><span class="k">class</span> <span class="nc">BaseInferenceFile</span><span class="p">(</span><span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">):</span>
+
+<div class="viewcode-block" id="BaseInferenceFile"><a class="viewcode-back" href="../../../../pycbc.inference.io.html#pycbc.inference.io.base_hdf.BaseInferenceFile">[docs]</a><span class="nd">@add_metaclass</span><span class="p">(</span><span class="n">ABCMeta</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">BaseInferenceFile</span><span class="p">(</span><span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Base class for all inference hdf files.</span>
 
 <span class="sd">    This is a subclass of the h5py.File object. It adds functions for</span>
@@ -257,7 +261,6 @@
 <span class="sd">    mode : {None, str}</span>
 <span class="sd">        The mode to open the file, eg. &quot;w&quot; for write and &quot;r&quot; for read.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
 
     <span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">samples_group</span> <span class="o">=</span> <span class="s1">&#39;samples&#39;</span>
