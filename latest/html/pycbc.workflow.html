@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.workflow package &mdash; PyCBC 9ac20e documentation</title>
+  <title>pycbc.workflow package &mdash; PyCBC 0014aa documentation</title>
   
 
   
@@ -4500,7 +4500,7 @@ minifollops plots.</p>
 
 <dl class="function">
 <dt id="pycbc.workflow.minifollowups.setup_single_det_minifollowups">
-<code class="descclassname">pycbc.workflow.minifollowups.</code><code class="descname">setup_single_det_minifollowups</code><span class="sig-paren">(</span><em>workflow</em>, <em>single_trig_file</em>, <em>tmpltbank_file</em>, <em>insp_segs</em>, <em>insp_data_name</em>, <em>insp_anal_name</em>, <em>dax_output</em>, <em>out_dir</em>, <em>veto_file=None</em>, <em>veto_segment_name=None</em>, <em>tags=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/workflow/minifollowups.html#setup_single_det_minifollowups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.workflow.minifollowups.setup_single_det_minifollowups" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pycbc.workflow.minifollowups.</code><code class="descname">setup_single_det_minifollowups</code><span class="sig-paren">(</span><em>workflow</em>, <em>single_trig_file</em>, <em>tmpltbank_file</em>, <em>insp_segs</em>, <em>insp_data_name</em>, <em>insp_anal_name</em>, <em>dax_output</em>, <em>out_dir</em>, <em>veto_file=None</em>, <em>veto_segment_name=None</em>, <em>statfiles=None</em>, <em>tags=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/workflow/minifollowups.html#setup_single_det_minifollowups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.workflow.minifollowups.setup_single_det_minifollowups" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create plots that followup the Nth loudest clustered single detector
 triggers from a merged single detector trigger HDF file.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -4515,6 +4515,8 @@ triggers from a merged single detector trigger HDF file.</p>
 <li><strong>insp_data_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The name of the segmentlist storing data read.</li>
 <li><strong>insp_anal_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The name of the segmentlist storing data analyzed.</li>
 <li><strong>out_dir</strong> (<em>path</em>) – The directory to store minifollowups result plots and files</li>
+<li><strong>statfiles</strong> (<a class="reference internal" href="#pycbc.workflow.core.FileList" title="pycbc.workflow.core.FileList"><em>FileList</em></a><em> (</em><em>optional</em><em>, </em><em>default=None</em><em>)</em>) – Supplementary files necessary for computing the single-detector
+statistic.</li>
 <li><strong>tags</strong> (<em>{None</em><em>, </em><em>optional}</em>) – Tags to add to the minifollowups executables</li>
 </ul>
 </td>

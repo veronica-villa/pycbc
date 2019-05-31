@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.workflow.minifollowups &mdash; PyCBC 9ac20e documentation</title>
+  <title>pycbc.workflow.minifollowups &mdash; PyCBC 0014aa documentation</title>
   
 
   
@@ -332,9 +332,10 @@
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Leaving minifollowups module&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="setup_single_det_minifollowups"><a class="viewcode-back" href="../../../pycbc.workflow.html#pycbc.workflow.minifollowups.setup_single_det_minifollowups">[docs]</a><span class="k">def</span> <span class="nf">setup_single_det_minifollowups</span><span class="p">(</span><span class="n">workflow</span><span class="p">,</span> <span class="n">single_trig_file</span><span class="p">,</span> <span class="n">tmpltbank_file</span><span class="p">,</span>
-                                  <span class="n">insp_segs</span><span class="p">,</span> <span class="n">insp_data_name</span><span class="p">,</span> <span class="n">insp_anal_name</span><span class="p">,</span>
-                                  <span class="n">dax_output</span><span class="p">,</span> <span class="n">out_dir</span><span class="p">,</span> <span class="n">veto_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                  <span class="n">veto_segment_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                                   <span class="n">insp_segs</span><span class="p">,</span> <span class="n">insp_data_name</span><span class="p">,</span> <span class="n">insp_anal_name</span><span class="p">,</span>
+                                   <span class="n">dax_output</span><span class="p">,</span> <span class="n">out_dir</span><span class="p">,</span> <span class="n">veto_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                   <span class="n">veto_segment_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">statfiles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                   <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Create plots that followup the Nth loudest clustered single detector</span>
 <span class="sd">    triggers from a merged single detector trigger HDF file.</span>
 
@@ -354,6 +355,9 @@
 <span class="sd">        The name of the segmentlist storing data analyzed.</span>
 <span class="sd">    out_dir: path</span>
 <span class="sd">        The directory to store minifollowups result plots and files</span>
+<span class="sd">    statfiles: FileList (optional, default=None)</span>
+<span class="sd">        Supplementary files necessary for computing the single-detector</span>
+<span class="sd">        statistic.</span>
 <span class="sd">    tags: {None, optional}</span>
 <span class="sd">        Tags to add to the minifollowups executables</span>
 <span class="sd">    Returns</span>
@@ -401,6 +405,9 @@
         <span class="k">assert</span><span class="p">(</span><span class="n">veto_segment_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span>
         <span class="n">node</span><span class="o">.</span><span class="n">add_input_opt</span><span class="p">(</span><span class="s1">&#39;--veto-file&#39;</span><span class="p">,</span> <span class="n">veto_file</span><span class="p">)</span>
         <span class="n">node</span><span class="o">.</span><span class="n">add_opt</span><span class="p">(</span><span class="s1">&#39;--veto-segment-name&#39;</span><span class="p">,</span> <span class="n">veto_segment_name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">statfiles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">statfiles</span> <span class="o">=</span> <span class="n">statfiles</span><span class="o">.</span><span class="n">find_output_with_ifo</span><span class="p">(</span><span class="n">curr_ifo</span><span class="p">)</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">add_input_list_opt</span><span class="p">(</span><span class="s1">&#39;--statistic-files&#39;</span><span class="p">,</span> <span class="n">statfiles</span><span class="p">)</span>
     <span class="n">node</span><span class="o">.</span><span class="n">new_output_file_opt</span><span class="p">(</span><span class="n">workflow</span><span class="o">.</span><span class="n">analysis_time</span><span class="p">,</span> <span class="s1">&#39;.dax&#39;</span><span class="p">,</span> <span class="s1">&#39;--output-file&#39;</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">)</span>
     <span class="n">node</span><span class="o">.</span><span class="n">new_output_file_opt</span><span class="p">(</span><span class="n">workflow</span><span class="o">.</span><span class="n">analysis_time</span><span class="p">,</span> <span class="s1">&#39;.dax.map&#39;</span><span class="p">,</span> <span class="s1">&#39;--output-map&#39;</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">)</span>
     <span class="n">node</span><span class="o">.</span><span class="n">new_output_file_opt</span><span class="p">(</span><span class="n">workflow</span><span class="o">.</span><span class="n">analysis_time</span><span class="p">,</span> <span class="s1">&#39;.tc.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;--transformation-catalog&#39;</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">)</span>

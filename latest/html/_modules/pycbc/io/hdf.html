@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.io.hdf &mdash; PyCBC 9ac20e documentation</title>
+  <title>pycbc.io.hdf &mdash; PyCBC 0014aa documentation</title>
   
 
   
@@ -672,13 +672,16 @@
 
 <div class="viewcode-block" id="SingleDetTriggers.mask_to_n_loudest_clustered_events"><a class="viewcode-back" href="../../../pycbc.io.html#pycbc.io.hdf.SingleDetTriggers.mask_to_n_loudest_clustered_events">[docs]</a>    <span class="k">def</span> <span class="nf">mask_to_n_loudest_clustered_events</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_loudest</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
                                            <span class="n">ranking_statistic</span><span class="o">=</span><span class="s2">&quot;newsnr&quot;</span><span class="p">,</span>
-                                           <span class="n">cluster_window</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+                                           <span class="n">cluster_window</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                                           <span class="n">statistic_files</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Edits the mask property of the class to point to the N loudest</span>
 <span class="sd">        single detector events as ranked by ranking statistic. Events are</span>
 <span class="sd">        clustered so that no more than 1 event within +/- cluster-window will</span>
 <span class="sd">        be considered.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">statistic_files</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">statistic_files</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="c1"># If this becomes memory intensive we can optimize</span>
-        <span class="n">stat_instance</span> <span class="o">=</span> <span class="n">sngl_statistic_dict</span><span class="p">[</span><span class="n">ranking_statistic</span><span class="p">]([])</span>
+        <span class="n">stat_instance</span> <span class="o">=</span> <span class="n">sngl_statistic_dict</span><span class="p">[</span><span class="n">ranking_statistic</span><span class="p">](</span><span class="n">statistic_files</span><span class="p">)</span>
         <span class="n">stat</span> <span class="o">=</span> <span class="n">stat_instance</span><span class="o">.</span><span class="n">single</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trig_dict</span><span class="p">())</span>
 
         <span class="c1"># Used for naming in plots ... Seems an odd place for this to live!</span>
