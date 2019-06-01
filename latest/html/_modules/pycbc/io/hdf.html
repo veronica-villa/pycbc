@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.io.hdf &mdash; PyCBC 018c5c documentation</title>
+  <title>pycbc.io.hdf &mdash; PyCBC 5efee9 documentation</title>
   
 
   
@@ -855,7 +855,8 @@
         <span class="c1"># If the mask accesses few enough elements then directly use it</span>
         <span class="c1"># This can be slower than reading in all the elements if most of them</span>
         <span class="c1"># will be read.</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">)</span> <span class="o">*</span> <span class="n">MFRAC</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> \
+                <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">nonzero</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">)</span> <span class="o">*</span> <span class="n">MFRAC</span><span class="p">))):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trigs</span><span class="p">[</span><span class="n">cname</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">]</span>
 
         <span class="c1"># We have a lot of elements to read so we resort to readin the entire</span>
@@ -1195,7 +1196,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on May 31, 2019.
+        Last updated on Jun 01, 2019.
       </span>
 
     </p>
