@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.dq &mdash; PyCBC 5efee9 documentation</title>
+  <title>pycbc.dq &mdash; PyCBC 18ede3 documentation</title>
   
 
   
@@ -287,6 +287,7 @@
 
         <span class="n">veto_info</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
                      <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="n">version</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                     <span class="s1">&#39;full_name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;:&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">version</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span>
                      <span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="n">start</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
                      <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="n">end</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
                      <span class="s1">&#39;start_pad&#39;</span><span class="p">:</span> <span class="n">start_pad</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
@@ -299,7 +300,7 @@
 <span class="n">GWOSC_URL</span> <span class="o">=</span> <span class="s1">&#39;https://www.gw-openscience.org/timeline/segments/json/</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">/&#39;</span>
 
 
-<div class="viewcode-block" id="query_flag"><a class="viewcode-back" href="../../pycbc.html#pycbc.dq.query_flag">[docs]</a><span class="k">def</span> <span class="nf">query_flag</span><span class="p">(</span><span class="n">ifo</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span>
+<div class="viewcode-block" id="query_flag"><a class="viewcode-back" href="../../pycbc.html#pycbc.dq.query_flag">[docs]</a><span class="k">def</span> <span class="nf">query_flag</span><span class="p">(</span><span class="n">ifo</span><span class="p">,</span> <span class="n">segment_name</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span>
                <span class="n">source</span><span class="o">=</span><span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="n">server</span><span class="o">=</span><span class="s2">&quot;segments.ligo.org&quot;</span><span class="p">,</span>
                <span class="n">veto_definer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Return the times where the flag is active</span>
@@ -308,7 +309,7 @@
 <span class="sd">    ----------</span>
 <span class="sd">    ifo: string</span>
 <span class="sd">        The interferometer to query (H1, L1).</span>
-<span class="sd">    name: string</span>
+<span class="sd">    segment_name: string</span>
 <span class="sd">        The status flag to query from LOSC.</span>
 <span class="sd">    start_time: int</span>
 <span class="sd">        The starting gps time to begin querying from LOSC</span>
@@ -330,13 +331,6 @@
 <span class="sd">    segments: glue.segments.segmentlist</span>
 <span class="sd">        List of segments</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">info</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">info</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="n">segment_name</span><span class="p">,</span> <span class="n">version</span> <span class="o">=</span> <span class="n">info</span>
-    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">info</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">segment_name</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">version</span> <span class="o">=</span> <span class="mi">1</span>
-
     <span class="n">flag_segments</span> <span class="o">=</span> <span class="n">segmentlist</span><span class="p">([])</span>
 
     <span class="k">if</span> <span class="n">source</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;GWOSC&#39;</span><span class="p">,</span> <span class="s1">&#39;any&#39;</span><span class="p">]:</span>
@@ -371,8 +365,8 @@
             <span class="k">if</span> <span class="n">source</span> <span class="o">!=</span> <span class="s1">&#39;any&#39;</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tried and failed GWOSC </span><span class="si">{}</span><span class="s2">, trying dqsegdb&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tried and failed GWOSC </span><span class="si">{}</span><span class="s2">, trying dqsegdb&quot;</span><span class="p">,</span>
+                      <span class="n">segment_name</span><span class="p">)</span>
 
             <span class="k">return</span> <span class="n">query_flag</span><span class="p">(</span><span class="n">ifo</span><span class="p">,</span> <span class="n">segment_name</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span>
                               <span class="n">source</span><span class="o">=</span><span class="s1">&#39;dqsegdb&#39;</span><span class="p">,</span> <span class="n">server</span><span class="o">=</span><span class="n">server</span><span class="p">,</span>
@@ -381,10 +375,10 @@
     <span class="k">elif</span> <span class="n">source</span> <span class="o">==</span> <span class="s1">&#39;dqsegdb&#39;</span><span class="p">:</span>
         <span class="c1"># Let&#39;s not hard require dqsegdb to be installed if we never get here.</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">dqsegdb.apicalls</span> <span class="k">import</span> <span class="n">dqsegdbQueryTimes</span> <span class="k">as</span> <span class="n">query</span>
+            <span class="kn">from</span> <span class="nn">dqsegdb2.query</span> <span class="k">import</span> <span class="n">query_segments</span> <span class="k">as</span> <span class="n">query</span>
         <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Could not query flag. Install dqsegdb&quot;</span>
-                             <span class="s2">&quot;:&#39;pip install dqsegdb&#39;&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Could not query flag. Install dqsegdb2&quot;</span>
+                             <span class="s2">&quot;:&#39;pip install dqsegdb2&#39;&quot;</span><span class="p">)</span>
 
         <span class="c1"># The veto definer will allow the use of MACRO names</span>
         <span class="c1"># These directly correspond the name defined in the veto definer file.</span>
@@ -396,9 +390,8 @@
         <span class="k">if</span> <span class="n">veto_definer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">segment_name</span> <span class="ow">in</span> <span class="n">veto_def</span><span class="p">[</span><span class="n">ifo</span><span class="p">]:</span>
             <span class="k">for</span> <span class="n">flag</span> <span class="ow">in</span> <span class="n">veto_def</span><span class="p">[</span><span class="n">ifo</span><span class="p">][</span><span class="n">segment_name</span><span class="p">]:</span>
                 <span class="n">partial</span> <span class="o">=</span> <span class="n">segmentlist</span><span class="p">([])</span>
-                <span class="n">segs</span> <span class="o">=</span> <span class="n">query</span><span class="p">(</span><span class="s2">&quot;https&quot;</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">ifo</span><span class="p">,</span> <span class="n">flag</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
-                             <span class="n">flag</span><span class="p">[</span><span class="s1">&#39;version&#39;</span><span class="p">],</span> <span class="s1">&#39;active&#39;</span><span class="p">,</span>
-                             <span class="nb">int</span><span class="p">(</span><span class="n">start_time</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">end_time</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;active&#39;</span><span class="p">]</span>
+                <span class="n">segs</span> <span class="o">=</span> <span class="n">query</span><span class="p">(</span><span class="n">ifo</span><span class="o">+</span><span class="s1">&#39;:&#39;</span><span class="o">+</span><span class="n">flag</span><span class="p">[</span><span class="s1">&#39;full_name&#39;</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">start_time</span><span class="p">),</span>
+                             <span class="nb">int</span><span class="p">(</span><span class="n">end_time</span><span class="p">),</span> <span class="n">host</span><span class="o">=</span><span class="n">server</span><span class="p">)[</span><span class="s1">&#39;active&#39;</span><span class="p">]</span>
 
                 <span class="c1"># Apply padding to each segment</span>
                 <span class="k">for</span> <span class="n">rseg</span> <span class="ow">in</span> <span class="n">segs</span><span class="p">:</span>
@@ -413,9 +406,9 @@
 
         <span class="k">else</span><span class="p">:</span>  <span class="c1"># Standard case just query directly.</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">segs</span> <span class="o">=</span> <span class="n">query</span><span class="p">(</span><span class="s2">&quot;https&quot;</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">ifo</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span>
-                             <span class="s1">&#39;active&#39;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">start_time</span><span class="p">),</span>
-                             <span class="nb">int</span><span class="p">(</span><span class="n">end_time</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;active&#39;</span><span class="p">]</span>
+                <span class="n">segs</span> <span class="o">=</span> <span class="n">query</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">ifo</span><span class="p">,</span> <span class="n">segment_name</span><span class="p">]),</span>
+                             <span class="nb">int</span><span class="p">(</span><span class="n">start_time</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">end_time</span><span class="p">),</span>
+                             <span class="n">host</span><span class="o">=</span><span class="n">server</span><span class="p">)[</span><span class="s1">&#39;active&#39;</span><span class="p">]</span>
                 <span class="k">for</span> <span class="n">rseg</span> <span class="ow">in</span> <span class="n">segs</span><span class="p">:</span>
                     <span class="n">flag_segments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">segment</span><span class="p">(</span><span class="n">rseg</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">rseg</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -533,6 +526,12 @@
 
     <span class="k">for</span> <span class="n">flag</span> <span class="ow">in</span> <span class="n">flags</span><span class="p">:</span>
         <span class="c1"># Check if the flag should add or subtract time</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">flag</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;+&#39;</span> <span class="ow">or</span> <span class="n">flag</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">):</span>
+            <span class="n">err_msg</span> <span class="o">=</span> <span class="s2">&quot;DQ flags must begin with a &#39;+&#39; or a &#39;-&#39; character. &quot;</span>
+            <span class="n">err_msg</span> <span class="o">+=</span> <span class="s2">&quot;You provided </span><span class="si">{}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
+            <span class="n">err_msg</span> <span class="o">+=</span> <span class="s2">&quot;See http://pycbc.org/pycbc/latest/html/workflow/segments.html &quot;</span>
+            <span class="n">err_msg</span> <span class="o">+=</span> <span class="s2">&quot;for more information.&quot;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
         <span class="n">sign</span> <span class="o">=</span> <span class="n">flag</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;+&#39;</span>
         <span class="n">flag</span> <span class="o">=</span> <span class="n">flag</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
@@ -629,7 +628,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Jun 01, 2019.
+        Last updated on Jun 03, 2019.
       </span>
 
     </p>

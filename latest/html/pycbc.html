@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc package &mdash; PyCBC 5efee9 documentation</title>
+  <title>pycbc package &mdash; PyCBC 18ede3 documentation</title>
   
 
   
@@ -2612,7 +2612,7 @@ themselves define a set of segments.</li>
 
 <dl class="function">
 <dt id="pycbc.dq.query_flag">
-<code class="descclassname">pycbc.dq.</code><code class="descname">query_flag</code><span class="sig-paren">(</span><em>ifo</em>, <em>name</em>, <em>start_time</em>, <em>end_time</em>, <em>source='any'</em>, <em>server='segments.ligo.org'</em>, <em>veto_definer=None</em>, <em>cache=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/dq.html#query_flag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.dq.query_flag" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pycbc.dq.</code><code class="descname">query_flag</code><span class="sig-paren">(</span><em>ifo</em>, <em>segment_name</em>, <em>start_time</em>, <em>end_time</em>, <em>source='any'</em>, <em>server='segments.ligo.org'</em>, <em>veto_definer=None</em>, <em>cache=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/dq.html#query_flag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.dq.query_flag" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the times where the flag is active</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2620,7 +2620,7 @@ themselves define a set of segments.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>ifo</strong> (<em>string</em>) – The interferometer to query (H1, L1).</li>
-<li><strong>name</strong> (<em>string</em>) – The status flag to query from LOSC.</li>
+<li><strong>segment_name</strong> (<em>string</em>) – The status flag to query from LOSC.</li>
 <li><strong>start_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The starting gps time to begin querying from LOSC</li>
 <li><strong>end_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The end gps time of the query</li>
 <li><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>, </em><em>Optional</em>) – Choice between “GWOSC” or “dqsegdb”. If dqsegdb, the server option may
@@ -6013,7 +6013,7 @@ already exist. Will do nothing if path already exists.</p>
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Jun 01, 2019.
+        Last updated on Jun 03, 2019.
       </span>
 
     </p>
