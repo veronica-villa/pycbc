@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.filter.qtransform &mdash; PyCBC dc919a documentation</title>
+  <title>pycbc.filter.qtransform &mdash; PyCBC 61c7a6 documentation</title>
   
 
   
@@ -413,7 +413,7 @@
 
     <span class="n">start</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">f0</span> <span class="o">-</span> <span class="p">(</span><span class="n">f0</span> <span class="o">/</span> <span class="n">qprime</span><span class="p">))</span> <span class="o">*</span> <span class="n">fseries</span><span class="o">.</span><span class="n">duration</span><span class="p">)</span>
     <span class="n">end</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">start</span> <span class="o">+</span> <span class="n">window_size</span><span class="p">)</span>
-    <span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="n">start</span> <span class="o">+</span> <span class="n">end</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="n">start</span> <span class="o">+</span> <span class="n">end</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
 
     <span class="n">windowed</span> <span class="o">=</span> <span class="n">fseries</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">xfrequencies</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">norm</span>
 

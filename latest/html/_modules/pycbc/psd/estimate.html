@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.psd.estimate &mdash; PyCBC dc919a documentation</title>
+  <title>pycbc.psd.estimate &mdash; PyCBC 61c7a6 documentation</title>
   
 
   
@@ -424,8 +424,9 @@
     <span class="c1"># sanity checks</span>
     <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">max_filter_len</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">int</span> <span class="ow">or</span> <span class="n">max_filter_len</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;max_filter_len must be a positive integer&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">low_frequency_cutoff</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">low_frequency_cutoff</span> <span class="o">&lt;</span> <span class="mi">0</span> \
-        <span class="ow">or</span> <span class="n">low_frequency_cutoff</span> <span class="o">&gt;</span> <span class="n">psd</span><span class="o">.</span><span class="n">sample_frequencies</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">low_frequency_cutoff</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> \
+            <span class="p">(</span><span class="n">low_frequency_cutoff</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span>
+             <span class="n">low_frequency_cutoff</span> <span class="o">&gt;</span> <span class="n">psd</span><span class="o">.</span><span class="n">sample_frequencies</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;low_frequency_cutoff must be within the bandwidth of the PSD&#39;</span><span class="p">)</span>
 
     <span class="n">N</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">psd</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span>

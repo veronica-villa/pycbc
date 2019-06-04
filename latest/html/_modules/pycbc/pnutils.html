@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.pnutils &mdash; PyCBC dc919a documentation</title>
+  <title>pycbc.pnutils &mdash; PyCBC 61c7a6 documentation</title>
   
 
   
@@ -748,7 +748,7 @@
     <span class="k">try</span><span class="p">:</span>
         <span class="n">approximant</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">approximant</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;__builtins__&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">},</span>
                            <span class="nb">dict</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">))</span>
-    <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">NameError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
         <span class="k">pass</span>
 
     <span class="k">if</span> <span class="n">approximant</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;TaylorF2&#39;</span><span class="p">,</span> <span class="s1">&#39;SPAtmplt&#39;</span><span class="p">]:</span>

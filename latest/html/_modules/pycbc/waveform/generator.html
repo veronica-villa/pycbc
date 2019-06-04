@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.waveform.generator &mdash; PyCBC dc919a documentation</title>
+  <title>pycbc.waveform.generator &mdash; PyCBC 61c7a6 documentation</title>
   
 
   
@@ -369,7 +369,8 @@
             <span class="n">variable_args</span><span class="o">=</span><span class="n">variable_args</span><span class="p">,</span> <span class="o">**</span><span class="n">frozen_params</span><span class="p">)</span>
         <span class="c1"># decorate the generator function with a list of functions that convert</span>
         <span class="c1"># parameters to those used by the waveform generation interface</span>
-        <span class="n">all_args</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frozen_params</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">variable_args</span><span class="p">))</span>
+        <span class="n">all_args</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frozen_params</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">+</span>
+                       <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">variable_args</span><span class="p">))</span>
         <span class="c1"># compare a set of all args of the generator to the input parameters</span>
         <span class="c1"># of the functions that do conversions and adds to list of pregenerate</span>
         <span class="c1"># functions if it is needed</span>
