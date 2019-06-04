@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.types.frequencyseries &mdash; PyCBC 08b533 documentation</title>
+  <title>pycbc.types.frequencyseries &mdash; PyCBC dc919a documentation</title>
   
 
   
@@ -277,7 +277,14 @@
                     <span class="n">epoch</span> <span class="o">=</span> <span class="n">_lal</span><span class="o">.</span><span class="n">LIGOTimeGPS</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">epoch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span> 
-                    <span class="n">epoch</span> <span class="o">=</span> <span class="n">_lal</span><span class="o">.</span><span class="n">LIGOTimeGPS</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">generic</span><span class="p">):</span>
+                        <span class="c1"># In python3 lal LIGOTimeGPS will not work on numpy</span>
+                        <span class="c1"># types as input. A quick google on how to generically</span>
+                        <span class="c1"># convert numpy floats/ints to the python equivalent</span>
+                        <span class="c1"># https://stackoverflow.com/questions/9452775/</span>
+                        <span class="n">epoch</span> <span class="o">=</span> <span class="n">_lal</span><span class="o">.</span><span class="n">LIGOTimeGPS</span><span class="p">(</span><span class="n">epoch</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">epoch</span> <span class="o">=</span> <span class="n">_lal</span><span class="o">.</span><span class="n">LIGOTimeGPS</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span>
                 <span class="k">except</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;epoch must be either None or a lal.LIGOTimeGPS&#39;</span><span class="p">)</span>
         <span class="n">Array</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial_array</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="n">copy</span><span class="p">)</span>
