@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.sampler.base_mcmc &mdash; PyCBC 3af2e7 documentation</title>
+  <title>pycbc.inference.sampler.base_mcmc &mdash; PyCBC 194277 documentation</title>
   
 
   
@@ -318,7 +318,7 @@
         <span class="s2">&quot;number of stat names must match length of tuples in the blobs&quot;</span><span class="p">)</span>
     <span class="c1"># convert to an array; to ensure that we get the dtypes correct, we&#39;ll</span>
     <span class="c1"># cast to a structured array</span>
-    <span class="n">raw_stats</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">blobs</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">stat_names</span><span class="p">,</span> <span class="n">dtypes</span><span class="p">))</span>
+    <span class="n">raw_stats</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">blobs</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">stat_names</span><span class="p">,</span> <span class="n">dtypes</span><span class="p">)))</span>
     <span class="c1"># transpose so that it has shape nwalkers x niterations</span>
     <span class="n">raw_stats</span> <span class="o">=</span> <span class="n">raw_stats</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
     <span class="c1"># now return as a dictionary</span>

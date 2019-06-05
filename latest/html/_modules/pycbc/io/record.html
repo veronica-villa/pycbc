@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.io.record &mdash; PyCBC 3af2e7 documentation</title>
+  <title>pycbc.io.record &mdash; PyCBC 194277 documentation</title>
   
 
   
@@ -1662,10 +1662,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">possible_fields</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="n">possible_fields</span> <span class="o">=</span> <span class="p">[</span><span class="n">possible_fields</span><span class="p">]</span>
-        <span class="n">possible_fields</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">possible_fields</span><span class="p">)</span>
+        <span class="n">possible_fields</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">possible_fields</span><span class="p">))</span>
         <span class="c1"># we&#39;ll just use float as the dtype, as we just need this for names</span>
-        <span class="n">arr</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">possible_fields</span><span class="p">,</span>
-                               <span class="nb">len</span><span class="p">(</span><span class="n">possible_fields</span><span class="p">)</span><span class="o">*</span><span class="p">[</span><span class="nb">float</span><span class="p">]))</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">possible_fields</span><span class="p">,</span>
+                                <span class="nb">len</span><span class="p">(</span><span class="n">possible_fields</span><span class="p">)</span><span class="o">*</span><span class="p">[</span><span class="nb">float</span><span class="p">])))</span>
         <span class="c1"># try to perserve order</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">get_needed_fieldnames</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">parameters</span><span class="p">))</span></div></div>
 
