@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.types package &mdash; PyCBC 61c7a6 documentation</title>
+  <title>pycbc.types package &mdash; PyCBC 3af2e7 documentation</title>
   
 
   
@@ -1606,6 +1606,35 @@ transients from a circular convolution / filter.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="pycbc.types.timeseries.TimeSeries.filter_psd">
+<code class="descname">filter_psd</code><span class="sig-paren">(</span><em>segment_duration</em>, <em>delta_f</em>, <em>flow</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/types/timeseries.html#TimeSeries.filter_psd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.types.timeseries.TimeSeries.filter_psd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the power spectral density of this time series.</p>
+<p>Use the <cite>pycbc.psd.welch</cite> method to estimate the psd of this time segment.
+The psd is then truncated in the time domain to the segment duration
+and interpolated to the requested sample frequency.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>segment_duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Duration in seconds to use for each sample of the spectrum.</li>
+<li><strong>delta_f</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Frequency spacing to return psd at.</li>
+<li><strong>flow</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – The low frequency cutoff to apply when truncating the inverse
+spectrum.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>psd</strong> – Frequency series containing the estimated PSD.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pycbc.types.frequencyseries.FrequencySeries" title="pycbc.types.frequencyseries.FrequencySeries">FrequencySeries</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="pycbc.types.timeseries.TimeSeries.fir_zero_filter">
 <code class="descname">fir_zero_filter</code><span class="sig-paren">(</span><em>coeff</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/types/timeseries.html#TimeSeries.fir_zero_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.types.timeseries.TimeSeries.fir_zero_filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Filter the timeseries with a set of FIR coefficients</p>
@@ -2024,7 +2053,7 @@ this as the key value.</li>
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Jun 04, 2019.
+        Last updated on Jun 05, 2019.
       </span>
 
     </p>

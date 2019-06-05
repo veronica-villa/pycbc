@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.types.timeseries &mdash; PyCBC 61c7a6 documentation</title>
+  <title>pycbc.types.timeseries &mdash; PyCBC 3af2e7 documentation</title>
   
 
   
@@ -661,6 +661,36 @@
                            <span class="n">seg_stride</span><span class="o">=</span><span class="n">seg_stride</span><span class="p">,</span>
                            <span class="o">**</span><span class="n">kwds</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="TimeSeries.filter_psd"><a class="viewcode-back" href="../../../pycbc.types.html#pycbc.types.timeseries.TimeSeries.filter_psd">[docs]</a>    <span class="k">def</span> <span class="nf">filter_psd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">segment_duration</span><span class="p">,</span> <span class="n">delta_f</span><span class="p">,</span> <span class="n">flow</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Calculate the power spectral density of this time series.</span>
+
+<span class="sd">        Use the `pycbc.psd.welch` method to estimate the psd of this time segment.</span>
+<span class="sd">        The psd is then truncated in the time domain to the segment duration</span>
+<span class="sd">        and interpolated to the requested sample frequency.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        segment_duration: float</span>
+<span class="sd">            Duration in seconds to use for each sample of the spectrum.</span>
+<span class="sd">        delta_f : float</span>
+<span class="sd">            Frequency spacing to return psd at.</span>
+<span class="sd">        flow : float</span>
+<span class="sd">            The low frequency cutoff to apply when truncating the inverse</span>
+<span class="sd">            spectrum.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        psd : FrequencySeries</span>
+<span class="sd">            Frequency series containing the estimated PSD.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">pycbc.psd</span> <span class="k">import</span> <span class="n">interpolate</span><span class="p">,</span> <span class="n">inverse_spectrum_truncation</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">psd</span><span class="p">(</span><span class="n">segment_duration</span><span class="p">)</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">sample_rate</span> <span class="o">*</span> <span class="n">segment_duration</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">delta_f</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">inverse_spectrum_truncation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span>
+                                           <span class="n">low_frequency_cutoff</span><span class="o">=</span><span class="n">flow</span><span class="p">,</span>
+                                           <span class="n">trunc_method</span><span class="o">=</span><span class="s1">&#39;hann&#39;</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="TimeSeries.whiten"><a class="viewcode-back" href="../../../pycbc.types.html#pycbc.types.timeseries.TimeSeries.whiten">[docs]</a>    <span class="k">def</span> <span class="nf">whiten</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">segment_duration</span><span class="p">,</span> <span class="n">max_filter_duration</span><span class="p">,</span> <span class="n">trunc_method</span><span class="o">=</span><span class="s1">&#39;hann&#39;</span><span class="p">,</span>
                      <span class="n">remove_corrupted</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">low_frequency_cutoff</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                      <span class="n">return_psd</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
@@ -1133,7 +1163,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Jun 04, 2019.
+        Last updated on Jun 05, 2019.
       </span>
 
     </p>
