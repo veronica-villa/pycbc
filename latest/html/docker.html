@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Running PyCBC under Docker &mdash; PyCBC 31de6c documentation</title>
+  <title>Running PyCBC under Docker &mdash; PyCBC 618d9b documentation</title>
   
 
   
@@ -93,9 +93,7 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Running PyCBC under Docker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#using-jupyter-notebook-within-docker">Using jupyter-notebook within docker</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#graphics-on-mac-os-x">Graphics on Mac OS X</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#graphics-on-linux">Graphics on Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-jupyter-notebook-within-docker">Using jupyter notebook within docker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sharing-user-files-and-ssh-keys">Sharing user files and SSH keys</a></li>
 </ul>
 </li>
@@ -218,49 +216,21 @@
 </pre></div>
 </div>
 <p>This example downloads current version of the code from the <a class="reference external" href="https://github.com/ligo-cbc/pycbc">GitHub master branch.</a> Replace the string <code class="docutils literal notranslate"><span class="pre">latest</span></code> with one of the <a class="reference external" href="https://github.com/ligo-cbc/pycbc/releases">PyCBC release tags</a> (e.g. <code class="docutils literal notranslate"><span class="pre">v1.7.0</span></code>) to install a container containing a released version of PyCBC. The container includes all of the required software and dependencies to run PyCBC, including a compatible version of LALSuite installed into the root filesystem. The command above starts a login shell as the pycbc user. To override this and log in as root, run the command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">it</span> <span class="n">pycbc</span><span class="o">/</span><span class="n">pycbc</span><span class="o">-</span><span class="n">el7</span><span class="p">:</span><span class="n">latest</span> <span class="n">root</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bash</span> <span class="o">-</span><span class="n">l</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">it</span> <span class="n">pycbc</span><span class="o">/</span><span class="n">pycbc</span><span class="o">-</span><span class="n">el7</span><span class="p">:</span><span class="n">latest</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bash</span> <span class="o">-</span><span class="n">l</span>
 </pre></div>
 </div>
 <div class="section" id="using-jupyter-notebook-within-docker">
-<h2>Using jupyter-notebook within docker<a class="headerlink" href="#using-jupyter-notebook-within-docker" title="Permalink to this headline">¶</a></h2>
+<h2>Using jupyter notebook within docker<a class="headerlink" href="#using-jupyter-notebook-within-docker" title="Permalink to this headline">¶</a></h2>
 <p>One can start a jupyter notebook within docker and then port forward to your
-computer environment.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">it</span> <span class="o">-</span><span class="n">p</span> <span class="mi">8888</span><span class="p">:</span><span class="mi">8888</span> <span class="o">--</span><span class="n">name</span> <span class="n">pycbc_test</span> <span class="n">pycbc</span><span class="o">/</span><span class="n">pycbc</span><span class="o">-</span><span class="n">el7</span><span class="p">:</span><span class="n">latest</span> <span class="n">pycbc</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bash</span> <span class="o">-</span><span class="n">l</span> <span class="o">-</span><span class="n">c</span> <span class="n">jupyter</span> <span class="n">notebook</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">browser</span> <span class="o">--</span><span class="n">ip</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>
+computer’s environment.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">it</span> <span class="o">-</span><span class="n">p</span> <span class="mi">8888</span><span class="p">:</span><span class="mi">8888</span> <span class="o">--</span><span class="n">name</span> <span class="n">pycbc_test</span> <span class="n">pycbc</span><span class="o">/</span><span class="n">pycbc</span><span class="o">-</span><span class="n">el7</span><span class="p">:</span><span class="n">latest</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">su</span> <span class="o">-</span><span class="n">l</span> <span class="n">pycbc</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;jupyter notebook --no-browser --ip 0.0.0.0&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="graphics-on-mac-os-x">
-<h2>Graphics on Mac OS X<a class="headerlink" href="#graphics-on-mac-os-x" title="Permalink to this headline">¶</a></h2>
-<p>To start a Docker container on Mac OS X that can display graphics on Mac OS X, you must be running <a class="reference external" href="https://www.xquartz.org/">XQuartz</a> version 2.7.11 or higher. To start an X11 server, run the command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">open</span> <span class="o">-</span><span class="n">a</span> <span class="n">Xquartz</span>
-</pre></div>
-</div>
-<p>In the Xquartz preferences, make sure that <code class="docutils literal notranslate"><span class="pre">Allow</span> <span class="pre">connections</span> <span class="pre">from</span> <span class="pre">network</span> <span class="pre">clients</span></code> is checked, as shown below:</p>
-<a class="reference internal image-reference" href="_images/xquartz_pref.png"><img alt="_images/xquartz_pref.png" class="align-center" src="_images/xquartz_pref.png" style="width: 400px;" /></a>
-<p>Next, enable Docker to connect to your X11 server by running the commands:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>ip=$(ifconfig en0 | grep inet | awk &#39;$1==&quot;inet&quot; {print $2}&#39;)
-xhost + $ip
-</pre></div>
-</div>
-<p>Finally, start the Docker container with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>docker run -e DISPLAY=${ip}:0 -it pycbc/pycbc-el7:latest
-</pre></div>
-</div>
-</div>
-<div class="section" id="graphics-on-linux">
-<h2>Graphics on Linux<a class="headerlink" href="#graphics-on-linux" title="Permalink to this headline">¶</a></h2>
-<p>To start a Docker container on Linux that can display graphics, run the commands:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>docker run -e DISPLAY=${DISPLAY} -v /tmp/.X11-unix:/tmp/.X11-unix/ -it pycbc/pycbc-el7:latest
-</pre></div>
-</div>
+<p>Once the image is running, you can connect from your computer’s web browser to the address printed to the screen by jupyter. This is typically the local host adddress, e.g. <code class="docutils literal notranslate"><span class="pre">127.0.0.1</span></code></p>
 </div>
 <div class="section" id="sharing-user-files-and-ssh-keys">
 <h2>Sharing user files and SSH keys<a class="headerlink" href="#sharing-user-files-and-ssh-keys" title="Permalink to this headline">¶</a></h2>
-<p>It can be useful to share your SSH public/private key with the Docker container, for example to allow you to git push and pull from your repository on GitHub. To do this, add the argument <code class="docutils literal notranslate"><span class="pre">-v</span> <span class="pre">${HOME}/.ssh:/home/pycbc/.ssh</span></code> to the <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code> commands.  You can also create e.g. a <code class="docutils literal notranslate"><span class="pre">scratch</span></code> directory and use the <code class="docutils literal notranslate"><span class="pre">-v</span></code> option to mount it in the container. This directory can be used to transfer files between the container and the host computer.  The command below will start a Docker container with graphics on a Mac and share ssh keys and a <code class="docutils literal notranslate"><span class="pre">scratch</span></code> directory:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mkdir -p scratch
-docker run -e DISPLAY=$(ifconfig en0 | grep inet | awk &#39;$1==&quot;inet&quot; {print $2}&#39;):0 -v `pwd`/scratch:/opt/pycbc/scratch -v ${HOME}/.ssh:/opt/pycbc/.ssh -it pycbc/pycbc-el7:latest
-</pre></div>
-</div>
+<p>It can be useful to share your SSH public/private key with the Docker container, for example to allow you to git push and pull from your repository on GitHub. To do this, add the argument <code class="docutils literal notranslate"><span class="pre">-v</span> <span class="pre">${HOME}/.ssh:/opt/pycbc/.ssh</span></code> to the <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code> commands.  You can also create e.g. a <code class="docutils literal notranslate"><span class="pre">scratch</span></code> directory and use the <code class="docutils literal notranslate"><span class="pre">-v</span></code> option to mount it in the container. This directory can be used to transfer files between the container and the host computer. See the <a class="reference external" href="https://docs.docker.com/storage/volumes/">Docker volumes documentation</a> for a detailed explaination of mounting directories inside a docker container.</p>
 </div>
 </div>
 
