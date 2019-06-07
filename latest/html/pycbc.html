@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc package &mdash; PyCBC 042f9a documentation</title>
+  <title>pycbc package &mdash; PyCBC 866378 documentation</title>
   
 
   
@@ -2550,22 +2550,25 @@ flag.</li>
 
 <dl class="function">
 <dt id="pycbc.dq.parse_veto_definer">
-<code class="descclassname">pycbc.dq.</code><code class="descname">parse_veto_definer</code><span class="sig-paren">(</span><em>veto_def_filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/dq.html#parse_veto_definer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.dq.parse_veto_definer" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pycbc.dq.</code><code class="descname">parse_veto_definer</code><span class="sig-paren">(</span><em>veto_def_filename</em>, <em>ifos</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/dq.html#parse_veto_definer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.dq.parse_veto_definer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse a veto definer file from the filename and return a dictionary
 indexed by ifo and veto definer category level.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>veto_def_filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The path to the veto definer file</li>
-<li><strong>Returns</strong> – <dl class="docutils">
-<dt>parsed_definition: dict</dt>
-<dd>Returns a dictionary first indexed by ifo, then category level, and
-finally a list of veto definitions.</dd>
-</dl>
-</li>
+<li><strong>ifos</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The list of ifos for which we require information from the vet-definer
+file</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>parsed_definition</strong> – Returns a dictionary first indexed by ifo, then category level, and
+finally a list of veto definitions.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></p>
 </td>
 </tr>
 </tbody>

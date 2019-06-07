@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.dq &mdash; PyCBC 042f9a documentation</title>
+  <title>pycbc.dq &mdash; PyCBC 866378 documentation</title>
   
 
   
@@ -235,7 +235,7 @@
 <span class="kn">from</span> <span class="nn">ligo.segments</span> <span class="k">import</span> <span class="n">segmentlist</span><span class="p">,</span> <span class="n">segment</span>
 <span class="kn">from</span> <span class="nn">pycbc.frame.losc</span> <span class="k">import</span> <span class="n">get_run</span>
 
-<div class="viewcode-block" id="parse_veto_definer"><a class="viewcode-back" href="../../pycbc.html#pycbc.dq.parse_veto_definer">[docs]</a><span class="k">def</span> <span class="nf">parse_veto_definer</span><span class="p">(</span><span class="n">veto_def_filename</span><span class="p">):</span>
+<div class="viewcode-block" id="parse_veto_definer"><a class="viewcode-back" href="../../pycbc.html#pycbc.dq.parse_veto_definer">[docs]</a><span class="k">def</span> <span class="nf">parse_veto_definer</span><span class="p">(</span><span class="n">veto_def_filename</span><span class="p">,</span> <span class="n">ifos</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Parse a veto definer file from the filename and return a dictionary</span>
 <span class="sd">    indexed by ifo and veto definer category level.</span>
 
@@ -243,15 +243,26 @@
 <span class="sd">    ----------</span>
 <span class="sd">    veto_def_filename: str</span>
 <span class="sd">        The path to the veto definer file</span>
+<span class="sd">    ifos: str</span>
+<span class="sd">        The list of ifos for which we require information from the vet-definer</span>
+<span class="sd">        file</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        parsed_definition: dict</span>
-<span class="sd">            Returns a dictionary first indexed by ifo, then category level, and</span>
-<span class="sd">            finally a list of veto definitions.</span>
+<span class="sd">    Returns</span>
+<span class="sd">    --------</span>
+<span class="sd">    parsed_definition: dict</span>
+<span class="sd">        Returns a dictionary first indexed by ifo, then category level, and</span>
+<span class="sd">        finally a list of veto definitions.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">from</span> <span class="nn">glue.ligolw</span> <span class="k">import</span> <span class="n">table</span><span class="p">,</span> <span class="n">lsctables</span><span class="p">,</span> <span class="n">utils</span> <span class="k">as</span> <span class="n">ligolw_utils</span>
     <span class="kn">from</span> <span class="nn">glue.ligolw.ligolw</span> <span class="k">import</span> <span class="n">LIGOLWContentHandler</span> <span class="k">as</span> <span class="n">h</span>
     <span class="n">lsctables</span><span class="o">.</span><span class="n">use_in</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">ifo_name</span> <span class="ow">in</span> <span class="n">ifos</span><span class="p">:</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">ifo_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">ifo_name</span><span class="p">][</span><span class="s1">&#39;CAT_H&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">cat_num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">ifo_name</span><span class="p">][</span><span class="s1">&#39;CAT_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cat_num</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="n">indoc</span> <span class="o">=</span> <span class="n">ligolw_utils</span><span class="o">.</span><span class="n">load_filename</span><span class="p">(</span><span class="n">veto_def_filename</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>
                                        <span class="n">contenthandler</span><span class="o">=</span><span class="n">h</span><span class="p">)</span>
@@ -266,10 +277,9 @@
     <span class="n">start_pad</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">veto_table</span><span class="o">.</span><span class="n">getColumnByName</span><span class="p">(</span><span class="s1">&#39;start_pad&#39;</span><span class="p">))</span>
     <span class="n">end_pad</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">veto_table</span><span class="o">.</span><span class="n">getColumnByName</span><span class="p">(</span><span class="s1">&#39;end_pad&#39;</span><span class="p">))</span>
 
-    <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">veto_table</span><span class="p">)):</span>
         <span class="k">if</span> <span class="n">ifo</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-            <span class="n">data</span><span class="p">[</span><span class="n">ifo</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">continue</span>
 
         <span class="c1"># The veto-definer categories are weird! Hardware injections are stored</span>
         <span class="c1"># in &quot;3&quot; and numbers above that are bumped up by one (although not</span>
@@ -281,9 +291,6 @@
             <span class="n">curr_cat</span> <span class="o">=</span> <span class="s2">&quot;CAT_H&quot;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">curr_cat</span> <span class="o">=</span> <span class="s2">&quot;CAT_</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">category</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-
-        <span class="k">if</span> <span class="n">curr_cat</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="n">ifo</span><span class="p">[</span><span class="n">i</span><span class="p">]]:</span>
-            <span class="n">data</span><span class="p">[</span><span class="n">ifo</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="n">curr_cat</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="n">veto_info</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
                      <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="n">version</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
@@ -383,7 +390,7 @@
         <span class="c1"># The veto definer will allow the use of MACRO names</span>
         <span class="c1"># These directly correspond the name defined in the veto definer file.</span>
         <span class="k">if</span> <span class="n">veto_definer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">veto_def</span> <span class="o">=</span> <span class="n">parse_veto_definer</span><span class="p">(</span><span class="n">veto_definer</span><span class="p">)</span>
+            <span class="n">veto_def</span> <span class="o">=</span> <span class="n">parse_veto_definer</span><span class="p">(</span><span class="n">veto_definer</span><span class="p">,</span> <span class="p">[</span><span class="n">ifo</span><span class="p">])</span>
 
         <span class="c1"># We treat the veto definer name as if it were its own flag and</span>
         <span class="c1"># a process the flags in the veto definer</span>
