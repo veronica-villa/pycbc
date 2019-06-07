@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.strain.strain &mdash; PyCBC 1.13.dev9 documentation</title>
+  <title>pycbc.strain.strain &mdash; PyCBC 4f3dd6 documentation</title>
   
 
   
@@ -60,6 +60,10 @@
 
           
             
+            
+              <div class="version">
+                1.13.8
+              </div>
             
           
 
@@ -480,6 +484,12 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unrecognized precision </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">precision</span><span class="p">))</span>
 
+        <span class="k">if</span> <span class="n">opt</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Resampling data&quot;</span><span class="p">)</span>
+            <span class="n">strain</span> <span class="o">=</span> <span class="n">resample_to_delta_t</span><span class="p">(</span><span class="n">strain</span><span class="p">,</span>
+                                         <span class="mf">1.0</span> <span class="o">/</span> <span class="n">opt</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
+                                         <span class="n">method</span><span class="o">=</span><span class="s1">&#39;ldas&#39;</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">opt</span><span class="o">.</span><span class="n">gating_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Gating times contained in gating file&quot;</span><span class="p">)</span>
             <span class="n">gate_params</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">gating_file</span><span class="p">)</span>
@@ -504,12 +514,6 @@
                              <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">%.3f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">gt</span> <span class="k">for</span> <span class="n">gt</span> <span class="ow">in</span> <span class="n">glitch_times</span><span class="p">]))</span>
             <span class="n">strain</span> <span class="o">=</span> <span class="n">gate_data</span><span class="p">(</span><span class="n">strain</span><span class="p">,</span> <span class="n">gate_params</span><span class="p">)</span>
             <span class="n">gating_info</span><span class="p">[</span><span class="s1">&#39;auto&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gate_params</span>
-
-        <span class="k">if</span> <span class="n">opt</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Resampling data&quot;</span><span class="p">)</span>
-            <span class="n">strain</span> <span class="o">=</span> <span class="n">resample_to_delta_t</span><span class="p">(</span><span class="n">strain</span><span class="p">,</span>
-                                         <span class="mf">1.0</span> <span class="o">/</span> <span class="n">opt</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
-                                         <span class="n">method</span><span class="o">=</span><span class="s1">&#39;ldas&#39;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">opt</span><span class="o">.</span><span class="n">strain_high_pass</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Highpass Filtering&quot;</span><span class="p">)</span>
