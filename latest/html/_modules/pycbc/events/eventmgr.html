@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.events.eventmgr &mdash; PyCBC 946964 documentation</title>
+  <title>pycbc.events.eventmgr &mdash; PyCBC 042f9a documentation</title>
   
 
   
@@ -230,6 +230,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
 <span class="kn">import</span> <span class="nn">numpy</span><span class="o">,</span> <span class="nn">copy</span><span class="o">,</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 
 <span class="kn">from</span> <span class="nn">pycbc</span> <span class="k">import</span> <span class="n">WEAVE_FLAGS</span>
 <span class="kn">from</span> <span class="nn">pycbc.types</span> <span class="k">import</span> <span class="n">Array</span>
@@ -439,10 +440,10 @@
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Chi-square test must be enabled in order to &#39;</span>
                                <span class="s1">&#39;use newsnr threshold&#39;</span><span class="p">)</span>
 
-        <span class="n">remove</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">)</span> <span class="k">if</span>
-                  <span class="n">ranking</span><span class="o">.</span><span class="n">newsnr</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="s1">&#39;snr&#39;</span><span class="p">]),</span> <span class="n">e</span><span class="p">[</span><span class="s1">&#39;chisq&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">e</span><span class="p">[</span><span class="s1">&#39;chisq_dof&#39;</span><span class="p">])</span>
-                  <span class="o">&lt;</span> <span class="n">threshold</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">events</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">,</span> <span class="n">remove</span><span class="p">)</span></div>
+        <span class="n">nsnrs</span> <span class="o">=</span> <span class="n">ranking</span><span class="o">.</span><span class="n">newsnr</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">[</span><span class="s1">&#39;snr&#39;</span><span class="p">]),</span>
+                               <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">[</span><span class="s1">&#39;chisq&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">[</span><span class="s1">&#39;chisq_dof&#39;</span><span class="p">])</span>
+        <span class="n">remove_idxs</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">nsnrs</span> <span class="o">&lt;</span> <span class="n">threshold</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">events</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">,</span> <span class="n">remove_idxs</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="EventManager.keep_near_injection"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.eventmgr.EventManager.keep_near_injection">[docs]</a>    <span class="k">def</span> <span class="nf">keep_near_injection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">injections</span><span class="p">):</span>
         <span class="kn">from</span> <span class="nn">pycbc.events.veto</span> <span class="k">import</span> <span class="n">indices_within_times</span>
@@ -543,6 +544,40 @@
 <div class="viewcode-block" id="EventManager.finalize_template_events"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.eventmgr.EventManager.finalize_template_events">[docs]</a>    <span class="k">def</span> <span class="nf">finalize_template_events</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">accumulate</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">template_events</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">template_events</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([],</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">event_dtype</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EventManager.consolidate_events"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.eventmgr.EventManager.consolidate_events">[docs]</a>    <span class="k">def</span> <span class="nf">consolidate_events</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opt</span><span class="p">,</span> <span class="n">gwstrain</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">events</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accumulate</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;We currently have </span><span class="si">%d</span><span class="s2"> triggers&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">opt</span><span class="o">.</span><span class="n">chisq_threshold</span> <span class="ow">and</span> <span class="n">opt</span><span class="o">.</span><span class="n">chisq_bins</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Removing triggers with poor chisq&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">chisq_threshold</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">chisq_threshold</span><span class="p">,</span> <span class="n">opt</span><span class="o">.</span><span class="n">chisq_bins</span><span class="p">,</span>
+                                 <span class="n">opt</span><span class="o">.</span><span class="n">chisq_delta</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> remaining triggers&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">opt</span><span class="o">.</span><span class="n">newsnr_threshold</span> <span class="ow">and</span> <span class="n">opt</span><span class="o">.</span><span class="n">chisq_bins</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Removing triggers with NewSNR below threshold&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">newsnr_threshold</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">newsnr_threshold</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> remaining triggers&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">opt</span><span class="o">.</span><span class="n">keep_loudest_interval</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Removing triggers not within the top </span><span class="si">%s</span><span class="s2"> &quot;</span>
+                         <span class="s2">&quot;loudest of a </span><span class="si">%s</span><span class="s2"> second interval by </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                         <span class="n">opt</span><span class="o">.</span><span class="n">keep_loudest_num</span><span class="p">,</span> <span class="n">opt</span><span class="o">.</span><span class="n">keep_loudest_interval</span><span class="p">,</span>
+                         <span class="n">opt</span><span class="o">.</span><span class="n">keep_loudest_stat</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">keep_loudest_in_interval</span>\
+                <span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">keep_loudest_interval</span> <span class="o">*</span> <span class="n">opt</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
+                 <span class="n">opt</span><span class="o">.</span><span class="n">keep_loudest_num</span><span class="p">,</span> <span class="n">statname</span><span class="o">=</span><span class="n">opt</span><span class="o">.</span><span class="n">keep_loudest_stat</span><span class="p">,</span>
+                 <span class="n">log_chirp_width</span><span class="o">=</span><span class="n">opt</span><span class="o">.</span><span class="n">keep_loudest_log_chirp_window</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> remaining triggers&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">opt</span><span class="o">.</span><span class="n">injection_window</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">gwstrain</span><span class="p">,</span> <span class="s1">&#39;injections&#39;</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Keeping triggers within </span><span class="si">%s</span><span class="s2"> seconds of injection&quot;</span><span class="p">,</span>
+                         <span class="n">opt</span><span class="o">.</span><span class="n">injection_window</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">keep_near_injection</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">injection_window</span><span class="p">,</span>
+                                     <span class="n">gwstrain</span><span class="o">.</span><span class="n">injections</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> remaining triggers&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">accumulate</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="EventManager.finalize_events"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.eventmgr.EventManager.finalize_events">[docs]</a>    <span class="k">def</span> <span class="nf">finalize_events</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">events</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accumulate</span><span class="p">)</span></div>
