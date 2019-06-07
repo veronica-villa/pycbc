@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.filter.matchedfilter &mdash; PyCBC 5a5291 documentation</title>
+  <title>pycbc.filter.matchedfilter &mdash; PyCBC 493a37 documentation</title>
   
 
   
@@ -714,7 +714,7 @@
 <span class="sd">        The SNR maximized over sky location</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># NOTE: Not much optimization has been done here! This may need to be</span>
-    <span class="c1"># C-ified using scipy.weave.</span>
+    <span class="c1"># Cythonized.</span>
 
     <span class="k">if</span> <span class="n">out</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">hplus</span><span class="p">))</span>

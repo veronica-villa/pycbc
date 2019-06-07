@@ -68,6 +68,14 @@ pycbc.fft.fftw\_pruned module
     :undoc-members:
     :show-inheritance:
 
+pycbc.fft.fftw\_pruned\_cython module
+-------------------------------------
+
+.. automodule:: pycbc.fft.fftw_pruned_cython
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 pycbc.fft.func\_api module
 --------------------------
 

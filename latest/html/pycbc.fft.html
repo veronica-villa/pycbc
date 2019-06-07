@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.fft package &mdash; PyCBC 5a5291 documentation</title>
+  <title>pycbc.fft package &mdash; PyCBC 493a37 documentation</title>
   
 
   
@@ -612,35 +612,6 @@ described rather nicely by wikipedia.</p>
 <p>I use a similar naming convention here, with minor simplifications to the
 twiddle factors.</p>
 <dl class="function">
-<dt id="pycbc.fft.fftw_pruned.fast_second_phase">
-<code class="descclassname">pycbc.fft.fftw_pruned.</code><code class="descname">fast_second_phase</code><span class="sig-paren">(</span><em>invec</em>, <em>indices</em>, <em>N1</em>, <em>N2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/fft/fftw_pruned.html#fast_second_phase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.fft.fftw_pruned.fast_second_phase" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is the second phase of the FFT decomposition that actually performs
-the pruning. It is an explicit calculation for the subset of points. Note
-that there seem to be some numerical accumulation issues at various values
-of N1 and N2.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>invec</strong> – The result of the first phase FFT</li>
-<li><strong>indices</strong> (<em>array of ints</em>) – The index locations to calculate the FFT</li>
-<li><strong>N1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The length of the second phase “FFT”</li>
-<li><strong>N2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The length of the first phase FFT</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">array of floats</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
 <dt id="pycbc.fft.fftw_pruned.fft_transpose">
 <code class="descclassname">pycbc.fft.fftw_pruned.</code><code class="descname">fft_transpose</code><span class="sig-paren">(</span><em>vec</em><span class="sig-paren">)</span><a class="headerlink" href="#pycbc.fft.fftw_pruned.fft_transpose" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform an FFT transpose from vec into outvec.
@@ -663,25 +634,6 @@ of N1 and N2.</p>
 <dt id="pycbc.fft.fftw_pruned.fft_transpose_fftw">
 <code class="descclassname">pycbc.fft.fftw_pruned.</code><code class="descname">fft_transpose_fftw</code><span class="sig-paren">(</span><em>vec</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/fft/fftw_pruned.html#fft_transpose_fftw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.fft.fftw_pruned.fft_transpose_fftw" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform an FFT transpose from vec into outvec.
-(Alex to provide more details in a write-up.)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vec</strong> (<em>array</em>) – Input array.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>outvec</strong> – Transposed output array.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">array</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="pycbc.fft.fftw_pruned.fft_transpose_numpy">
-<code class="descclassname">pycbc.fft.fftw_pruned.</code><code class="descname">fft_transpose_numpy</code><span class="sig-paren">(</span><em>vec</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/fft/fftw_pruned.html#fft_transpose_numpy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.fft.fftw_pruned.fft_transpose_numpy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Perform a numpy transpose from vec into outvec.
 (Alex to provide more details in a write-up.)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -833,6 +785,14 @@ of N1 and N2.</p>
 <code class="descclassname">pycbc.fft.fftw_pruned.</code><code class="descname">splay</code><span class="sig-paren">(</span><em>vec</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/fft/fftw_pruned.html#splay"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.fft.fftw_pruned.splay" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determine two lengths to split stride the input vector by</p>
 </dd></dl>
+
+</div>
+<div class="section" id="module-pycbc.fft.fftw_pruned_cython">
+<span id="pycbc-fft-fftw-pruned-cython-module"></span><h2>pycbc.fft.fftw_pruned_cython module<a class="headerlink" href="#module-pycbc.fft.fftw_pruned_cython" title="Permalink to this headline">¶</a></h2>
+<dl class="attribute">
+<dt id="pycbc.fft.fftw_pruned_cython.second_phase_cython">
+<code class="descclassname">pycbc.fft.fftw_pruned_cython.</code><code class="descname">second_phase_cython</code><a class="headerlink" href="#pycbc.fft.fftw_pruned_cython.second_phase_cython" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 <div class="section" id="module-pycbc.fft.func_api">

@@ -28,6 +28,14 @@ pycbc.events.eventmgr module
     :undoc-members:
     :show-inheritance:
 
+pycbc.events.eventmgr\_cython module
+------------------------------------
+
+.. automodule:: pycbc.events.eventmgr_cython
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 pycbc.events.ranking module
 ---------------------------
 
