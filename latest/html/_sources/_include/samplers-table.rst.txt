@@ -1,4 +1,8 @@
 ===============  ==============================================================
 Name             Class
 ===============  ==============================================================
+``'cpnest'``     :py:class:`pycbc.inference.sampler.cpnest.CPNestSampler`
+``'emcee'``      :py:class:`pycbc.inference.sampler.emcee.EmceeEnsembleSampler`
+``'emcee_pt'``   :py:class:`pycbc.inference.sampler.emcee_pt.EmceePTSampler`
+``'multinest'``  :py:class:`pycbc.inference.sampler.multinest.MultinestSampler`
 ===============  ==============================================================
