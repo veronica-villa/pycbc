@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.workflow.segment &mdash; PyCBC 1.13.dev9 documentation</title>
+  <title>pycbc.workflow.segment &mdash; PyCBC cc914f documentation</title>
   
 
   
@@ -60,6 +60,10 @@
 
           
             
+            
+              <div class="version">
+                1.13.8
+              </div>
             
           
 
@@ -1428,11 +1432,11 @@
 
             <span class="n">offsourceSegfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_dir</span><span class="p">,</span> <span class="s2">&quot;offSourceSeg.txt&quot;</span><span class="p">)</span>
             <span class="n">segmentsUtils</span><span class="o">.</span><span class="n">tosegwizard</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">offsourceSegfile</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">),</span>
-                                      <span class="nb">next</span><span class="p">(</span><span class="n">offsource</span><span class="p">[</span><span class="n">best_comb</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+                                      <span class="nb">list</span><span class="p">(</span><span class="n">offsource</span><span class="p">[</span><span class="n">best_comb</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">])</span>
 
             <span class="n">onsourceSegfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_dir</span><span class="p">,</span> <span class="s2">&quot;onSourceSeg.txt&quot;</span><span class="p">)</span>
             <span class="n">segmentsUtils</span><span class="o">.</span><span class="n">tosegwizard</span><span class="p">(</span><span class="n">file</span><span class="p">(</span><span class="n">onsourceSegfile</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">),</span>
-                                      <span class="nb">next</span><span class="p">(</span><span class="n">onsource</span><span class="p">[</span><span class="n">best_comb</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+                                      <span class="nb">list</span><span class="p">(</span><span class="n">onsource</span><span class="p">[</span><span class="n">best_comb</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">])</span>
 
             <span class="n">bufferleft</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;workflow-exttrig_segments&#39;</span><span class="p">,</span>
                                     <span class="s1">&#39;num-buffer-before&#39;</span><span class="p">))</span>
