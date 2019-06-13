@@ -226,6 +226,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">ranking</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">coinc_rate</span>
 
 
 <div class="viewcode-block" id="Stat"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.Stat">[docs]</a><span class="k">class</span> <span class="nc">Stat</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -294,7 +295,7 @@
         <span class="k">return</span> <span class="p">(</span><span class="n">s0</span><span class="o">**</span><span class="mf">2.</span> <span class="o">+</span> <span class="n">s1</span><span class="o">**</span><span class="mf">2.</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span></div>
 
 <div class="viewcode-block" id="NewSNRStatistic.coinc_multiifo"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.NewSNRStatistic.coinc_multiifo">[docs]</a>    <span class="k">def</span> <span class="nf">coinc_multiifo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">slide</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span>
-                       <span class="p">):</span> <span class="c1"># pylint:disable=unused-argument</span>
+                       <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span> <span class="c1"># pylint:disable=unused-argument</span>
         <span class="sd">&quot;&quot;&quot;Calculate the coincident detection statistic.</span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -657,7 +658,8 @@
         <span class="c1"># scale by 1/sqrt(2) to resemble network SNR</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">s0</span> <span class="o">+</span> <span class="n">s1</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.</span><span class="o">**</span><span class="mf">0.5</span></div>
 
-<div class="viewcode-block" id="ExpFitCombinedSNR.coinc_multiifo"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.ExpFitCombinedSNR.coinc_multiifo">[docs]</a>    <span class="k">def</span> <span class="nf">coinc_multiifo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">slide</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span> <span class="c1"># pylint:disable=unused-argument</span>
+<div class="viewcode-block" id="ExpFitCombinedSNR.coinc_multiifo"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.ExpFitCombinedSNR.coinc_multiifo">[docs]</a>    <span class="k">def</span> <span class="nf">coinc_multiifo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">slide</span><span class="p">,</span>
+                       <span class="n">step</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span> <span class="c1"># pylint:disable=unused-argument</span>
         <span class="c1"># scale by 1/sqrt(number of ifos) to resemble network SNR</span>
         <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span></div></div>
 
@@ -767,6 +769,45 @@
                            <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="n">ndmin</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div></div>
 
 
+<div class="viewcode-block" id="ExpFitSGCoincRateStatistic"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.ExpFitSGCoincRateStatistic">[docs]</a><span class="k">class</span> <span class="nc">ExpFitSGCoincRateStatistic</span><span class="p">(</span><span class="n">ExpFitStatistic</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;Detection statistic using an exponential falloff noise model.</span>
+<span class="sd">    Statistic calculates the log noise coinc rate for each</span>
+<span class="sd">    template over single-ifo newsnr values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">benchmark_lograte</span><span class="o">=-</span><span class="mf">14.6</span><span class="p">):</span>
+        <span class="c1"># benchmark_lograte is log of a representative noise trigger rate</span>
+        <span class="c1"># This comes from H1L1 (O2) and is 4.5e-7 Hz</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ExpFitSGCoincRateStatistic</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">benchmark_lograte</span> <span class="o">=</span> <span class="n">benchmark_lograte</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_newsnr</span> <span class="o">=</span> <span class="n">ranking</span><span class="o">.</span><span class="n">get_newsnr_sgveto</span>
+        <span class="c1"># Reassign the rate as it is now number per time rather than an</span>
+        <span class="c1"># arbitrarily normalised number</span>
+        <span class="k">for</span> <span class="n">ifo</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ifos</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reassign_rate</span><span class="p">(</span><span class="n">ifo</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ExpFitSGCoincRateStatistic.reassign_rate"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.ExpFitSGCoincRateStatistic.reassign_rate">[docs]</a>    <span class="k">def</span> <span class="nf">reassign_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ifo</span><span class="p">):</span>
+        <span class="n">coeff_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="p">[</span><span class="n">ifo</span><span class="o">+</span><span class="s1">&#39;-fit_coeffs&#39;</span><span class="p">]</span>
+        <span class="n">template_id</span> <span class="o">=</span> <span class="n">coeff_file</span><span class="p">[</span><span class="s1">&#39;template_id&#39;</span><span class="p">][:]</span>
+        <span class="c1"># the template_ids and fit coeffs are stored in an arbitrary order</span>
+        <span class="c1"># create new arrays in template_id order for easier recall</span>
+        <span class="n">tid_sort</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">template_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fits_by_tid</span><span class="p">[</span><span class="n">ifo</span><span class="p">][</span><span class="s1">&#39;rate&#39;</span><span class="p">]</span> <span class="o">=</span> \
+            <span class="n">coeff_file</span><span class="p">[</span><span class="s1">&#39;count_above_thresh&#39;</span><span class="p">][:][</span><span class="n">tid_sort</span><span class="p">]</span> <span class="o">/</span> \
+            <span class="nb">float</span><span class="p">(</span><span class="n">coeff_file</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;analysis_time&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="ExpFitSGCoincRateStatistic.coinc_multiifo"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.stat.ExpFitSGCoincRateStatistic.coinc_multiifo">[docs]</a>    <span class="k">def</span> <span class="nf">coinc_multiifo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">slide</span><span class="p">,</span>
+                       <span class="n">step</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span> <span class="c1"># pylint:disable=unused-argument</span>
+        <span class="sd">&quot;&quot;&quot;Calculate the final coinc ranking statistic&quot;&quot;&quot;</span>
+        <span class="n">sngl_rates_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">ifo</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">sngl_rate</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">ifo</span><span class="p">,</span> <span class="n">sngl_rate</span><span class="p">)</span> <span class="ow">in</span>\
+                           <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fits_by_tid</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">s</span><span class="o">.</span><span class="n">values</span><span class="p">())}</span>
+        <span class="n">ln_coinc_rate</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">coinc_rate</span><span class="o">.</span><span class="n">combination_noise_coinc_rate</span><span class="p">(</span>
+                                  <span class="n">sngl_rates_dict</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;time_addition&#39;</span><span class="p">]))</span>
+        <span class="n">loglr</span> <span class="o">=</span> <span class="o">-</span> <span class="n">ln_coinc_rate</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">benchmark_lograte</span>
+        <span class="k">return</span> <span class="n">loglr</span></div></div>
+
+
 <span class="n">statistic_dict</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;newsnr&#39;</span><span class="p">:</span> <span class="n">NewSNRStatistic</span><span class="p">,</span>
     <span class="s1">&#39;network_snr&#39;</span><span class="p">:</span> <span class="n">NetworkSNRStatistic</span><span class="p">,</span>
@@ -782,7 +823,8 @@
     <span class="s1">&#39;phasetd_exp_fit_stat_sgveto&#39;</span><span class="p">:</span> <span class="n">PhaseTDExpFitSGStatistic</span><span class="p">,</span>
     <span class="s1">&#39;newsnr_sgveto&#39;</span><span class="p">:</span> <span class="n">NewSNRSGStatistic</span><span class="p">,</span>
     <span class="s1">&#39;newsnr_sgveto_psdvar&#39;</span><span class="p">:</span> <span class="n">NewSNRSGPSDStatistic</span><span class="p">,</span>
-    <span class="s1">&#39;phasetd_exp_fit_stat_sgveto_psdvar&#39;</span><span class="p">:</span> <span class="n">PhaseTDExpFitSGPSDStatistic</span>
+    <span class="s1">&#39;phasetd_exp_fit_stat_sgveto_psdvar&#39;</span><span class="p">:</span> <span class="n">PhaseTDExpFitSGPSDStatistic</span><span class="p">,</span>
+    <span class="s1">&#39;exp_fit_sg_coinc_rate&#39;</span><span class="p">:</span> <span class="n">ExpFitSGCoincRateStatistic</span>
 <span class="p">}</span>
 
 <span class="n">sngl_statistic_dict</span> <span class="o">=</span> <span class="p">{</span>
@@ -859,7 +901,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Jun 12, 2019.
+        Last updated on Jun 13, 2019.
       </span>
 
     </p>

@@ -747,9 +747,38 @@ is slid to the right by the offset in the given timeslide_offsets vector.</p>
 <p>This module contains functions for calculating expected rates of noise
 and signal coincidences.</p>
 <dl class="function">
+<dt id="pycbc.events.coinc_rate.combination_noise_coinc_rate">
+<code class="descclassname">pycbc.events.coinc_rate.</code><code class="descname">combination_noise_coinc_rate</code><span class="sig-paren">(</span><em>rates</em>, <em>slop</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/coinc_rate.html#combination_noise_coinc_rate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.coinc_rate.combination_noise_coinc_rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the expected rate of noise coincidences for a combination of
+detectors</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>rates</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – Dictionary keyed on ifo string
+Value is a sequence of single-detector trigger rates, units assumed
+to be Hz</li>
+<li><strong>slop</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – time added to maximum time-of-flight between detectors to account
+for timing error</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>combo_coinc_rate</strong> – Value is expected coincidence rate in the combination, units Hz</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy array</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="pycbc.events.coinc_rate.multiifo_noise_coinc_rate">
 <code class="descclassname">pycbc.events.coinc_rate.</code><code class="descname">multiifo_noise_coinc_rate</code><span class="sig-paren">(</span><em>rates</em>, <em>slop</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/coinc_rate.html#multiifo_noise_coinc_rate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.coinc_rate.multiifo_noise_coinc_rate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the expected rate of noise coincidences for multiple detectors</p>
+<dd><p>Calculate the expected rate of noise coincidences for multiple
+combinations of detectors</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1259,7 +1288,7 @@ approximates combined (new)snr for coincs with similar newsnr in each ifo</p>
 
 <dl class="method">
 <dt id="pycbc.events.stat.ExpFitCombinedSNR.coinc_multiifo">
-<code class="descname">coinc_multiifo</code><span class="sig-paren">(</span><em>s</em>, <em>slide</em>, <em>step</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/stat.html#ExpFitCombinedSNR.coinc_multiifo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.stat.ExpFitCombinedSNR.coinc_multiifo" title="Permalink to this definition">¶</a></dt>
+<code class="descname">coinc_multiifo</code><span class="sig-paren">(</span><em>s</em>, <em>slide</em>, <em>step</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/stat.html#ExpFitCombinedSNR.coinc_multiifo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.stat.ExpFitCombinedSNR.coinc_multiifo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the coincident detection statistic.
 :param s: statistics
 :type s: dictionary keyed by ifo of single detector ranking
@@ -1288,6 +1317,26 @@ approximates combined (new)snr for coincs with similar newsnr in each ifo</p>
 <dl class="method">
 <dt id="pycbc.events.stat.ExpFitCombinedSNR.use_alphamax">
 <code class="descname">use_alphamax</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/stat.html#ExpFitCombinedSNR.use_alphamax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.stat.ExpFitCombinedSNR.use_alphamax" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pycbc.events.stat.ExpFitSGCoincRateStatistic">
+<em class="property">class </em><code class="descclassname">pycbc.events.stat.</code><code class="descname">ExpFitSGCoincRateStatistic</code><span class="sig-paren">(</span><em>files</em>, <em>benchmark_lograte=-14.6</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/stat.html#ExpFitSGCoincRateStatistic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.stat.ExpFitSGCoincRateStatistic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycbc.events.stat.ExpFitStatistic" title="pycbc.events.stat.ExpFitStatistic"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.events.stat.ExpFitStatistic</span></code></a></p>
+<p>Detection statistic using an exponential falloff noise model.
+Statistic calculates the log noise coinc rate for each
+template over single-ifo newsnr values.</p>
+<dl class="method">
+<dt id="pycbc.events.stat.ExpFitSGCoincRateStatistic.coinc_multiifo">
+<code class="descname">coinc_multiifo</code><span class="sig-paren">(</span><em>s</em>, <em>slide</em>, <em>step</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/stat.html#ExpFitSGCoincRateStatistic.coinc_multiifo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.stat.ExpFitSGCoincRateStatistic.coinc_multiifo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the final coinc ranking statistic</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.events.stat.ExpFitSGCoincRateStatistic.reassign_rate">
+<code class="descname">reassign_rate</code><span class="sig-paren">(</span><em>ifo</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/stat.html#ExpFitSGCoincRateStatistic.reassign_rate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.stat.ExpFitSGCoincRateStatistic.reassign_rate" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1542,7 +1591,7 @@ are required keys for this statistic.</td>
 
 <dl class="method">
 <dt id="pycbc.events.stat.NewSNRStatistic.coinc_multiifo">
-<code class="descname">coinc_multiifo</code><span class="sig-paren">(</span><em>s</em>, <em>slide</em>, <em>step</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/stat.html#NewSNRStatistic.coinc_multiifo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.stat.NewSNRStatistic.coinc_multiifo" title="Permalink to this definition">¶</a></dt>
+<code class="descname">coinc_multiifo</code><span class="sig-paren">(</span><em>s</em>, <em>slide</em>, <em>step</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/events/stat.html#NewSNRStatistic.coinc_multiifo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.events.stat.NewSNRStatistic.coinc_multiifo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the coincident detection statistic.
 :param s: statistics
 :type s: dictionary keyed by ifo of single detector ranking
@@ -2393,7 +2442,7 @@ contain a segment table</li>
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Jun 12, 2019.
+        Last updated on Jun 13, 2019.
       </span>
 
     </p>

@@ -216,7 +216,8 @@
 
 <div class="viewcode-block" id="multiifo_noise_coinc_rate"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.coinc_rate.multiifo_noise_coinc_rate">[docs]</a><span class="k">def</span> <span class="nf">multiifo_noise_coinc_rate</span><span class="p">(</span><span class="n">rates</span><span class="p">,</span> <span class="n">slop</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Calculate the expected rate of noise coincidences for multiple detectors</span>
+<span class="sd">    Calculate the expected rate of noise coincidences for multiple</span>
+<span class="sd">    combinations of detectors</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -234,18 +235,16 @@
 <span class="sd">        Dictionary keyed on the ifo combination string</span>
 <span class="sd">        Value is expected coincidence rate in the combination, units Hz</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">ifos</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">rates</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
-    <span class="n">rates_raw</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">rates</span><span class="p">[</span><span class="n">ifo</span><span class="p">]</span> <span class="k">for</span> <span class="n">ifo</span> <span class="ow">in</span> <span class="n">ifos</span><span class="p">)</span>
     <span class="n">expected_coinc_rates</span> <span class="o">=</span> <span class="p">{}</span>
 
-    <span class="c1"># Calculate coincidence for all-ifo combination</span>
-    <span class="c1"># multiply product of trigger rates by the overlap time</span>
-    <span class="n">allowed_area</span> <span class="o">=</span> <span class="n">multiifo_noise_coincident_area</span><span class="p">(</span><span class="n">ifos</span><span class="p">,</span> <span class="n">slop</span><span class="p">)</span>
-    <span class="n">rateprod</span> <span class="o">=</span> <span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">rs</span><span class="p">)</span> <span class="k">for</span> <span class="n">rs</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">rates_raw</span><span class="p">)]</span>
+    <span class="c1"># Order of ifos must be stable in output dict keys, so sort them</span>
+    <span class="n">ifos</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">rates</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
     <span class="n">ifostring</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ifos</span><span class="p">)</span>
-    <span class="n">expected_coinc_rates</span><span class="p">[</span><span class="n">ifostring</span><span class="p">]</span> <span class="o">=</span> <span class="n">allowed_area</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rateprod</span><span class="p">)</span>
 
-    <span class="c1"># if more than one possible coincidence type exists,</span>
+    <span class="c1"># Calculate coincidence for all-ifo combination</span>
+    <span class="n">expected_coinc_rates</span><span class="p">[</span><span class="n">ifostring</span><span class="p">]</span> <span class="o">=</span> <span class="n">combination_noise_coinc_rate</span><span class="p">(</span><span class="n">rates</span><span class="p">,</span> <span class="n">slop</span><span class="p">)</span>
+
+    <span class="c1"># If more than one possible coincidence type exists,</span>
     <span class="c1"># calculate coincidence for subsets through recursion</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ifos</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
         <span class="c1"># Calculate rate for each &#39;miss-one-out&#39; detector combination</span>
@@ -260,6 +259,35 @@
                 <span class="n">expected_coinc_rates</span><span class="p">[</span><span class="n">sub_coinc</span><span class="p">]</span> <span class="o">=</span> <span class="n">sub_coinc_rates</span><span class="p">[</span><span class="n">sub_coinc</span><span class="p">]</span>
 
     <span class="k">return</span> <span class="n">expected_coinc_rates</span></div>
+
+
+<div class="viewcode-block" id="combination_noise_coinc_rate"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.coinc_rate.combination_noise_coinc_rate">[docs]</a><span class="k">def</span> <span class="nf">combination_noise_coinc_rate</span><span class="p">(</span><span class="n">rates</span><span class="p">,</span> <span class="n">slop</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the expected rate of noise coincidences for a combination of</span>
+<span class="sd">    detectors</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    rates: dict</span>
+<span class="sd">        Dictionary keyed on ifo string</span>
+<span class="sd">        Value is a sequence of single-detector trigger rates, units assumed</span>
+<span class="sd">        to be Hz</span>
+<span class="sd">    slop: float</span>
+<span class="sd">        time added to maximum time-of-flight between detectors to account</span>
+<span class="sd">        for timing error</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    combo_coinc_rate: numpy array</span>
+<span class="sd">        Value is expected coincidence rate in the combination, units Hz</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># multiply product of trigger rates by the overlap time</span>
+    <span class="n">allowed_area</span> <span class="o">=</span> <span class="n">multiifo_noise_coincident_area</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">rates</span><span class="p">),</span> <span class="n">slop</span><span class="p">)</span>
+    <span class="c1"># list(dict.values()) is python-3-proof</span>
+    <span class="n">rateprod</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">rates</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">combo_coinc_rate</span> <span class="o">=</span> <span class="n">allowed_area</span> <span class="o">*</span> <span class="n">rateprod</span>
+
+    <span class="k">return</span> <span class="n">combo_coinc_rate</span></div>
 
 
 <div class="viewcode-block" id="multiifo_noise_coincident_area"><a class="viewcode-back" href="../../../pycbc.events.html#pycbc.events.coinc_rate.multiifo_noise_coincident_area">[docs]</a><span class="k">def</span> <span class="nf">multiifo_noise_coincident_area</span><span class="p">(</span><span class="n">ifos</span><span class="p">,</span> <span class="n">slop</span><span class="p">):</span>
@@ -368,7 +396,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Jun 12, 2019.
+        Last updated on Jun 13, 2019.
       </span>
 
     </p>

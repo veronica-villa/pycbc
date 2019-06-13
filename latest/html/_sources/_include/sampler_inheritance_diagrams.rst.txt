@@ -1,13 +1,3 @@
-.. _inheritance-cpnest:
-
-* ``cpnest``:
-
-.. inheritance-diagram:: pycbc.inference.sampler.cpnest.CPNestSampler
-   :parts: 3
-
-|
-
-
 .. _inheritance-emcee:
 
 * ``emcee``:
