@@ -798,6 +798,40 @@ reads the file and returns it unedited</p>
 
 <dl class="method">
 <dt>
+<code class="descname">resolve_file_url</code><span class="sig-paren">(</span><em>test_string</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycbc/workflow/configuration.html#WorkflowConfigParser.resolve_file_url"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Replace test_string with a path to an executable based on the format.</p>
+<p>If this looks like</p>
+<p>${which:lalapps_tmpltbank}</p>
+<p>it will return the equivalent of which(lalapps_tmpltbank)</p>
+<p>Otherwise it will return an unchanged string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>test_string</strong> (<em>string</em>) – The input string</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>new_string</strong> – The output string.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">resolve_urls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycbc/workflow/configuration.html#WorkflowConfigParser.resolve_urls"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This function will look through all sections of the
+ConfigParser object and replace any URLs that are given the resolve
+magic flag with a path on the local drive.</p>
+<p>Specifically for any values that look like</p>
+<p>${resolve:https://git.ligo.org/detchar/SOME_GATING_FILE.txt}</p>
+<p>the file will be replaced with the output of resolve_url(URL)</p>
+<p>Otherwise values will be unchanged.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
 <code class="descname">sanity_check_subsections</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycbc/workflow/configuration.html#WorkflowConfigParser.sanity_check_subsections"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This function goes through the ConfigParset and checks that any options
 given in the [SECTION_NAME] section are not also given in any

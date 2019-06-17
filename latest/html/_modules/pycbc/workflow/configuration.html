@@ -276,7 +276,7 @@
             <span class="c1"># support HttpOnly cookies (as stored by curl or old Firefox).</span>
             <span class="k">if</span> <span class="n">sline</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;#HttpOnly_&quot;</span><span class="p">):</span>
                 <span class="n">line</span> <span class="o">=</span> <span class="n">sline</span><span class="p">[</span><span class="mi">10</span><span class="p">:]</span>
-            <span class="c1"># skip comments and blank lines XXX what is $ for?</span>
+            <span class="c1"># skip comments and blank lines ... what is $ for?</span>
             <span class="k">elif</span> <span class="p">(</span><span class="n">sline</span><span class="o">.</span><span class="n">startswith</span><span class="p">((</span><span class="s2">&quot;#&quot;</span><span class="p">,</span> <span class="s2">&quot;$&quot;</span><span class="p">))</span> <span class="ow">or</span> <span class="n">sline</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
                 <span class="k">continue</span>
 
@@ -627,14 +627,11 @@
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Overriding section </span><span class="si">%s</span><span class="s2"> option </span><span class="si">%s</span><span class="s2"> with value </span><span class="si">%s</span><span class="s2"> &quot;</span>
                 <span class="s2">&quot;in configuration.&quot;</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">value</span> <span class="p">)</span>
 
+        <span class="c1"># Resolve any URLs needing resolving</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curr_resolved_files</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resolve_urls</span><span class="p">()</span>
 
         <span class="c1"># Check for any substitutions that can be made</span>
-        <span class="c1"># FIXME: The python 3 version of ConfigParser can do this automatically</span>
-        <span class="c1"># move over to that if it can be backported to python2.X.</span>
-        <span class="c1"># We use the same formatting as the new configparser module when doing</span>
-        <span class="c1"># ExtendedInterpolation</span>
-        <span class="c1"># This is described at</span>
-        <span class="c1"># http://docs.python.org/3.4/library/configparser.html</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">perform_extended_interpolation</span><span class="p">()</span>
 
         <span class="c1"># Check for duplicate options in sub-sections</span>
@@ -747,7 +744,6 @@
                 <span class="k">if</span> <span class="n">newStr</span> <span class="o">!=</span> <span class="n">value</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;executables&#39;</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">newStr</span><span class="p">)</span></div>
 
-
 <div class="viewcode-block" id="WorkflowConfigParser.interpolate_exe"><a class="viewcode-back" href="../../../workflow/initialization.html#pycbc.workflow.configuration.WorkflowConfigParser.interpolate_exe">[docs]</a>    <span class="k">def</span> <span class="nf">interpolate_exe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">testString</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Replace testString with a path to an executable based on the format.</span>
@@ -775,7 +771,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">testString</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;${&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">testString</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;}&#39;</span><span class="p">)):</span>
             <span class="k">return</span> <span class="n">testString</span>
 
-        <span class="c1"># This may not be an exe interpolation, so even if it has ${XXX} form</span>
+        <span class="c1"># This may not be an exe interpolation, so even if it has ${ ... } form</span>
         <span class="c1"># I may not have to do anything</span>
         <span class="n">newString</span> <span class="o">=</span> <span class="n">testString</span>
 
@@ -794,6 +790,75 @@
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">errmsg</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">newString</span></div>
+
+<div class="viewcode-block" id="WorkflowConfigParser.resolve_urls"><a class="viewcode-back" href="../../../workflow/initialization.html#pycbc.workflow.configuration.WorkflowConfigParser.resolve_urls">[docs]</a>    <span class="k">def</span> <span class="nf">resolve_urls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function will look through all sections of the</span>
+<span class="sd">        ConfigParser object and replace any URLs that are given the resolve</span>
+<span class="sd">        magic flag with a path on the local drive.</span>
+
+<span class="sd">        Specifically for any values that look like</span>
+
+<span class="sd">        ${resolve:https://git.ligo.org/detchar/SOME_GATING_FILE.txt}</span>
+
+<span class="sd">        the file will be replaced with the output of resolve_url(URL)</span>
+
+<span class="sd">        Otherwise values will be unchanged.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Only works on executables section</span>
+        <span class="k">for</span> <span class="n">section</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">option</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="n">section</span><span class="p">):</span>
+                <span class="c1"># Check the value</span>
+                <span class="n">new_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolve_file_url</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">new_str</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">new_str</span> <span class="o">!=</span> <span class="n">value</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">new_str</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WorkflowConfigParser.resolve_file_url"><a class="viewcode-back" href="../../../workflow/initialization.html#pycbc.workflow.configuration.WorkflowConfigParser.resolve_file_url">[docs]</a>    <span class="k">def</span> <span class="nf">resolve_file_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">test_string</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Replace test_string with a path to an executable based on the format.</span>
+
+<span class="sd">        If this looks like</span>
+
+<span class="sd">        ${which:lalapps_tmpltbank}</span>
+
+<span class="sd">        it will return the equivalent of which(lalapps_tmpltbank)</span>
+
+<span class="sd">        Otherwise it will return an unchanged string.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        -----------</span>
+<span class="sd">        test_string : string</span>
+<span class="sd">            The input string</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        --------</span>
+<span class="sd">        new_string : string</span>
+<span class="sd">            The output string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># First check if any interpolation is needed and abort if not</span>
+        <span class="n">test_string</span> <span class="o">=</span> <span class="n">test_string</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">test_string</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;${&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">test_string</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;}&#39;</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="n">test_string</span>
+
+        <span class="c1"># This may not be a &quot;resolve&quot; interpolation, so even if it has</span>
+        <span class="c1"># ${ ... } form I may not have to do anything</span>
+
+        <span class="c1"># Strip the ${ and }</span>
+        <span class="n">test_string</span> <span class="o">=</span> <span class="n">test_string</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">test_list</span> <span class="o">=</span> <span class="n">test_string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">test_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;resolve&#39;</span><span class="p">:</span>
+                <span class="n">curr_lfn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">test_list</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">curr_lfn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">curr_resolved_files</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">curr_resolved_files</span><span class="p">[</span><span class="n">curr_lfn</span><span class="p">]</span>
+                <span class="n">local_url</span> <span class="o">=</span> <span class="n">resolve_url</span><span class="p">(</span><span class="n">test_list</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">curr_resolved_files</span><span class="p">[</span><span class="n">curr_lfn</span><span class="p">]</span> <span class="o">=</span> <span class="n">local_url</span>
+                <span class="k">return</span> <span class="n">local_url</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+
 
 <div class="viewcode-block" id="WorkflowConfigParser.get_subsections"><a class="viewcode-back" href="../../../workflow/initialization.html#pycbc.workflow.configuration.WorkflowConfigParser.get_subsections">[docs]</a>    <span class="k">def</span> <span class="nf">get_subsections</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section_name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Return a list of subsections for the given section name</span>
