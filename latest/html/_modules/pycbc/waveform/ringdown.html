@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.waveform.ringdown &mdash; PyCBC 1.13.dev9 documentation</title>
+  <title>pycbc.waveform.ringdown &mdash; PyCBC 6d43cf documentation</title>
   
 
   
@@ -60,6 +60,10 @@
 
           
             
+            
+              <div class="version">
+                None
+              </div>
             
           
 
@@ -276,15 +280,15 @@
 <span class="sd">    given, raise an error.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1"># Case 1: the list is in a string &quot;[221, 331]&quot;</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">lmns</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">unicode</span><span class="p">)):</span>
-        <span class="c1"># strip off brackets</span>
-        <span class="n">lmns</span> <span class="o">=</span> <span class="n">lmns</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;[]&#39;</span><span class="p">)</span>
-        <span class="c1"># convert to list</span>
-        <span class="n">lmns</span> <span class="o">=</span> <span class="n">lmns</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+    <span class="c1"># Case 1: the list is in a string &quot;[&#39;221&#39;, &#39;331&#39;]&quot;</span>
+    <span class="c1"># In Python3 this might be &quot;[b&#39;221&#39;, b&#39;331&#39;]&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">lmns</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="c1"># strip off brackets and convert to list</span>
+        <span class="n">lmns</span> <span class="o">=</span> <span class="n">lmns</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;[]&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
 
     <span class="c1"># Case 2: a list with only one string with a list [&quot;221&#39;, &#39;331&quot;]</span>
-    <span class="k">elif</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lmns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">lmns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">unicode</span><span class="p">))</span>
+    <span class="c1"># In Python3 this might be [&quot;b221&#39;, b&#39;331&quot;]</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lmns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">lmns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">)</span>
           <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">lmns</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">):</span>
         <span class="n">lmns</span> <span class="o">=</span> <span class="n">lmns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
 
@@ -292,6 +296,10 @@
     <span class="c1"># Cycle over the lmns to ensure that we get back a list of strings that</span>
     <span class="c1"># are three digits long, and that nmodes!=0</span>
     <span class="k">for</span> <span class="n">lmn</span> <span class="ow">in</span> <span class="n">lmns</span><span class="p">:</span>
+        <span class="c1"># The following line is to be used with Python3 if the lmns are stored</span>
+        <span class="c1"># as a list of strings in the HDF files and the workflow converts that</span>
+        <span class="c1"># to a string</span>
+        <span class="c1"># lmn = lmn.strip(&quot; b&#39;&quot;)</span>
         <span class="c1"># Try to convert to int and then str, to ensure the right format</span>
         <span class="n">lmn</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">lmn</span><span class="p">))</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lmn</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
@@ -969,7 +977,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Jun 15, 2019.
+        Last updated on Jun 17, 2019.
       </span>
 
     </p>
