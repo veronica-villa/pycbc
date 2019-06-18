@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference package &mdash; PyCBC 1.14.dev1 documentation</title>
+  <title>pycbc.inference package &mdash; PyCBC 9827f8 documentation</title>
   
 
   
@@ -62,6 +62,10 @@
 
           
             
+            
+              <div class="version">
+                1.14.0
+              </div>
             
           
 
@@ -463,8 +467,143 @@ never happened, returns 0.</p>
 <p>The module contains functions for calculating the
 Kullback-Leibler divergence.</p>
 <dl class="function">
+<dt id="pycbc.inference.entropy.check_hist_params">
+<code class="descclassname">pycbc.inference.entropy.</code><code class="descname">check_hist_params</code><span class="sig-paren">(</span><em>samples</em>, <em>hist_min</em>, <em>hist_max</em>, <em>hist_bins</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/entropy.html#check_hist_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.entropy.check_hist_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks that the bound values given for the histogram are consistent,
+returning the range if they are or raising an error if they are not.
+Also checks that if hist_bins is a str, it corresponds to a method
+available in numpy.histogram</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>samples</strong> (<em>numpy.array</em>) – Set of samples to get the min/max if only one of the bounds is given.</li>
+<li><strong>hist_min</strong> (<em>numpy.float64</em>) – Minimum value for the histogram.</li>
+<li><strong>hist_max</strong> (<em>numpy.float64</em>) – Maximum value for the histogram.</li>
+<li><strong>hist_bins</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – If int, number of equal-width bins to use in numpy.histogram. If str,
+it should be one of the methods to calculate the optimal bin width
+available in numpy.histogram: [‘auto’, ‘fd’, ‘doane’, ‘scott’, ‘stone’,
+‘rice’, ‘sturges’, ‘sqrt’]. Default is ‘fd’ (Freedman Diaconis
+Estimator). This option will be ignored if <cite>kde=True</cite>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>hist_range</strong> (<em>tuple or None</em>) – The bounds (hist_min, hist_max) or None.</li>
+<li><strong>hist_bins</strong> (<em>int or str</em>) – Number of bins or method for optimal width bin calculation.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pycbc.inference.entropy.compute_pdf">
+<code class="descclassname">pycbc.inference.entropy.</code><code class="descname">compute_pdf</code><span class="sig-paren">(</span><em>samples</em>, <em>method</em>, <em>bins</em>, <em>hist_min</em>, <em>hist_max</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/entropy.html#compute_pdf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.entropy.compute_pdf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the probability density function for a set of samples.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>samples</strong> (<em>numpy.array</em>) – Set of samples to calculate the pdf.</li>
+<li><strong>method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Method to calculate the pdf. Options are ‘kde’ for the Kernel Density
+Estimator, and ‘hist’ to use numpy.histogram</li>
+<li><strong>bins</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em>, </em><em>optional</em>) – This option will be ignored if method is <cite>kde</cite>.
+If int, number of equal-width bins to use when calculating probability
+density function from a set of samples of the distribution. If str, it
+should be one of the methods to calculate the optimal bin width
+available in numpy.histogram: [‘auto’, ‘fd’, ‘doane’, ‘scott’, ‘stone’,
+‘rice’, ‘sturges’, ‘sqrt’]. Default is ‘fd’ (Freedman Diaconis
+Estimator).</li>
+<li><strong>hist_min</strong> (<em>numpy.float64</em><em>, </em><em>optional</em>) – Minimum of the distributions’ values to use. This will be ignored if
+<cite>kde=True</cite>.</li>
+<li><strong>hist_max</strong> (<em>numpy.float64</em><em>, </em><em>optional</em>) – Maximum of the distributions’ values to use. This will be ignored if
+<cite>kde=True</cite>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>pdf</strong> – Discrete probability distribution calculated from samples.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.array</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pycbc.inference.entropy.entropy">
+<code class="descclassname">pycbc.inference.entropy.</code><code class="descname">entropy</code><span class="sig-paren">(</span><em>pdf1</em>, <em>base=2.718281828459045</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/entropy.html#entropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.entropy.entropy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the information entropy for a single parameter
+from one probability density function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pdf1</strong> (<em>numpy.array</em>) – Probability density function.</li>
+<li><strong>base</strong> (<em>{numpy.e</em><em>, </em><em>numpy.float64}</em><em>, </em><em>optional</em>) – The logarithmic base to use (choose base 2 for information measured
+in bits, default is nats).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The information entropy value.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.float64</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pycbc.inference.entropy.js">
+<code class="descclassname">pycbc.inference.entropy.</code><code class="descname">js</code><span class="sig-paren">(</span><em>samples1</em>, <em>samples2</em>, <em>kde=False</em>, <em>bins=None</em>, <em>hist_min=None</em>, <em>hist_max=None</em>, <em>base=2.718281828459045</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/entropy.html#js"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.entropy.js" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the Jensen-Shannon divergence for a single parameter
+from two distributions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>samples1</strong> (<em>numpy.array</em>) – Samples.</li>
+<li><strong>samples2</strong> (<em>numpy.array</em>) – Samples.</li>
+<li><strong>kde</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Set to <cite>True</cite> to estimate the probability density function using
+kernel density estimation (KDE).</li>
+<li><strong>bins</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>, </em><em>optional</em>) – If int, number of equal-width bins to use when calculating probability
+density function from a set of samples of the distribution. If str, it
+should be one of the methods to calculate the optimal bin width
+available in numpy.histogram: [‘auto’, ‘fd’, ‘doane’, ‘scott’, ‘stone’,
+‘rice’, ‘sturges’, ‘sqrt’]. Default is ‘fd’ (Freedman Diaconis
+Estimator). This option will be ignored if <cite>kde=True</cite>.</li>
+<li><strong>hist_min</strong> (<em>numpy.float64</em>) – Minimum of the distributions’ values to use. This will be ignored if
+<cite>kde=True</cite>.</li>
+<li><strong>hist_max</strong> (<em>numpy.float64</em>) – Maximum of the distributions’ values to use. This will be ignored if
+<cite>kde=True</cite>.</li>
+<li><strong>base</strong> (<em>numpy.float64</em>) – The logarithmic base to use (choose base 2 for information measured
+in bits, default is nats).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Jensen-Shannon divergence value.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.float64</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="pycbc.inference.entropy.kl">
-<code class="descclassname">pycbc.inference.entropy.</code><code class="descname">kl</code><span class="sig-paren">(</span><em>samples1</em>, <em>samples2</em>, <em>pdf1=False</em>, <em>pdf2=False</em>, <em>bins=30</em>, <em>hist_min=None</em>, <em>hist_max=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/entropy.html#kl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.entropy.kl" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pycbc.inference.entropy.</code><code class="descname">kl</code><span class="sig-paren">(</span><em>samples1</em>, <em>samples2</em>, <em>pdf1=False</em>, <em>pdf2=False</em>, <em>kde=False</em>, <em>bins=None</em>, <em>hist_min=None</em>, <em>hist_max=None</em>, <em>base=2.718281828459045</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/entropy.html#kl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.entropy.kl" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the Kullback-Leibler divergence for a single parameter
 from two distributions.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -472,14 +611,27 @@ from two distributions.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>samples1</strong> (<em>numpy.array</em>) – Samples or probability density function (must also set <cite>pdf1=True</cite>).</li>
-<li><strong>samples2</strong> (<em>numpy.array</em>) – Samples or probability density function (must also set <cite>pdf2=True</cite>).</li>
+<li><strong>samples1</strong> (<em>numpy.array</em>) – Samples or probability density function (for the latter must also set
+<cite>pdf1=True</cite>).</li>
+<li><strong>samples2</strong> (<em>numpy.array</em>) – Samples or probability density function (for the latter must also set
+<cite>pdf2=True</cite>).</li>
 <li><strong>pdf1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Set to <cite>True</cite> if <cite>samples1</cite> is a probability density funtion already.</li>
 <li><strong>pdf2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Set to <cite>True</cite> if <cite>samples2</cite> is a probability density funtion already.</li>
-<li><strong>bins</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of bins to use when calculating probability density function
-from a set of samples of the distribution.</li>
-<li><strong>hist_min</strong> (<em>numpy.float64</em>) – Minimum of the distributions’ values to use.</li>
-<li><strong>hist_max</strong> (<em>numpy.float64</em>) – Maximum of the distributions’ values to use.</li>
+<li><strong>kde</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Set to <cite>True</cite> if at least one of <cite>pdf1</cite> or <cite>pdf2</cite> is <cite>False</cite> to
+estimate the probability density function using kernel density
+estimation (KDE).</li>
+<li><strong>bins</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>, </em><em>optional</em>) – If int, number of equal-width bins to use when calculating probability
+density function from a set of samples of the distribution. If str, it
+should be one of the methods to calculate the optimal bin width
+available in numpy.histogram: [‘auto’, ‘fd’, ‘doane’, ‘scott’, ‘stone’,
+‘rice’, ‘sturges’, ‘sqrt’]. Default is ‘fd’ (Freedman Diaconis
+Estimator). This option will be ignored if <cite>kde=True</cite>.</li>
+<li><strong>hist_min</strong> (<em>numpy.float64</em>) – Minimum of the distributions’ values to use. This will be ignored if
+<cite>kde=True</cite>.</li>
+<li><strong>hist_max</strong> (<em>numpy.float64</em>) – Maximum of the distributions’ values to use. This will be ignored if
+<cite>kde=True</cite>.</li>
+<li><strong>base</strong> (<em>numpy.float64</em>) – The logarithmic base to use (choose base 2 for information measured
+in bits, default is nats).</li>
 </ul>
 </td>
 </tr>
@@ -721,7 +873,7 @@ will go to the beginning of the data array.</li>
 <p>This module contains standard options used for inference-related programs.</p>
 <dl class="class">
 <dt id="pycbc.inference.option_utils.ParseLabelArg">
-<em class="property">class </em><code class="descclassname">pycbc.inference.option_utils.</code><code class="descname">ParseLabelArg</code><span class="sig-paren">(</span><em>type=&lt;class 'str'&gt;</em>, <em>nargs=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/option_utils.html#ParseLabelArg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.option_utils.ParseLabelArg" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pycbc.inference.option_utils.</code><code class="descname">ParseLabelArg</code><span class="sig-paren">(</span><em>type=&lt;type 'str'&gt;</em>, <em>nargs=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/option_utils.html#ParseLabelArg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.option_utils.ParseLabelArg" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Action" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.Action</span></code></a></p>
 <p>Argparse action that will parse arguments that can accept labels.</p>
 <p>This assumes that the values set on the command line for its assigned
@@ -739,7 +891,7 @@ to <code class="docutils literal notranslate"><span class="pre">str</span></code
 
 <dl class="class">
 <dt id="pycbc.inference.option_utils.ParseParametersArg">
-<em class="property">class </em><code class="descclassname">pycbc.inference.option_utils.</code><code class="descname">ParseParametersArg</code><span class="sig-paren">(</span><em>type=&lt;class 'str'&gt;</em>, <em>nargs=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/option_utils.html#ParseParametersArg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.option_utils.ParseParametersArg" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pycbc.inference.option_utils.</code><code class="descname">ParseParametersArg</code><span class="sig-paren">(</span><em>type=&lt;type 'str'&gt;</em>, <em>nargs=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/option_utils.html#ParseParametersArg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.option_utils.ParseParametersArg" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pycbc.inference.option_utils.ParseLabelArg" title="pycbc.inference.option_utils.ParseLabelArg"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.option_utils.ParseLabelArg</span></code></a></p>
 <p>Argparse action that will parse parameters and labels from an opton.</p>
 <p>Does the same as <code class="docutils literal notranslate"><span class="pre">ParseLabelArg</span></code>, with the additional functionality that
