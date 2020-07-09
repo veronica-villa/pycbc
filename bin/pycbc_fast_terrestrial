@@ -1,0 +1,61 @@
+#!/usr/bin/env python
+
+import json
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--snr', type=float,
+                    help='SNR of the event')
+parser.add_argument('--far', type=float,
+                    help='FAR of the event')
+parser.add_argument('--ifos', help= 'options: H1, L1, V1, H1V1, H1L1, L1V1, H1L1V1')
+parser.add_argument('--json-file',
+                    help='json file with CBC probabilities')
+parser.add_argument('--bbh', type=float, default=0.0,
+                    help='BBH probability (in case of not having a json file)')
+parser.add_argument('--nsbh', type=float, default=0.0,
+                    help='NSBH probability (in case of not having a json file)')
+parser.add_argument('--bns', type=float, default=0.0,
+                    help='BNS probability (in case of not having a json file)')
+parser.add_argument('--mg', type=float, default=0.0,
+                    help='Mass-Gap probability (in case of not having a json file)')
+args = parser.parse_args()
+
+if args.json_file:
+    with open(args.json_file) as json_file:
+        probabilities = json.load(json_file)
+else:
+    probabilities = {'BBH': args.BBH, 'NSBH': args.NSBH, 'BNS': args.BNS, 'Mass Gap': args.MG}
+
+mean_counts = {'BNS': 2.11050326523, 'NSBH': 1.56679410666, 'BBH': 9.26042350393, 'Mass Gap': 2.40800240248}
+
+far_snr_t = {"H1": {"far": 0, "snr": 10000000000.0}, "H1V1": {"far": 3.203009291289352e-10, "snr": 10}, "H1L1": {"far": 3.203009291289352e-10, "snr": 10},
+             "V1": {"far": 0, "snr": 10000000000.0}, "H1L1V1": {"far": 3.203009291289352e-10, "snr": 10}, "L1": {"far": 0, "snr": 10000000000.0},
+             "L1V1": {"far": 3.203009291289352e-10, "snr": 10}}
+far_t = far_snr_t[args.ifos]["far"]
+snr_t = far_snr_t[args.ifos]["snr"]
+
+if args.far < far_t and args.snr > snr_t:
+    snr_choice = snr_t
+else:
+    snr_choice = args.snr
+
+snr_star = 8.5
+far_star = 1 / (30 * 86400)
+p_astro_livetime = 14394240
+
+fground = 3 * snr_star**3 / (snr_choice**4)
+bground = args.far / far_star
+astro_bayesfac = fground / bground
+
+lam_0 = far_star * p_astro_livetime
+
+sum_probs_weighted = sum([probabilities[i]*mean_counts[i] for i in ['BBH', 'BNS', 'NSBH', 'Mass Gap']])
+
+p_terrestrial = lam_0 / (lam_0 + 4*astro_bayesfac*sum_probs_weighted)
+p_cbc = 1 - p_terrestrial
+print('p_terrestrial = %.3f' % p_terrestrial)
+print('p_BBH = %.3f' % (probabilities['BBH'] * p_cbc))
+print('p_NSBH = %.3f' % (probabilities['NSBH'] * p_cbc))
+print('p_BNS = %.3f' % (probabilities['BNS'] * p_cbc))
+print('p_MG = %.3f' % (probabilities['Mass Gap'] * p_cbc))
